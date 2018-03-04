@@ -7,3 +7,5 @@ this is just a playground area for you to practice git things like cloning to yo
 Patrick Was Here
 
 Patrick Was Here and He Didnt fork everything
+
+Dena was here, ummmm.. is writing on here all we do?
