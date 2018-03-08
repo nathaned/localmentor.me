@@ -6,12 +6,12 @@ import Footer from '../components/footer'
 
 export default () => (
 	<div>
-		<Head title="Home" css="homepage.css"/>
+		<Head title="Home" cssFiles={ ["homepage.css"] }/>
 		<div className="app-container">
 			<div className="site-wrapper">
 				<div className="site-wrapper-inner">
 					<div className="cover-container">
-						<Nav />
+						<Nav page="home"/>
 
 						<Homepage />
 						<Footer />
