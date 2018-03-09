@@ -1,7 +1,7 @@
 # effective-barnacle
 COP 4331 Group 11 Project in Spring 2018
 
-## how to use this
+## how to use this!!!!laksjdflkjasdlfkjasldjflaskdjflaksjdflkajdsf
 This stuff is outlined in more detail in the "gitting started notes" on google drive
 1. make sure you have these things installed (just type these words into terminal and see if it knows what's up)
     * `node`
@@ -22,3 +22,7 @@ Patrick Was Here
 Patrick Was Here and He Didnt fork everything
 
 Dena was here, ummmm.. is writing on here all we do?
+
+Ajay is here, patrick star is awesome.
+
+Lets get this going!!
