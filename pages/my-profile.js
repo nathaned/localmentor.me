@@ -1,18 +1,19 @@
 import Head from '../components/head'
-import HomeNav from '../components/public/homeNav'
-import Homepage from '../components/public/homepage'
+import DashboardNav from '../components/user/dashboardNav'
+import Dashboard from '../components/user/dashboard'
 import Footer from '../components/footer'
+
+const pageTitle = "My Profile";
 
 export default () => (
 	<div>
-		<Head title="Home" cssFiles={ ["homepage.css"] }/>
+		<Head title={pageTitle} cssFiles={ ["dashboard.css"] }/>
 		<div className="app-container">
 			<div className="site-wrapper">
 				<div className="site-wrapper-inner">
 					<div className="cover-container">
-						<HomeNav page="home"/>
-
-						<Homepage />
+						<DashboardNav pageTitle={pageTitle}/>
+						<Dashboard pageTitle={pageTitle}/>
 						<Footer />
 					</div>
 				</div>

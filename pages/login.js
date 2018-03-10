@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Head from '../components/head'
-import Nav from '../components/nav'
+import HomeNav from '../components/public/homeNav'
 import Footer from '../components/footer'
 
 class Login extends Component {
@@ -13,7 +13,7 @@ class Login extends Component {
 							<Head
 								title="Login / Register"
 								cssFiles={ ["login.css"] }/>
-							<Nav page="login"/>
+							<HomeNav page="login"/>
 							<form className="form-signin">
 								<h2 className="form-signin-heading">Please sign in</h2>
 								<label htmlFor="inputEmail" className="sr-only">Email address</label>
