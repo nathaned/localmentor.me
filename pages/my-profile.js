@@ -7,7 +7,7 @@ const pageTitle = "My Profile";
 
 export default () => (
 	<div>
-		<Head title={pageTitle} cssFiles={ ["dashboard.css"] }/>
+		<Head title={pageTitle} cssFiles={ ["profile.css"] }/>
 		<div className="app-container">
 			<div className="site-wrapper">
 				<div className="site-wrapper-inner">
