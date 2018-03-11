@@ -3,7 +3,7 @@ import Head from '../components/head'
 import HomeNav from '../components/public/homeNav'
 import Footer from '../components/footer'
 
-class Login extends Component {
+export default class Login extends Component {
 	render() {
 		return (
 			<div className="app-container">
@@ -35,5 +35,3 @@ class Login extends Component {
 		);
 	}
 }
-
-export default Login;
