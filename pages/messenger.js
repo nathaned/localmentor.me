@@ -7,7 +7,7 @@ const pageTitle = "Messenger";
 
 export default () => (
 	<div>
-		<Head title={pageTitle} cssFiles={ ["dashboard.css"] }/>
+		<Head title={pageTitle} cssFiles={ ["messenger.css"] }/>
 		<div className="app-container">
 			<div className="site-wrapper">
 				<div className="site-wrapper-inner">

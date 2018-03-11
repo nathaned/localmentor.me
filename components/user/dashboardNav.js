@@ -16,7 +16,7 @@ export default class DashboardNav extends Component {
 									? " active"
 									: " "
 							)}>
-							Find a Mentor
+							Find Mentor
 						</a>
 						<a	href="/my-connections"
 							className={"nav-link" + (
@@ -24,7 +24,7 @@ export default class DashboardNav extends Component {
 									? " active"
 									: " "
 							)}>
-							My Connections
+							Connections
 						</a>
 						<a	href="/messenger"
 							className={"nav-link" + (
@@ -32,7 +32,7 @@ export default class DashboardNav extends Component {
 									? " active"
 									: " "
 							)}>
-							Messenger
+							Messenges
 						</a>
 						<a	href="/my-profile"
 							className={"nav-link" + (
@@ -40,7 +40,7 @@ export default class DashboardNav extends Component {
 									? " active"
 									: " "
 							)}>
-							My Profile
+							Profile
 						</a>
 					</nav>
 				</div>
