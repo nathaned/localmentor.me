@@ -7,7 +7,7 @@ const pageTitle = "Contact";
 
 export default () => (
 	<div>
-		<Head title={pageTitle} cssFiles={ ["homepage.css"] }/>
+		<Head title={pageTitle} cssFiles={ ["contact.css"] }/>
 		<div className="app-container">
 			<div className="site-wrapper">
 				<div className="site-wrapper-inner">
