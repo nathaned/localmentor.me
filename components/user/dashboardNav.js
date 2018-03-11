@@ -34,8 +34,7 @@ export default class DashboardNav extends Component {
 							)}>
 							Messenges
 						</a>
-						<a	href="/my-profile"
-							className={"nav-link" + (
+						<a	href="/my-profile" className={"nav-link" + (
 								this.props.pageTitle == "My Profile"
 									? " active"
 									: " "
