@@ -8,7 +8,7 @@ export default class Header extends Component {
 		return (
 			<div className="masthead clearfix">
 				<div className="inner">
-					<h3 className="masthead-brand">Cover</h3>
+					<h3 className="masthead-brand">MentorMe</h3>
 					<nav className="nav nav-masthead">
 						<a	href="/"
 							className={"nav-link" + (

@@ -5,7 +5,7 @@ export default class Footer extends Component {
 		return (
 			<div className="mastfoot">
 				<div className="inner">
-					<p>Cover template for <a href="https://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+					<p>MentorMe &copy;</p>
 				</div>
 			</div>
 		);

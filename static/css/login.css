@@ -26,7 +26,11 @@ a:hover {
 
 .app-container {
 	height: 100vh;
-	background-color: #333;
+	background-color: #fff;
+	background-image: url("../images/pic1.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
 	color: #fff;
 	text-align: center;
 	text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
