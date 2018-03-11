@@ -23,6 +23,16 @@ a:hover {
 /*
  * Base structure
  */
+ 
+/*
+ *	Patricks first CSS
+ */
+ 
+ #whaterver-you-want-to-call-that-id 
+ {
+ 	font-size: 100px;
+ 	color: yellow;
+ }
 
 .app-container {
 	height: 100vh;
