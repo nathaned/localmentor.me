@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Header extends Component {
+export default class Header extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -26,9 +26,9 @@ class Header extends Component {
 							)}>
 							Sign In
 						</a>
-						<a	href="#"
+						<a	href="/contact"
 							className={"nav-link" + (
-								this.props.page == "contact"
+								this.props.page == "Contact"
 									? " active"
 									: " "
 							)}>
@@ -40,5 +40,3 @@ class Header extends Component {
 		);
 	}
 }
-
-export default Header;

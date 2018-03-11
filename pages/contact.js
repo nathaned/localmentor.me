@@ -1,18 +1,19 @@
 import Head from '../components/head'
-import HomeNav from '../components/public/homeNav'
-import Homepage from '../components/public/homepage'
+import HomepageNav from '../components/public/homeNav'
+import Contact from '../components/public/contact'
 import Footer from '../components/footer'
+
+const pageTitle = "Contact";
 
 export default () => (
 	<div>
-		<Head title="Home" cssFiles={ ["homepage.css"] }/>
+		<Head title={pageTitle} cssFiles={ ["homepage.css"] }/>
 		<div className="app-container">
 			<div className="site-wrapper">
 				<div className="site-wrapper-inner">
 					<div className="cover-container">
-						<HomeNav page="home"/>
-
-						<Homepage />
+						<HomepageNav page={pageTitle}/>
+						<Contact pageTitle={pageTitle}/>
 						<Footer />
 					</div>
 				</div>
