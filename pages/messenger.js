@@ -13,7 +13,7 @@ export default () => (
 				<div className="site-wrapper-inner">
 					<div className="cover-container">
 						<DashboardNav pageTitle={pageTitle}/>
-						<Dashboard pageTitle={pageTitle}/>
+						
 						<Footer />
 					</div>
 				</div>

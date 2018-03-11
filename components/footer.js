@@ -5,7 +5,7 @@ export default class Footer extends Component {
 		return (
 			<div className="mastfoot">
 				<div className="inner">
-					<p>MentorMe &copy;</p>
+					<p><font color="grey">MentorMe &copy;</font></p>
 				</div>
 			</div>
 		);

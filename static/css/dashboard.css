@@ -30,8 +30,9 @@ a:hover {
  
  #whaterver-you-want-to-call-that-id 
  {
- 	font-size: 100px;
+ 	font-size: 75px;
  	color: yellow;
+ 	background-color: white;
  }
 
 .app-container {

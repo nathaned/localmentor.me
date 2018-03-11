@@ -8,7 +8,7 @@ export default class SearchBar extends Component {
 		return (
 			<div className = "search bar">
 				
-				<img src="/static/download.png" height = "50px" width = "750px" />
+				<img src="/static/images/download.png" alt = "help no image" height = "50px" width = "750px" />
 								
 			</div>
 		);
