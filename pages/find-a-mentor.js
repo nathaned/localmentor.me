@@ -12,34 +12,34 @@ export default () => (
 		<Head title="Dashboard" cssFiles={ ["dashboard.css"] }/>
 		<div className="app-container">
 			<div className="site-wrapper">
-			
-			
+
+
 				<div className="site-wrapper-inner">
-				
+
 					<div className="cover-container">
-															
+
 						<DashboardNav pageTitle={pageTitle}/>
-						
+
 						<div id = "whaterver-you-want-to-call-that-id">
 							FIND A MENTOR
 						</div>
-						
+
 						<div className = "search-bar">
-					
+
 							<SearchBar />
-						
+
 						</div>
-						
+
 						<div className = "mentor-list">
-							
+
 							<MentorList />
 						</div>
-						
-						
+
+
 						<Footer />
 					</div>
-					
-					
+
+
 				</div>
 			</div>
 		</div>
