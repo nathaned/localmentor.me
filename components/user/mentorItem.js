@@ -12,7 +12,7 @@ export default class MentorItem extends Component {
 
 	render(props) {
 		return (
-			<div className="mentor item">
+			<div className="mentorItem">
 
 				<div className="profile picture" style={{ display:'inline-block'}}>
 					{"Picture: "}

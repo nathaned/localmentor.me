@@ -1,35 +1,48 @@
 import React, { Component } from 'react';
 import MentorItem from './mentorItem';
+import fetch from 'isomorphic-fetch';
 
 export default class MentorList extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {};
 	}
 
-	getMentors(id, searchThing){
-		var json = '[{ "username": "abc", "rating":"3", "profileText": "wafiojaewiofjaiof aewifjaoiwfjwefja iojfa", "distanceAway": "4", "Tags": ["UCF", "Vegan"]}, {"username": "def", "rating":"4", "profileText": "as aewifjaoiwfjwefja iojfa", "distanceAway": "21", "Tags": ["USF", "Clubs"]}, {"username": "fawe", "rating":"2", "profileText": "sd dfew iojfa", "distanceAway": "5", "Tags": ["UCF", "BugerU"]}]';
-		var obj = JSON.parse(json);
+	async loadMentors(id, query) {
+		const body = JSON.stringify({ query, id });
+		const headers = { 'Content-Type': 'application/json' };
+		const url = this.props.baseUrl + '/api/mentor-list';
+		const response = await fetch(
+			url,
+			{ method: "POST", body, headers }
+		);
+		const res = await response.json();
+		console.log(res);
+		// note that if we do just `query`, it's shorthand for `query: query`
+		this.setState({ mentors: res.list, query });
+	}
 
-		return(
-			obj.map((item, i) =>
-				<MentorItem
-					username={item.username}
-					rating={item.rating}
-					profileText={item.profileText}
-					distanceAway={item.distanceAway}
-					tags={item.Tags}
-					key={i}
-				/>
-		));
+	getMentors(id, query){
+		if (this.state && this.state.query == query) {
+			return (
+				this.state.mentors.map((item, i) =>
+					<MentorItem
+						username={item.username}
+						rating={item.rating}
+						profileText={item.profileText}
+						distanceAway={item.distanceAway}
+						tags={item.Tags}
+						key={i}
+					/>
+			));
+		}
+		else this.loadMentors(id, query)
 	}
 
 	render(props) {
-
 		return (
 			<div className="mentor list">
-
-				{ this.getMentors(0,0) }
-
+				{ this.getMentors(0,"sampleQuery") }
 			</div>
 		);
 	}

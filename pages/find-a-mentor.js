@@ -1,47 +1,46 @@
-import Head from '../components/head'
+import React, { Component } from 'react';
 import DashboardNav from '../components/user/dashboardNav'
 import Footer from '../components/footer'
-import Dashboard from '../components/user/dashboard'
+import Head from '../components/head'
 import MentorList from '../components/user/mentorList'
 import SearchBar from '../components/user/searchBar'
 
-const pageTitle = "Find a Mentor";
 
-export default () => (
-	<div>
-		<Head title="Dashboard" cssFiles={ ["dashboard.css"] }/>
-		<div className="app-container">
-			<div className="site-wrapper">
+export default class FindAMentor extends Component {
+	constructor(props) {
+		super(props);
+	}
 
+	static getInitialProps({ req }) {
+		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
+		return { baseUrl };
+	}
 
-				<div className="site-wrapper-inner">
-
-					<div className="cover-container">
-
-						<DashboardNav pageTitle={pageTitle}/>
-
-						<div id = "whaterver-you-want-to-call-that-id">
-							FIND A MENTOR
+	render() {
+		const pageTitle = "Find a Mentor";
+		return (
+			<div>
+				<Head title="Dashboard" cssFiles={ ["dashboard.css"] }/>
+				<div className="app-container">
+					<div className="site-wrapper">
+						<div className="site-wrapper-inner">
+							<div className="cover-container">
+								<DashboardNav pageTitle={pageTitle}/>
+								<div id = "whaterver-you-want-to-call-that-id">
+									FIND A MENTOR
+								</div>
+								<div className = "search-bar">
+									<SearchBar />
+								</div>
+								<div className = "mentor-list">
+									<MentorList baseUrl={this.props.baseUrl}/>
+								</div>
+								<Footer />
+							</div>
 						</div>
-
-						<div className = "search-bar">
-
-							<SearchBar />
-
-						</div>
-
-						<div className = "mentor-list">
-
-							<MentorList />
-						</div>
-
-
-						<Footer />
 					</div>
-
-
 				</div>
 			</div>
-		</div>
-	</div>
-)
+		);
+	}
+}
