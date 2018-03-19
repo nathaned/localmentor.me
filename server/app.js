@@ -10,11 +10,9 @@ const fetch = require('isomorphic-fetch');
 dotenv.config();
 
 const dev = process.env.NODE_ENV !== 'production';
-const build = process.env.npm_lifecycle_event == 'build';
 const COOKIE_SECRET = process.env.COOKIE_SECRET || 'secretthinghere'
 
-// TODO session stuff isn't optimized for production
-const PORT = build ? 3000 : process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 // TODO put this in a different file
 const authenticate = async (username, password) => {
@@ -23,6 +21,12 @@ const authenticate = async (username, password) => {
 	const users = await request.json();
 	console.log(users);
 	const user = users[0];
+
+	// adds a delay (for animations and 'security')
+	await new Promise((resolve) => {
+		setTimeout(resolve, 500)
+	})
+
 	if (!user) {
 		console.log("user not found");
 		return null;
@@ -92,14 +96,15 @@ app.prepare().then(() => {
 	})
 
 	server.get('/api/checkAuth', async (req, res) => {
-		console.log(req);
 		if (req.session && req.session.user)
 			return res.status(200).json({ user: req.session.user });
 		else
 			return res.sendStatus(403);
 	})
 
+	// TODO make it actually search mentors, not always return the whole list
 	server.post('/api/mentor-list', async (req, res) => {
+		const { query, id } = req.body || {}
 		const response = await fetch(process.env.MENTOR_LIST);
 		const list = await response.json();
 		return res.status(200).json({list})
@@ -109,14 +114,6 @@ app.prepare().then(() => {
 		req.session.user = "hi";
 		console.log(req.session.user);
 		return res.status(200).json({ user: req.session.user })
-		const { signedCookies = {} } = req
-		const { token = '' } = signedCookies
-		if (token && token.email) {
-			const users = await axios.get('https://jsonplaceholder.typicode.com/users').then(response => response.data)
-			const user = users.find(u => u.email.toLowerCase() === token.email.toLowerCase())
-			return res.status(200).json({ user })
-		}
-		return res.sendStatus(404)
 	})
 
 

@@ -3,6 +3,7 @@ import Head from '../components/head'
 import HomeNav from '../components/public/homeNav'
 import Footer from '../components/footer'
 import fetch from 'isomorphic-fetch';
+import NProgress from 'nprogress';
 
 export default class Login extends Component {
 	constructor(props) {
@@ -14,12 +15,15 @@ export default class Login extends Component {
 	}
 
 	static async getInitialProps ({req, query}) {
-		const user = req && req.session ? req.session.user : null
-		console.log(user);
+		const user = req && req.session
+			? (req.session.user || null)
+			: null;
+		console.log("user: " + user);
 		return { user };
 	}
 
 	async handleSubmit(e) {
+		NProgress.start();   // start the cool loading bar
 		e.preventDefault();  // prevents default behavior
 
 		// TODO change the page when it's loading, add server-side loading time?
@@ -32,11 +36,13 @@ export default class Login extends Component {
 		});
 		const headers = { 'Content-Type': 'application/json' };
 		const credentials = 'include';
+		NProgress.set(0.4);
 		const response = await fetch(
 			'/api/login',
 			{ method: "POST", body, headers, credentials }
 		);
 
+		NProgress.done();
 		// server will send a 403 if login failed
 		if (response.status == 403) {
 			this.setState({
@@ -68,7 +74,7 @@ export default class Login extends Component {
 						<div className="cover-container">
 							<Head
 								title="Login / Register"
-								cssFiles={ ["login.css"] }/>
+								cssFiles={ ["login.css", "nprogress.css"] }/>
 							<HomeNav page="login"/>
 							<form className="form-signin" onSubmit={this.handleSubmit.bind(this)}>
 								<h2 className="form-signin-heading">Please sign in</h2>
