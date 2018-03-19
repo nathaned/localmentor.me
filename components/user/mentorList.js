@@ -17,7 +17,6 @@ export default class MentorList extends Component {
 			{ method: "POST", body, headers }
 		);
 		const res = await response.json();
-		console.log(res);
 		// note that if we do just `query`, it's shorthand for `query: query`
 		this.setState({ mentors: res.list, query });
 	}
