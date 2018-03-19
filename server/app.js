@@ -16,15 +16,7 @@ const COOKIE_SECRET = process.env.COOKIE_SECRET || 'secretthinghere'
 // TODO session stuff isn't optimized for production
 const PORT = build ? 3000 : process.env.PORT;
 
-const AUTHENTICATED_TYPE = 'authenticated'
-const COOKIE_OPTIONS = {
-	// domain: 'YOU_DOMAIN',
-	path: '/',
-	secure: !dev,
-	httpOnly: true,
-	signed: true
-}
-
+// TODO put this in a different file
 const authenticate = async (username, password) => {
 	const url = process.env.USERS_URL_PREFIX + username + process.env.USERS_URL_SUFFIX;
 	const request = await fetch(url);
@@ -45,6 +37,7 @@ const authenticate = async (username, password) => {
 const app = next({dir: '.', dev });
 const handle = app.getRequestHandler();
 
+// TODO makes routes
 const getRoutes = require('./routes');
 
 const routes = getRoutes();
@@ -58,6 +51,7 @@ app.prepare().then(() => {
 	server.use(session({
 		secret: COOKIE_SECRET,
 		resave: true,
+		// store: TODO should be a mongodb if on production
 		saveUninitialized: false
 	}));
 
@@ -85,25 +79,20 @@ app.prepare().then(() => {
 			console.log("correct!");
 			return res.sendStatus(200);
 		}
-
-		/*
-		const info = {
-			email: user.email,
-			name: user.name,
-			type: AUTHENTICATED_TYPE
-		}
-		res.cookie('token', info, COOKIE_OPTIONS)
-		return res.status(200).json(info)
-		*/
 	})
 
+	// TODO figure out if both post and get logout requests are necessary
 	server.post('/api/logout', (req, res) => {
-		res.clearCookie('token', COOKIE_OPTIONS)
+		req.session.user = null;
 		return res.sendStatus(204)
+	})
+	server.get('/logout', (req, res) => {
+		req.session.user = null;
+		return app.render(req, res, '/');
 	})
 
 	server.get('/api/checkAuth', async (req, res) => {
-		console.log(req.cookies);
+		console.log(req);
 		if (req.session && req.session.user)
 			return res.status(200).json({ user: req.session.user });
 		else

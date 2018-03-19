@@ -39,6 +39,7 @@ export default class MentorList extends Component {
 	}
 
 	render(props) {
+		console.log("Logged in as " + this.props.user);
 		return (
 			<div className="mentor list">
 				{ this.getMentors(0,"sampleQuery") }
