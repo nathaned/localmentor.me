@@ -19,7 +19,6 @@ const authenticate = async (username, password) => {
 	const url = process.env.USERS_URL_PREFIX + username + process.env.USERS_URL_SUFFIX;
 	const request = await fetch(url);
 	const users = await request.json();
-	console.log(users);
 	const user = users[0];
 
 	// adds a delay (for animations and 'security')
@@ -71,7 +70,6 @@ app.prepare().then(() => {
 
 	// auth stuff
 	server.post('/api/login', async (req, res) => {
-		console.log(req.cookies);
 		const { username, password } = req.body || {}
 		const user = await authenticate(username, password);
 		if (!user) {
@@ -80,7 +78,7 @@ app.prepare().then(() => {
 		}
 		else {
 			req.session.user = username;
-			console.log("correct!");
+			console.log("correct login!");
 			return res.sendStatus(200);
 		}
 	})
