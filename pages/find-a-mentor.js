@@ -35,19 +35,22 @@ export default class FindAMentor extends Component {
 		const pageTitle = "Find a Mentor";
 		return (
 			<div>
-				<Head title="Dashboard" cssFiles={ ["dashboard.css"] }/>
+				<Head title="Dashboard" cssFiles={ ["dashboard.css", "dashboardNav.css"] }/>
 				<div className="app-container">
 					<div className="site-wrapper">
 						<div className="site-wrapper-inner">
 							<div className="cover-container">
-								<DashboardNav pageTitle={pageTitle}/>
+								<DashboardNav
+									pageTitle={pageTitle}
+									user={this.state.user}
+								/>
 								<div id = "whaterver-you-want-to-call-that-id">
 									FIND A MENTOR
 								</div>
-								<div className = "search-bar">
+								<div className="search-bar">
 									<SearchBar />
 								</div>
-								<div className = "mentor-list">
+								<div className="mentor-list">
 									<MentorList
 										baseUrl={this.props.baseUrl}
 										user={this.state.user}

@@ -21,7 +21,6 @@ const authenticate = async (username, password) => {
 	const url = process.env.USERS_URL_PREFIX + username + process.env.USERS_URL_SUFFIX;
 	const request = await fetch(url);
 	const users = await request.json();
-	console.log(users);
 	const user = users[0];
 	if (!user) {
 		console.log("user not found");
@@ -67,7 +66,6 @@ app.prepare().then(() => {
 
 	// auth stuff
 	server.post('/api/login', async (req, res) => {
-		console.log(req.cookies);
 		const { username, password } = req.body || {}
 		const user = await authenticate(username, password);
 		if (!user) {
@@ -76,7 +74,7 @@ app.prepare().then(() => {
 		}
 		else {
 			req.session.user = username;
-			console.log("correct!");
+			console.log("correct login!");
 			return res.sendStatus(200);
 		}
 	})
@@ -92,7 +90,6 @@ app.prepare().then(() => {
 	})
 
 	server.get('/api/checkAuth', async (req, res) => {
-		console.log(req);
 		if (req.session && req.session.user)
 			return res.status(200).json({ user: req.session.user });
 		else
