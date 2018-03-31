@@ -2,11 +2,6 @@ const express = require('express');
 const authApi = express.Router();
 const User = require('../models/User');
 
-const authenticate = async (username, password) => {
-	const user = await User.authenticate(username, password, "PASSWORDHASH");
-	return user;
-}
-
 const checkAuth = (req) => {
 	if (req.session && req.session.user)
 		return req.session.user;
@@ -23,7 +18,6 @@ const createUser = async (username, password, password2) => {
 		return false;
 	}
 	const passwordHash = "thisisahash" // todo make this actually call bcrypt
-
 	const user = await User.createUser(username, password, passwordHash);
 
 	return user;
@@ -36,8 +30,10 @@ const getUser = async (username) => {
 }
 
 authApi.post('/api/login', async (req, res) => {
-	const { username, password } = req.body || {}
-	const user = await authenticate(username, password);
+	const { username, password } = req.body || {};
+	const passwordHash = "PASSWORDHASH"; // todo make this actually use bcrypt
+
+	const user = await User.authenticate(username, password, passwordHash);
 	if (!user) {
 		req.session.user = null;
 		return res.sendStatus(403);
@@ -65,7 +61,7 @@ authApi.post('/api/register', async (req, res) => {
 	}
 	else {
 		req.session.user = username;
-		console.log("correct login!");
+		console.log("successfully created user");
 		return res.sendStatus(200);
 	}
 });

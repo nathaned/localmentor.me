@@ -13,31 +13,16 @@ const mongoose = require('mongoose');
 
 dotenv.config();
 
+// create a connection to the mongodb (MONGO_URI needs to be defined in .env file)
 const URI = process.env.MONGO_URI;
 mongoose.connect(URI);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
-
 const dev = process.env.NODE_ENV !== 'production';
 const COOKIE_SECRET = process.env.COOKIE_SECRET || 'secretthinghere'
 
 const PORT = process.env.PORT || 3000;
-
-const createUser = async (username, password, passwordAgain) => {
-	if (password !== passwordAgain)
-		return null;
-	const url = process.env.USERS_URL_PREFIX + username + process.env.USERS_URL_SUFFIX;
-	const request = await fetch(url);
-	const users = await request.json();
-	const user = users[0];
-	if (user) {
-		console.log("user already exists");
-		return null;
-	}
-
-	// post to database to create user
-}
 
 const app = next({dir: '.', dev });
 const handle = app.getRequestHandler();
@@ -88,7 +73,6 @@ app.prepare().then(() => {
 		return res.status(200).json({ user: req.session.user })
 	})
 
-	// api routes
 	server.get('/*', (req, res) => {
 		if (req.session && req.session.user)
 			console.log("user is logged in");
