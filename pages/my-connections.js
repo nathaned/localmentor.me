@@ -7,7 +7,7 @@ const pageTitle = "My Connections";
 
 export default () => (
 	<div>
-		<Head title={pageTitle} cssFiles={ ["connections.css"] }/>
+		<Head title={pageTitle} cssFiles={ ["dashboardNav.css", "connections.css"] }/>
 		<div className="app-container">
 			<div className="site-wrapper">
 				<div className="site-wrapper-inner">

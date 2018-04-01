@@ -6,7 +6,6 @@ import MentorList from '../components/user/mentorList'
 import SearchBar from '../components/user/searchBar'
 import { checkAuth } from '../lib/api/user'
 
-
 export default class FindAMentor extends Component {
 	constructor(props) {
 		super(props);
@@ -53,8 +52,7 @@ export default class FindAMentor extends Component {
 								<div className="mentor-list">
 									<MentorList
 										baseUrl={this.props.baseUrl}
-										user={this.state.user}
-										/>
+										user={this.state.user}/>
 								</div>
 								<Footer />
 							</div>

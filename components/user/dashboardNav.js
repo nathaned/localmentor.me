@@ -38,14 +38,14 @@ export default class DashboardNav extends Component {
 									? " active"
 									: " "
 							)}>
-							Messenges
+							Messages
 						</a>
 						<a	href="/my-profile" className={"nav-link" + (
 								this.props.pageTitle == "My Profile"
 									? " active"
 									: " "
 							)}>
-							Profile
+							My Profile
 						</a>
 						<div onClick={this.toggleProfileMenu.bind(this)}id="nav-profile">{this.props.user}
 							<img src="static/images/download.png"/>
@@ -53,7 +53,7 @@ export default class DashboardNav extends Component {
 								? (
 									<ul>
 										<li>
-											<a href="/profile">Profile</a>
+											<a href="/my-profile">My Profile</a>
 										</li>
 										<li>
 											<a href="/logout">Logout</a>

@@ -88,6 +88,6 @@ a:hover {
 @media (min-width: 62em) {
 	.mastfoot,
 	.cover-container {
-		width: 42rem;
+		width: 62rem;
 	}
 }

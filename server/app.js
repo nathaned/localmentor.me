@@ -64,12 +64,6 @@ app.prepare().then(() => {
 		return res.status(200).json({list})
 	})
 
-	server.get('/api/profile', async (req, res) => {
-		req.session.user = "hi";
-		console.log(req.session.user);
-		return res.status(200).json({ user: req.session.user })
-	})
-
 	server.get('/*', (req, res) => {
 		if (req.session && req.session.user)
 			console.log("user is logged in");

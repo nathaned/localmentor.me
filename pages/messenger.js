@@ -7,13 +7,13 @@ const pageTitle = "Messenger";
 
 export default () => (
 	<div>
-		<Head title={pageTitle} cssFiles={ ["messenger.css"] }/>
+		<Head title={pageTitle} cssFiles={ ["dashboardNav.css", "messenger.css"] }/>
 		<div className="app-container">
 			<div className="site-wrapper">
 				<div className="site-wrapper-inner">
 					<div className="cover-container">
 						<DashboardNav pageTitle={pageTitle}/>
-						
+
 						<Footer />
 					</div>
 				</div>
