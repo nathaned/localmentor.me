@@ -97,3 +97,13 @@ a:hover {
 		width: 62rem;
 	}
 }
+
+#messenger-container {
+	padding: 20px;
+	margin-top: 30px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background: rgba(180, 180, 180, .9);
+	height: calc(100vh - 64px - 104px);
+	text-align: left;
+}
