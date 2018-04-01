@@ -2,25 +2,10 @@ const express = require('express');
 const authApi = express.Router();
 const User = require('../models/User');
 
-const checkAuth = (req) => {
+const getUserFromSession = (req) => {
 	if (req.session && req.session.user)
 		return req.session.user;
 	return false;
-}
-
-const createUser = async (username, password, password2) => {
-	if (await getUser(username)) {
-		console.log("user already exists");
-		return false;
-	}
-	if (password !== password2) {
-		console.log("passwords don't match");
-		return false;
-	}
-	const passwordHash = "thisisahash" // todo make this actually call bcrypt
-	const user = await User.createUser(username, password, passwordHash);
-
-	return user;
 }
 
 const getUser = async (username) => {
@@ -49,15 +34,23 @@ authApi.post('/api/register', async (req, res) => {
 	const { username, password, password2 } = req.body || {}
 
 	if (!username || !password || !password2) {
-		console.log("fields not complete")
-		return res.sendStatus(404);
+		const error = "Fields not complete";
+		console.log(error);
+		return res.status(404).json({ error });
 	}
 
-	const user = await createUser(username, password, password2);
+	if (password !== password2) {
+		const error = "Passwords do not match"
+		console.log(error);
+		return res.status(404).json({ error });
+	}
+
+	const user = await User.createUser(username, password);
 	console.log(user);
-	if (!user) {
+	if (!user || user.error) {
 		req.session.user = null;
-		return res.sendStatus(403);
+		const error = (user && user.error) ? user.error : "Error";
+		return res.status(403).json({ error });
 	}
 	else {
 		req.session.user = username;
@@ -66,7 +59,6 @@ authApi.post('/api/register', async (req, res) => {
 	}
 });
 
-// TODO figure out if both post and get logout requests are necessary
 authApi.post('/api/logout', (req, res) => {
 	req.session.user = null;
 	return res.sendStatus(204)
@@ -77,7 +69,7 @@ authApi.get('/logout', (req, res) => {
 })
 
 authApi.get('/api/checkAuth', async (req, res) => {
-	const user = checkAuth(req);
+	const user = getUserFromSession(req);
 	if (user)
 		return res.status(200).json({ user });
 	else
@@ -85,4 +77,4 @@ authApi.get('/api/checkAuth', async (req, res) => {
 })
 
 
-module.exports = { authApi, checkAuth, getUser };
+module.exports = { authApi, getUserFromSession };

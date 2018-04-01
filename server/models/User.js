@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const mongoSchema = new mongoose.Schema({
 	username: {
@@ -50,13 +51,15 @@ class UserClass {
 		return user;
 	}
 
-	static async createUser (username, password, passwordHash) {
+	static async createUser (username, password) {
 		// if the user is already in the database, then don't allow it to be added
 		if ( await this.find(username) ) {
-			console.log("username already in datbase");
-			return false;
+			const error = "Username Taken";
+			console.log(error);
+			return { error };
 		}
 
+		const passwordHash = "PASSWORDHASH"; // todo make this with bcrypt
 		const user = await this.create({
 			username,
 			password,

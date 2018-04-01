@@ -44,21 +44,25 @@ export default class Register extends Component {
 			{ method: "POST", body, headers, credentials }
 		);
 
-		NProgress.done();
-		// server will send a 403 if login failed
-		if (response.status == 403) {
+		NProgress.done(); // finish the loading animation
+
+		if (response.status == 200) {
+			// if login successful, load the find-a-mentor page.
+			// we may put a redirect page in the url ( TODO )
+			window.location = '/find-a-mentor';
+		}
+		else {
+			console.log(response);
+			const contents = await response.json();
+			const error = contents.error || "Error";
+			// server will send some other status if login failed
 			this.setState({
-				errorMessage: "Invalid username/password",
-				loading: false
+				errorMessage: error,
+				loading: false // todo use this loading flag
 			});
 			return;
 		}
 
-		// if login successful, load the find-a-mentor page.
-		// we may put a redirect page in the url ( TODO )
-		if (response.status == 200) {
-			window.location = '/find-a-mentor';
-		}
 	}
 
 	handleChange(e) {

@@ -1,11 +1,13 @@
 const express = require('express');
 const usersApi = express.Router();
-const { checkAuth } = require('./auth')
+const { getUserFromSession } = require('./auth')
 
 const getUserProfile = async (username) => {
 	return false;
 }
 
+// this would search the `profiles` database (that would be defined in `Profile.js` in the models folder)
+// this function call would be used to load the user's profile page
 usersApi.get('/api/users/:slug', async (req, res) => {
 	// search the database for the user
 	const result = await getUserProfile(req.params.slug);
@@ -34,5 +36,10 @@ usersApi.get('/api/users/:slug', async (req, res) => {
 	// otherwise, send a 403 (no permission)
 	return res.sendStatus(403);
 });
+
+// this call would be used to update a user's profile
+usersApi.post('/api/users/:slug', async(req, res) => {
+
+})
 
 module.exports = { usersApi, getUserProfile };

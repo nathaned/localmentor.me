@@ -43,6 +43,8 @@ export default class Login extends Component {
 		);
 
 		NProgress.done();
+
+		console.log(response);
 		// server will send a 403 if login failed
 		if (response.status == 403) {
 			this.setState({
