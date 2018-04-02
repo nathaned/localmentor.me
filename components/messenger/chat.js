@@ -6,15 +6,23 @@ export default class Chat extends Component {
 		this.state = {};
 	}
 
-	onClick() {
-
+	renderMessages() {
+		return (
+			<strong>hi</strong>
+		);
 	}
 
 	render() {
 		console.log(this.props);
 		return (
 			<div className="chat">
-				<img src="static/images/download.png" />
+				<div id="message-list">
+					{ this.renderMessages() }
+				</div>
+				<div id="chat-input">
+					<input type="text" placeholder={"Message " + this.props.contact}/>
+					<p>Send</p>
+				</div>
 				{ "FirstName" + this.props.firstName }
 			</div>
 		);

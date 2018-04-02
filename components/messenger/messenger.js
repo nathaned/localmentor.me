@@ -30,6 +30,7 @@ export default class Messenger extends Component {
 
 	selectContact(index) {
 		console.log("index: " + index);
+		this.setState({ contact: this.props.contactList[index] })
 	}
 
 	componentDidMount() {
@@ -62,7 +63,7 @@ export default class Messenger extends Component {
 					</div>
 					<div id="chat-container">
 						{ this.state.contact
-							? <Chat />
+							? <Chat contact={this.state.contact}/>
 							: <p>Select someone to chat.</p>
 						}
 					</div>

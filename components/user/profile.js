@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
+import ProfileCard from './profileCard'
 
 export default class Profile extends Component {
 	constructor(props) {
 		super(props);
+		this.state = { edit: true };
 	}
 
 	render() {
+		// if not in edit mode, just show the regular profile card
+		if (!this.state.edit) {
+			return (
+				<div id="profileCard-container">
+					<ProfileCard
+						action={"edit"}
+						expanded={true}
+						user={this.state.user} />
+				</div>
+			)
+		}
 		return (
 			<div className="inner cover">
 				<div id="profile-container">
@@ -15,20 +28,10 @@ export default class Profile extends Component {
 							<div className="col-md-3">
 								<div className="text-center">
 									<img src="//placehold.it/100" className="avatar img-circle" alt="avatar"/>
-									<h6>Upload a different photo...</h6>
-
-									<input type="file" className="form-control"/>
 								</div>
 							</div>
 
 							<div className="col-md-9 personal-info">
-								<div className="alert alert-info alert-dismissable">
-									<a className="panel-close close" data-dismiss="alert">×</a>
-									<i className="fa fa-coffee"></i>
-									This is an <strong>.alert</strong>. Use this to show important messages to the user.
-								</div>
-								<h3>Personal info</h3>
-
 								<form className="form-horizontal" role="form">
 									<div className="form-group">
 										<label className="col-lg-3 control-label">First name:</label>
@@ -43,44 +46,27 @@ export default class Profile extends Component {
 										</div>
 									</div>
 									<div className="form-group">
-										<label className="col-lg-3 control-label">Company:</label>
-										<div className="col-lg-8">
-											<input className="form-control" type="text" value=""/>
-										</div>
-									</div>
-									<div className="form-group">
-										<label className="col-lg-3 control-label">Email:</label>
+										<label className="col-lg-3 control-label">Email (used for Gravatar image):</label>
 										<div className="col-lg-8">
 											<input className="form-control" type="text" value="janesemail@gmail.com"/>
 										</div>
 									</div>
 									<div className="form-group">
-										<label className="col-lg-3 control-label">Time Zone:</label>
-										<div className="col-lg-8">
-											<div className="ui-select">
-												<select id="user_time_zone" className="form-control">
-													<option value="Hawaii">(GMT-10:00) Hawaii</option>
-													<option value="Alaska">(GMT-09:00) Alaska</option>
-													<option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-													<option value="Arizona">(GMT-07:00) Arizona</option>
-													<option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-													<option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-													<option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-													<option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-												</select>
-											</div>
+										<label className="col-md-3 control-label">Bio:</label>
+										<div className="col-md-8">
+											<textarea className="form-control" type="text" rows="8" placeholder="Write a little about yourself. What you know, what you do, what you're looking for..."></textarea>
 										</div>
 									</div>
 									<div className="form-group">
-										<label className="col-md-3 control-label">Username:</label>
-										<div className="col-md-8">
-											<input className="form-control" type="text" value="janeuser"/>
-										</div>
-									</div>
-									<div className="form-group">
-										<label className="col-md-3 control-label">Password:</label>
-										<div className="col-md-8">
-											<input className="form-control" type="password" value="11111122333"/>
+										<label className="col-md-3 control-label">Status:</label>
+										<div className="col-md-8" id="status-container">
+											<label>
+												<input className="form-control" type="checkbox" id="mentor-checkbox"/>
+												<span>Mentor</span>
+											</label>
+											<label>
+												<input className="form-control" type="checkbox" id="mentee-checkbox"/>Mentee
+											</label>
 										</div>
 									</div>
 									<div className="form-group">
