@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Gravatar from 'react-gravatar';
 
 export default class Messenger extends Component {
 	constructor(props) {
@@ -26,7 +27,7 @@ export default class Messenger extends Component {
 		const { firstName, lastName, image, relation, selected, username } = this.props;
 		return (
 			<div className="contact" onClick={this.props.onClick}>
-			 	<img src="static/images/download.png" />
+				<Gravatar protocol="https://" email="mathews.kyle@gmail.com" />
 				{ this.renderName() } <br/>
 				{ this.renderTitle() }
 			</div>
