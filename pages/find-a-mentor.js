@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import DashboardNav from '../components/user/dashboardNav'
-import Footer from '../components/footer'
 import Head from '../components/head'
 import MentorList from '../components/user/mentorList'
 import SearchBar from '../components/user/searchBar'
@@ -54,7 +53,6 @@ export default class FindAMentor extends Component {
 										baseUrl={this.props.baseUrl}
 										user={this.state.user}/>
 								</div>
-								<Footer />
 							</div>
 						</div>
 					</div>

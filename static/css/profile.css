@@ -20,7 +20,7 @@ a:hover {
 }
 
 .app-container {
-	height: 100vh;
+	min-height: 100vh;
 	background-color: #333;
 	background-image: url("../images/miami.jpg");
 	background-size: cover;
@@ -59,16 +59,11 @@ a:hover {
  */
 
 @media (min-width: 40em) {
-	.mastfoot {
-		position: fixed;
-		bottom: 0;
-	}
 	/* Start the vertical centering */
 	.site-wrapper-inner {
 		vertical-align: middle;
 	}
 	/* Handle the widths */
-	.mastfoot,
 	.cover-container {
 		width: 100%; /* Must be percentage or pixels for horizontal alignment */
 	}
@@ -76,7 +71,6 @@ a:hover {
 
 @media (min-width: 62em) {
 	.masthead,
-	.mastfoot,
 	.cover-container {
 		width: 62rem;
 	}
@@ -89,10 +83,33 @@ a:hover {
 	overflow-y: auto;
 	overflow-x: hidden;
 	background: rgba(180, 180, 180, .9);
-	height: calc(100vh - 64px - 104px);
+	min-height: 100vh;
+	margin-bottom: 30px;
 	text-align: left;
 }
 
 #profile-container h1 {
 	text-align: center;
+}
+
+/* todo figure out how to put the checkboxes next to each other*/
+#profile-container #status-container label{
+	padding-right: 10px;
+	padding-left: 22px;
+}
+
+
+#profile-container label {
+	max-width: 100%;
+}
+
+#profileCard-container {
+	padding: 20px;
+	margin-top: 300px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background: rgba(180, 180, 180, .9);
+	height: 300px;
+	margin-bottom: 30px;
+	text-align: left;
 }

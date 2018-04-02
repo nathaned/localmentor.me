@@ -70,23 +70,17 @@ a:hover {
  */
 
 @media (min-width: 40em) {
-	.mastfoot {
-		position: fixed;
-		bottom: 0;
-	}
 	/* Start the vertical centering */
 	.site-wrapper-inner {
 		vertical-align: middle;
 	}
 	/* Handle the widths */
-	.mastfoot,
 	.cover-container {
 		width: 100%; /* Must be percentage or pixels for horizontal alignment */
 	}
 }
 
 @media (min-width: 62em) {
-	.mastfoot,
 	.cover-container {
 		width: 62rem;
 	}

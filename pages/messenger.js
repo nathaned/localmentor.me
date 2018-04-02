@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Head from '../components/head'
 import DashboardNav from '../components/user/dashboardNav'
 import Dashboard from '../components/user/dashboard'
-import Footer from '../components/footer'
 import Messenger from '../components/messenger/messenger'
 import { checkAuth } from '../lib/api/user'
 import { getContactList } from '../lib/api/messages'
@@ -62,7 +61,6 @@ export default class MessengerPage extends Component {
 									)
 									: <p>Loading...</p>
 								}
-								<Footer />
 							</div>
 						</div>
 					</div>
