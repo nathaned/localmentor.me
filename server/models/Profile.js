@@ -14,6 +14,9 @@ const mongoSchema = new mongoose.Schema({
 	connections: {
 		type: [UserClass],
 		required: true
+	},
+	picture: { // profile picture will just be a link to a pic
+		type: String
 	}
 	... lots of other things needed here (location, mentor/mentee, etc)
 	*/
@@ -53,6 +56,13 @@ class ProfileClass {
 		return user;
 	}
 	*/
+
+	// returns everything except bio and connections list ( TODO add to this )
+	static async getShortProfile(username) {
+		const shortProfile = await this.findOne( {username}, { bio: 0, connections: 0 });
+		console.log("shortProfile: ", shortProfile);
+		return shortProfile;
+	}
 }
 
 mongoSchema.loadClass(ProfileClass);

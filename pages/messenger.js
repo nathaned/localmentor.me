@@ -3,7 +3,9 @@ import Head from '../components/head'
 import DashboardNav from '../components/user/dashboardNav'
 import Dashboard from '../components/user/dashboard'
 import Footer from '../components/footer'
-import Messenger from '../components/user/messenger'
+import Messenger from '../components/messenger/messenger'
+import { checkAuth } from '../lib/api/user'
+import { getContactList } from '../lib/api/messages'
 
 export default class MessengerPage extends Component {
 	constructor(props) {
@@ -21,11 +23,24 @@ export default class MessengerPage extends Component {
 			window.location = '/login';
 
 		this.setState({ user });
+		await this.getContactList();
 	}
 
-	static getInitialProps({ req }) {
+	static async getInitialProps({ req }) {
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		return { baseUrl };
+	}
+
+	async getContactList() {
+		console.log("baseurl: " + this.props.baseUrl);
+		console.log("hello123");
+		const contactList = await getContactList(this.props.baseUrl);
+		if (!contactList) {
+			this.setState({ contactList: [] });
+		}
+		else {
+			this.setState({ contactList });
+		}
 	}
 
 	render () {
@@ -38,9 +53,15 @@ export default class MessengerPage extends Component {
 						<div className="site-wrapper-inner">
 							<div className="cover-container">
 								<DashboardNav pageTitle={pageTitle}/>
-								<Messenger
-									baseUrl={this.props.baseUrl}
-									user={this.state.user}/>
+								{ this.state.contactList
+									? (
+										<Messenger
+											baseUrl={this.props.baseUrl}
+											contactList={this.state.contactList}
+											user={this.state.user}/>
+									)
+									: <p>Loading...</p>
+								}
 								<Footer />
 							</div>
 						</div>

@@ -4,6 +4,7 @@ import DashboardNav from '../components/user/dashboardNav'
 import Dashboard from '../components/user/dashboard'
 import Footer from '../components/footer'
 import Profile from '../components/user/profile'
+import { checkAuth } from '../lib/api/user'
 
 export default class MyProfile extends Component {
 	constructor(props) {
