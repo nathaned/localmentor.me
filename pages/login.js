@@ -83,7 +83,7 @@ export default class Login extends Component {
 								<p id="error-message" display={this.state.errorMessage ? null : "none"}>{this.state.errorMessage}</p>
 								<input type="text" id="inputUsername" className="form-control" placeholder="Username" value={this.state.inputUsername} onChange={this.handleChange.bind(this)} required autoFocus/>
 								<input type="password" id="inputPassword" className="form-control" placeholder="Password" value={this.state.inputPassword} onChange={this.handleChange.bind(this)} required/>
-								<input className="btn btn-lg btn-primary btn-block" type="submit"/>
+								<input className="btn btn-lg btn-primary btn-block" type="submit" value="Sign in"/>
 							</form>
 							<Footer />
 						</div>
