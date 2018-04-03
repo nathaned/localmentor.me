@@ -9,11 +9,16 @@ const mongoSchema = new mongoose.Schema({
 	},
 	contactList: {
 		type: [String]
-	},/*
+	},
 	messages: {
-		type: [Message]
-	}*/
+		type: []
+	},
+	unread: {
+		type: Boolean,
+		default: false
+	}
 });
+
 
 class UserMessageClass {
 	static publicFields() {
@@ -23,6 +28,17 @@ class UserMessageClass {
 			'conatactList',
 			'messages'
 		];
+	}
+
+	static async getUserContactList(username) {
+		const user = await this.findOne({ username });
+		console.log("user in getUserContactList function: ", user);
+		let fullList = []
+		const contactList = await user.contactList.map( async (contact) => {
+			const curr = await Profile.getContactInfo(contact);
+			fullList.push(curr);
+		});
+		return fullList;
 	}
 
 }

@@ -31,8 +31,6 @@ export default class MessengerPage extends Component {
 	}
 
 	async getContactList() {
-		console.log("baseurl: " + this.props.baseUrl);
-		console.log("hello123");
 		const contactList = await getContactList(this.props.baseUrl);
 		if (!contactList) {
 			this.setState({ contactList: [] });

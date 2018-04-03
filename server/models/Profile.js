@@ -7,6 +7,12 @@ const mongoSchema = new mongoose.Schema({
 		unique: true,
 	},
 	/* this stuff needs to be completed with whatever you decide you want to have here
+	firstName: String,
+	lastName: String,
+	email: String,
+	location: String,
+	isMentor: Boolean,
+	isMentee: Boolean,
 	bio: {
 		type: String,
 		required: true
@@ -62,6 +68,14 @@ class ProfileClass {
 		const shortProfile = await this.findOne( {username}, { bio: 0, connections: 0 });
 		console.log("shortProfile: ", shortProfile);
 		return shortProfile;
+	}
+
+	// return only the info necessary to draw the contact card in the messages view
+	static async getContactInfo(username) {
+		const contactInfo = await this.findOne(
+			{username},
+			{ firstName: 1, lastName: 1, isMentee: 1, isMentor: 1, email: 1 });
+		return contactInfo;
 	}
 }
 

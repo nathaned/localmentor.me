@@ -127,7 +127,6 @@ a:hover {
 	height: 100%;
 	margin-left: 325px;
 	width: auto;
-	background: rgba(9, 200, 9, .25);
 	color: black;
 	text-shadow: none;
 }
@@ -137,4 +136,61 @@ a:hover {
 	top: 40%;
 	left: 51%;
 	font-size: 30px;
+}
+
+#chat {
+	height: 100%;
+}
+
+#chat-input {
+	position: absolute;
+	bottom: 85px;
+	width: 590px;
+}
+
+#chat-input textarea {
+	width: 475px;
+	float: left;
+}
+
+#send-button {
+	width: 75px;
+	margin-left: 5px;
+}
+
+#message-list {
+	height: 845px;
+	position: relative;
+}
+
+#message-list ul {
+	padding-left: 0;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	max-height: 100%;
+	overflow-y: auto;
+}
+
+#message-list .message {
+	width: 100%;
+	padding: 10px;
+	color: black;
+	list-style: none;
+}
+
+#message-list .message p {
+	border: 1px solid black;
+	border-radius: 5px;
+	width: fit-content;
+	margin: 10px;
+	padding: 5px;
+}
+
+#message-list .message.sent {
+	background: lightgray;
+}
+
+#message-list .message.received  {
+	background: white;
 }
