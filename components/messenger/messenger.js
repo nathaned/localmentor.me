@@ -18,7 +18,6 @@ export default class Messenger extends Component {
 						firstName={contact.firstName}
 						lastName={contact.lastName}
 						onClick={this.selectContact.bind(this, i)}
-						pic={contact.pic}
 						relation={contact.relation}
 						username={contact.username}
 						selected={contact.username == this.state.contact}

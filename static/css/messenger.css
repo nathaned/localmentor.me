@@ -143,13 +143,11 @@ a:hover {
 }
 
 #chat-input {
-	position: absolute;
-	bottom: 85px;
-	width: 590px;
+	position: relative;
 }
 
 #chat-input textarea {
-	width: 475px;
+	width: calc(100% - 85px);
 	float: left;
 }
 
@@ -159,7 +157,7 @@ a:hover {
 }
 
 #message-list {
-	height: 845px;
+	height: calc(100% - 60px);
 	position: relative;
 }
 

@@ -22,7 +22,7 @@ export default class MessengerPage extends Component {
 			window.location = '/login';
 
 		this.setState({ user });
-		await this.getContactList();
+		await this.loadContactList();
 	}
 
 	static async getInitialProps({ req }) {
@@ -30,7 +30,7 @@ export default class MessengerPage extends Component {
 		return { baseUrl };
 	}
 
-	async getContactList() {
+	async loadContactList() {
 		const contactList = await getContactList(this.props.baseUrl);
 		if (!contactList) {
 			this.setState({ contactList: [] });

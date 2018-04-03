@@ -35,7 +35,6 @@ export default class Chat extends Component {
 					<textarea placeholder={"Message " + this.props.contact}></textarea>
 					<input id="send-button" className="btn btn-primary " value="Send" readOnly/>
 				</div>
-				{ "FirstName" + this.props.firstName }
 			</div>
 		);
 	}
