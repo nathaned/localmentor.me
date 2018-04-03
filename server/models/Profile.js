@@ -6,26 +6,38 @@ const mongoSchema = new mongoose.Schema({
 		required: true,
 		unique: true,
 	},
-	/* this stuff needs to be completed with whatever you decide you want to have here
-	firstName: String,
-	lastName: String,
-	email: String,
-	location: String,
-	isMentor: Boolean,
-	isMentee: Boolean,
+	firstName: {
+		type: String,
+		default: ""
+	},
+	lastName: {
+		type: String,
+		default: ""
+	},
+	email: {
+		type: String,
+		default: ""
+	},
+	location: {
+		type: String,
+		default: ""
+	},
+	isMentor: {
+		type: Boolean,
+		default: false
+	},
+	isMentee: {
+		type: Boolean,
+		default: true
+	},
 	bio: {
 		type: String,
-		required: true
+		default: ""
 	},
 	connections: {
-		type: [UserClass],
-		required: true
-	},
-	picture: { // profile picture will just be a link to a pic
-		type: String
+		type: [String],
+		default: []
 	}
-	... lots of other things needed here (location, mentor/mentee, etc)
-	*/
 });
 
 class ProfileClass {
@@ -37,6 +49,10 @@ class ProfileClass {
 			 * add things here
 			*/
 		];
+	}
+
+	static async createEmptyProfile(username) {
+		this.create({ username });
 	}
 
 	static async find (username) {

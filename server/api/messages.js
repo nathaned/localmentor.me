@@ -14,10 +14,6 @@ messagesApi.get('/api/messages/contactList', async (req, res) => {
 	return res.status(200).json({ contactList });
 	/*
 	const contactList = await UserMessage.getContactList(user);
-	let detailedContacts = {};
-	for (contact of contactList) {
-		detailedContacts.contact = await Profile.getShortProfile(user);
-	}
 	return res.status(200).json({ contactList });
 	*/
 })

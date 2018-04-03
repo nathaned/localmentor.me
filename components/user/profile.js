@@ -1,13 +1,34 @@
 import React, { Component } from 'react';
 import ProfileCard from './profileCard'
+import Gravatar from 'react-gravatar'
 
 export default class Profile extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { edit: false };
+		this.state = { edit: true };
+		this.getProfile();
+	}
+
+	async componentDidMount() {
+		await this.getProfile();
+	}
+
+	async getProfile() {
+		console.log(this.props);
+		this.setState({ profile: true });
 	}
 
 	render() {
+		if (!this.state.profile) {
+			return (
+				<div className="inner cover">
+					<div id="profile-container">
+						<h1 class="loading-text">Loading...</h1>
+					</div>
+				</div>
+			);
+		}
+
 		// if not in edit mode, just show the regular profile card
 		if (!this.state.edit) {
 			return (
@@ -27,7 +48,7 @@ export default class Profile extends Component {
 					<div className="row">
 							<div className="col-md-3">
 								<div className="text-center">
-									<img src="//placehold.it/100" className="avatar img-circle" alt="avatar"/>
+									<Gravatar protocol="https://" email="mathews.kyle@gmail.com" />
 								</div>
 							</div>
 

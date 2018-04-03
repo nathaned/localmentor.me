@@ -8,10 +8,12 @@ const mongoSchema = new mongoose.Schema({
 		unique: true,
 	},
 	contactList: {
-		type: [String]
+		type: [String],
+		default: []
 	},
 	messages: {
-		type: []
+		type: [],
+		default: []
 	},
 	unread: {
 		type: Boolean,
@@ -30,7 +32,11 @@ class UserMessageClass {
 		];
 	}
 
-	static async getUserContactList(username) {
+	static async createEmptyMessages(username) {
+		this.create({ username });
+	}
+
+	static async getContactList(username) {
 		const user = await this.findOne({ username });
 		console.log("user in getUserContactList function: ", user);
 		let fullList = []

@@ -6,6 +6,25 @@ const getUserProfile = async (username) => {
 	return false;
 }
 
+// this call is used to get the currently-logged-in user's profile
+usersApi.get('/api/profile', async (req, res) => {
+	const user = getUserFromSession(req);
+	if (!user) {
+		return res.status(403);
+	}
+
+	const profile = await Profile.find(user.username);
+	if (!profile) {
+		return res.status(404);
+	}
+
+})
+
+// this call is used to update a profile
+usersApi.post('/api/profile', async (req, res) => {
+	return res.status(404);
+})
+
 // this would search the `profiles` database (that would be defined in `Profile.js` in the models folder)
 // this function call would be used to load the user's profile page
 usersApi.get('/api/users/:slug', async (req, res) => {
@@ -15,7 +34,7 @@ usersApi.get('/api/users/:slug', async (req, res) => {
 	// user not found, send 404
 	if (!result) {
 		console.log("a")
-		return res.sendStatus(404);
+		return res.status(404);
 	}
 
 	// if user's permissions allow it, send the deets
@@ -34,12 +53,7 @@ usersApi.get('/api/users/:slug', async (req, res) => {
 		return res.sendStatus(200).json({ user: result });
 
 	// otherwise, send a 403 (no permission)
-	return res.sendStatus(403);
+	return res.status(403);
 });
-
-// this call would be used to update a user's profile
-usersApi.post('/api/users/:slug', async(req, res) => {
-
-})
 
 module.exports = { usersApi, getUserProfile };
