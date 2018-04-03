@@ -4,7 +4,7 @@ import ProfileCard from './profileCard'
 export default class Profile extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { edit: true };
+		this.state = { edit: false };
 	}
 
 	render() {
@@ -15,7 +15,7 @@ export default class Profile extends Component {
 					<ProfileCard
 						action={"edit"}
 						expanded={true}
-						user={this.state.user} />
+						user={this.props.user} />
 				</div>
 			)
 		}
