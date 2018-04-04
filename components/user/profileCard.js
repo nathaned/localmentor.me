@@ -15,12 +15,24 @@ export default class ProfileCard extends Component {
 
 		);
 	}
-
+	
+	// This currently isnt working
+	toggleExpanded(){
+		
+		alert('click');
+		this.setState({expanded: !this.state.expanded});
+		
+	}
+	
 	renderActionButton() {
 		return (
-			<p>{this.props.action}</p>
+			<button className="btn btn-primary" onClick={() => this.toggleExpanded()}>
+						{"MENTOR ME"}
+					</button>
 		)
 	}
+	
+	
 
 	renderExpandedProfile() {
 		return (
@@ -44,8 +56,7 @@ export default class ProfileCard extends Component {
 		return (
 			<div className="profileCard">
 				<Gravatar protocol="https://" email="mathews.kyle@gmail.com" />
-				{ " " + this.props.firstName + " " + this.props.lastName + " Distance: " + this.props.distanceAway } <br/>
-				{ this.props.title }
+				{ " " + this.props.firstName + " " + this.props.lastName + " Distance: " + this.props.distanceAway + " " } 
 				
 				
 			</div>

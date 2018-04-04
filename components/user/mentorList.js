@@ -34,7 +34,7 @@ export default class MentorList extends Component {
 						distanceAway={item.distanceAway}
 						tags={item.Tags}
 						key={i}
-						
+						expanded = {0}
 						firstName = {item.firstName}
 						lastName = {item.lastName}
 					/>

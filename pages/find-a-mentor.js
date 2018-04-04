@@ -13,7 +13,6 @@ export default class FindAMentor extends Component {
 		};
 	}
 	
-	
 	handleChange(e) {
 		if (e.target.id == "inputSearch")
 			this.setState({inputSearch: e.target.value});
@@ -72,6 +71,7 @@ export default class FindAMentor extends Component {
 						</div>
 					</div>
 				</div>
+				
 			</div>
 		);
 	}
