@@ -28,7 +28,7 @@ export default class ProfileCard extends Component {
 		return (
 			<button className="btn btn-primary" onClick={() => this.toggleExpanded()}>
 						{"MENTOR ME"}
-					</button>
+			</button>
 		)
 	}
 	
@@ -55,9 +55,10 @@ export default class ProfileCard extends Component {
 	renderShortProfile() {
 		return (
 			<div className="profileCard">
+				
 				<Gravatar protocol="https://" email="mathews.kyle@gmail.com" />
 				{ " " + this.props.firstName + " " + this.props.lastName + " Distance: " + this.props.distanceAway + " " } 
-				
+				<p></p>
 				
 			</div>
 		);

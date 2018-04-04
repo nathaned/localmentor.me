@@ -28,16 +28,17 @@ export default class MentorList extends Component {
 				this.state.mentors.map((item, i) =>
 					
 					<ProfileCard
-						username={item.username}
-						rating={item.rating}
-						profileText={item.profileText}
-						distanceAway={item.distanceAway}
-						tags={item.Tags}
-						key={i}
+						username = {item.username}
+						rating = {item.rating}
+						profileText = {item.profileText}
+						distanceAway = {item.distanceAway}
+						tags = {item.Tags}
+						key = {i}
 						expanded = {0}
 						firstName = {item.firstName}
 						lastName = {item.lastName}
 					/>
+					
 			));
 		}
 		else this.loadMentors(id, query)

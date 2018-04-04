@@ -13,6 +13,20 @@ export default class FindAMentor extends Component {
 		};
 	}
 	
+	async sendSearch(id, query) {
+		
+		const body = JSON.stringify({ query, id });
+		const headers = { 'Content-Type': 'application/json' };
+		const url = this.props.baseUrl + '/api/mentor-list';
+		const response = await fetch(
+			url,
+			{ method: "POST", body, headers }
+		);
+		const res = await response.json();
+		// note that if we do just `query`, it's shorthand for `query: query`
+		this.setState({ mentors: res.list, query });
+	}
+	
 	handleChange(e) {
 		if (e.target.id == "inputSearch")
 			this.setState({inputSearch: e.target.value});
@@ -31,12 +45,20 @@ export default class FindAMentor extends Component {
 
 		this.setState({ user });
 	}
+	
+	
+	
+	testButton()
+	{
+		this.sendSearch(0, "someOtherQuery");
+	}
 
 
 	static getInitialProps({ req }) {
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		return { baseUrl };
 	}
+	
 
 	render() {
 		const pageTitle = "Find a Mentor";
@@ -57,11 +79,18 @@ export default class FindAMentor extends Component {
 									FIND A MENTOR
 								</div>
 								
-								<div className="search-bar">
+								<div className="search-bar" >
 									<input type="text" id="inputSearch" className="form-control" placeholder="Search for a Mentor" value={this.state.inputSearch} onChange={this.handleChange.bind(this)} required autoFocus/>
+									
+									<button className="btn btn-primary" onClick={() => this.testButon()}>
+									{"MENTOR ME"}
+									</button>
+									
+									<p></p>
+									<p></p>
 								</div>
 								
-								<div className="mentor-list">
+								<div className="mentor-list" id="test">
 									<MentorList
 										baseUrl={this.props.baseUrl}
 										user={this.state.user}/>
