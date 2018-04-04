@@ -8,7 +8,17 @@ import { checkAuth } from '../lib/api/user'
 export default class FindAMentor extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			inputSearch: ''
+		};
+	}
+	
+	
+	handleChange(e) {
+		if (e.target.id == "inputSearch")
+			this.setState({inputSearch: e.target.value});
+		else if (e.target.id == "inputPassword")
+			this.setState({inputPassword: e.target.value});
 	}
 
 	async componentDidMount() {
@@ -38,21 +48,26 @@ export default class FindAMentor extends Component {
 					<div className="site-wrapper">
 						<div className="site-wrapper-inner">
 							<div className="cover-container">
+								
 								<DashboardNav
 									pageTitle={pageTitle}
 									user={this.state.user}
 								/>
+								
 								<div id = "whaterver-you-want-to-call-that-id">
 									FIND A MENTOR
 								</div>
+								
 								<div className="search-bar">
-									<SearchBar />
+									<input type="text" id="inputSearch" className="form-control" placeholder="Search for a Mentor" value={this.state.inputSearch} onChange={this.handleChange.bind(this)} required autoFocus/>
 								</div>
+								
 								<div className="mentor-list">
 									<MentorList
 										baseUrl={this.props.baseUrl}
 										user={this.state.user}/>
 								</div>
+								
 							</div>
 						</div>
 					</div>
