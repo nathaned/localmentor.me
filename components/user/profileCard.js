@@ -12,6 +12,7 @@ export default class ProfileCard extends Component {
 			this.props.expanded
 				? this.renderExpandedProfile()
 				: this.renderShortProfile()
+
 		);
 	}
 
@@ -32,6 +33,9 @@ export default class ProfileCard extends Component {
 					{ this.props.title }
 					{ this.renderActionButton() }
 				</div>
+				
+				
+				
 			</div>
 		);
 	}
@@ -40,8 +44,10 @@ export default class ProfileCard extends Component {
 		return (
 			<div className="profileCard">
 				<Gravatar protocol="https://" email="mathews.kyle@gmail.com" />
-				{ this.props.firstName + this.props.lastName } <br/>
+				{ " " + this.props.firstName + " " + this.props.lastName + " Distance: " + this.props.distanceAway } <br/>
 				{ this.props.title }
+				
+				
 			</div>
 		);
 	}
