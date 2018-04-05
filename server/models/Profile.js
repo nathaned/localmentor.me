@@ -42,6 +42,14 @@ const mongoSchema = new mongoose.Schema({
 		type: [String],
 		default: []
 	},
+	requestedMentors: {
+		type: [String],
+		default: []
+	},
+	requestedMentees: {
+		type: [String],
+		default: []
+	},
 	unreads: {
 		type: [String],
 		default: []
@@ -68,24 +76,6 @@ class ProfileClass {
 		console.log("user in find function: ", user);
 		return user;
 	}
-
-	/* need to setup how you want the user profile creation to work.
-	* possibly this funciton would be called by the createUser() function of the User.js model
-	static async createProfile (username, password, passwordHash) {
-		// if the user is already in the database, then don't allow it to be added
-		if ( await this.find(username) ) {
-			console.log("username already in datbase");
-			return false;
-		}
-
-		const user = await this.create({
-			username,
-			password,
-			passwordHash
-		});
-		return user;
-	}
-	*/
 
 	// returns everything except bio and connections list ( TODO add to this )
 	static async getShortProfile(username) {
@@ -145,6 +135,31 @@ class ProfileClass {
 			unreads.push(sender);
 		}
 		await this.findOneAndUpdate( {username: recipient }, { unreads });
+	}
+
+	static async requestMentor(requester, requested) {
+		const mentee = await this.find(requester);
+		if (!mentee) {
+			console.log("requestMentor: requester (mentee) not found");
+			return;
+		}
+		const mentor = await this.find(requested);
+		if (!mentor) {
+			console.log("requestMentor: requested (mentor) not found");
+			return;
+		}
+
+		let requestedMentors = mentee.requestedMentors;
+		if (requestedMentors.indexOf(requested) == -1) {
+			requestedMentors.push(requested);
+		}
+		await this.findOneAndUpdate({ username: requester }, { requestedMentors });
+
+		let requestedMentees = mentor.requestedMentees;
+		if (requestedMentees.indexof(requester) == -1) {
+			requestedMentees.push(requestMentor);
+		}
+		await this.findOneAndUpdate({ username: requester }, { requestedMentees });
 	}
 }
 
