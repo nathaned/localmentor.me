@@ -34,7 +34,15 @@ const mongoSchema = new mongoose.Schema({
 		type: String,
 		default: ""
 	},
-	connections: {
+	mentors: {
+		type: [String],
+		default: []
+	},
+	mentees: {
+		type: [String],
+		default: []
+	},
+	unreads: {
 		type: [String],
 		default: []
 	}
@@ -92,6 +100,51 @@ class ProfileClass {
 			{username},
 			{ firstName: 1, lastName: 1, isMentee: 1, isMentor: 1, email: 1 });
 		return contactInfo;
+	}
+
+	static async getContactList(username) {
+		const connections = await this.findOne(
+			{ username }, { mentors: 1, mentees: 1 }
+		);
+		let contactList = [];
+		for (mentor of connections.mentors) {
+			contactList.push( {
+				email: mentor.email,
+				firstName: mentor.firstName,
+				lastName: mentor.lastName,
+				relation: "mentor",
+				username: mentor.username,
+			});
+		}
+		for (mentee of connections.mentees) {
+			contactList.push( {
+				email: mentee.email,
+				firstName: mentee.firstName,
+				lastName: mentee.lastName,
+				relation: "mentee",
+				username: mentee.username,
+			});
+		}
+		return contactList;
+	}
+
+	static async getUnreads(username) {
+		const user = await this.findOne({ username }, { unreads: 1 });
+		if (!user) {
+			console.log("user not found in getUnreads: ", username);
+			return [];
+		}
+		console.log("got unreads", user.unreads);
+		return user.unreads;
+	}
+
+	static async appendUnread(recipient, sender) {
+		const user = await this.find(recipient);
+		let unreads = user.unreads;
+		if (unreads.indexOf(sender) == -1) {
+			unreads.push(sender);
+		}
+		await this.findOneAndUpdate( {username: recipient }, { unreads });
 	}
 }
 

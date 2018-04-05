@@ -1,28 +1,43 @@
 import React, { Component } from 'react';
-import Message from './message'
+import Message from './message';
 
 export default class Chat extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = { inputText: "" };
 	}
 
 	renderMessages() {
+		if (!this.props.messages) return null;
+		const selectedUsername = this.props.contact.username;
+		const renderedMessages = (
+			this.props.messages.map( (message) => {
+			const type = (message.from == selectedUsername) ? "received" : "sent"
+				return (
+					<Message
+						key={message.text}
+						type={type}
+						text={message.text}/>
+				);
+			})
+		);
+
 		return (
 			<ul>
-				<Message
-					text="hiac"
-					type="sent"/>
-				<Message
-					text="height: 100%;margin-left: 325px; width: auto; background: rgba(9, 200, 9, .25); color: black; text-shadow: none;height: 100%; margin-left: 325px; width: auto; background: rgba(9, 200, 9, .25); color: black; text-shadow: none;"
-					type="received"/>
-				<Message
-					text="background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);background: rgba(9, 200, 9, .25);"
-					type="sent"/>
-
+				{ renderedMessages }
 			</ul>
 		);
 	}
+
+	handleChange(e) {
+		this.setState({ inputText: e.target.value });
+	}
+
+	sendMessage() {
+		const message = this.state.inputText;
+		this.props.sendMessage(message);
+	}
+
 
 	render() {
 		console.log(this.props);
@@ -32,8 +47,17 @@ export default class Chat extends Component {
 					{ this.renderMessages() }
 				</div>
 				<div id="chat-input">
-					<textarea placeholder={"Message " + this.props.contact}></textarea>
-					<input id="send-button" className="btn btn-primary " value="Send" readOnly/>
+					<textarea
+						placeholder={"Message " + this.props.contact}
+						value={this.state.inputText}
+						onChange={this.handleChange.bind(this)}>
+					</textarea>
+					<input
+						id="send-button"
+						onClick={this.sendMessage.bind(this)}
+						className="btn btn-primary "
+						value="Send"
+						readOnly />
 				</div>
 			</div>
 		);

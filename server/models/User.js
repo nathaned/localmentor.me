@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Profile = require('./Profile');
-const UserMessage = require('./UserMessage');
+const Message = require('./Message');
 
 const mongoSchema = new mongoose.Schema({
 	username: {
@@ -68,7 +68,6 @@ class UserClass {
 			passwordHash
 		});
 		await Profile.createEmptyProfile(username);
-		await UserMessage.createEmptyMessages(username);
 		return user;
 	}
 }

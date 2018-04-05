@@ -29,6 +29,10 @@ export default class Messenger extends Component {
 				<Gravatar protocol="https://" email="mathews.kyle@gmail.com" />
 				{ this.renderName() } <br/>
 				{ this.renderTitle() }
+				{ this.props.unread
+					? ( <div className="unread-dot">dot</div>
+					) : null
+				}
 			</div>
 		);
 	}

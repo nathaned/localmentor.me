@@ -13,7 +13,7 @@ usersApi.get('/api/profile', async (req, res) => {
 		return res.status(403);
 	}
 
-	const profile = await Profile.find(user.username);
+	const profile = await Profile.find(user);
 	if (!profile) {
 		return res.status(404);
 	}

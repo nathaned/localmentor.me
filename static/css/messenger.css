@@ -115,6 +115,10 @@ a:hover {
 	font-size: 14px;
 }
 
+.contact.selected {
+	background: gold;
+}
+
 .contact img {
 	height: 100%;
 	width: auto;

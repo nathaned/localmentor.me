@@ -4,12 +4,12 @@ import DashboardNav from '../components/user/dashboardNav'
 import Dashboard from '../components/user/dashboard'
 import Messenger from '../components/messenger/messenger'
 import { checkAuth } from '../lib/api/user'
-import { getContactList } from '../lib/api/messages'
+import { getContactList, getUnreads } from '../lib/api/messages'
 
 export default class MessengerPage extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = { messages: [], unreads: [] };
 	}
 
 	async componentDidMount() {
@@ -23,11 +23,28 @@ export default class MessengerPage extends Component {
 
 		this.setState({ user });
 		await this.loadContactList();
+		this.continuouslyCheckUnreads();
 	}
+
 
 	static async getInitialProps({ req }) {
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		return { baseUrl };
+	}
+
+	continuouslyCheckUnreads() {
+		setInterval( async () => {
+			console.log("checking for new unread messages");
+			if (document.hidden) {
+				console.log("jk, document is hidden");
+				return;
+			}
+			const unreads = await getUnreads(this.props.baseUrl);
+			if ( JSON.stringify(this.state.unreads) != JSON.stringify(unreads) ) {
+				this.setState({ unreads });
+			}
+			console.log("unreads: ", unreads);
+		}, 2000)
 	}
 
 	async loadContactList() {
@@ -55,6 +72,8 @@ export default class MessengerPage extends Component {
 										<Messenger
 											baseUrl={this.props.baseUrl}
 											contactList={this.state.contactList}
+											messages={this.state.messages}
+											unreads={this.state.unreads}
 											user={this.state.user}/>
 									)
 									: <p>Loading...</p>

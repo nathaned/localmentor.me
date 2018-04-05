@@ -23,7 +23,7 @@ export default class Profile extends Component {
 			return (
 				<div className="inner cover">
 					<div id="profile-container">
-						<h1 class="loading-text">Loading...</h1>
+						<h1 className="loading-text">Loading...</h1>
 					</div>
 				</div>
 			);
