@@ -2965,8 +2965,8 @@ mongoose-legacy-pluralize@1.0.2:
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
 
 mongoose@^5.0.9:
-  version "5.0.12"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.0.12.tgz#608a3829bf2edae47b0078cd1970ede2a033b3a0"
+  version "5.0.13"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.0.13.tgz#07c1ce9ecf9c758939891b5f180f448eda44f11d"
   dependencies:
     async "2.1.4"
     bson "~1.0.4"
@@ -3053,7 +3053,7 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
-next@^5.0.0:
+next@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/next/-/next-5.1.0.tgz#9f79f095b28e1be568ba6fc61ec807409ec77e0a"
   dependencies:
@@ -3691,7 +3691,7 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dom@^16.2.0:
+react-dom@^16.3.1:
   version "16.3.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.3.1.tgz#6a3c90a4fb62f915bdbcf6204422d93a7d4ca573"
   dependencies:
@@ -3718,7 +3718,7 @@ react-hot-loader@4.0.0:
     prop-types "^15.6.0"
     shallowequal "^1.0.2"
 
-react@^16.2.0:
+react@^16.3.1:
   version "16.3.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.3.1.tgz#4a2da433d471251c69b6033ada30e2ed1202cfd8"
   dependencies:
