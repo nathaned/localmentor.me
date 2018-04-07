@@ -40,6 +40,17 @@ static async addMentorToTag(newTag, mentor) {
 
 
 
+static async exploreAllTags() {
+  const alltags = await this.find({});
+  return alltags;
+}
+
+
+
+
+
+
+
 
 
 

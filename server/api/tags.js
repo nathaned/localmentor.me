@@ -15,6 +15,13 @@ tagsApi.post('/api/tags/:slug', async (req, res) => {
 });
 
 
+// returns all tags in the database, you will need to extract "tag" only for
+// drop down menu purposes 
+tagsApi.get('/api/tags', async (req, res) => {
+  const all = await Tags.exploreAllTags();
+  if(!all) {return res.status(403).json("empty tags list");}
+  return res.status(200).json(all);
+});
 
 
 module.exports = { tagsApi };
