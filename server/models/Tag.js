@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-export const TagsSchema = new Schema({
+const TagsSchema = new Schema({
   tag: {type: String, unique: true},
   tagMentors: {type: [String]}          // email/username
 })
@@ -18,29 +18,37 @@ class TagsClass {
   }
 
 
-static async addMentorToTag( newTag, mentor){
-  console.log(`${mentor} has added themselves to the "${tag}" tag`);
-  this.findOne({tag: newtag},
-  (err, newTag) =>
-  {
-    if(err){
-      this.create({newTag});
-      console.log(` new "${tag}"  has been created`);
-    }
-      this.findOneAndUpdate(
-        {newTag},
-        {$addToSet:{mentor}},
-        {new: true},
-        (err, tag) =>
-        {
-          if(err){ res.send(err);}
-          res.send(tag);
-      });
-      console.log(`>${mentor} is added to the "${tag}" tag`);
-  })
+static async addMentorToTag(newTag, mentor) {
+
+  console.log(`------>addMentorToTag function`);
+
+  const isTag  = await this.findOne({tag: newTag});
+  if(!isTag){
+    this.create({tag: newTag});
+    console.log(`------> new "${newTag}"  has been created`);
+  }
+  else {console.log("-----> tag exists already ");}
+
+  const addmentor = await this.findOneAndUpdate(
+        {tag: newTag},
+        {$addToSet:{tagMentors: mentor}},
+        {new: true});
+
+  console.log(`------->${mentor} is added to the "${newTag}" tag`);
+  return addmentor;
+  };
+
+
+
+
+
+
+
 }
 
 
+TagsSchema.loadClass(TagsClass);
 
+const Tags = mongoose.model('Tags', TagsSchema);
 
-}
+module.exports = Tags;
