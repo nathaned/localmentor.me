@@ -22,12 +22,12 @@ static async addMentorToTag(newTag, mentor) {
 
   console.log(`------>addMentorToTag function`);
 
-  const isTag  = await this.findOne({tag: newTag});
+  const isTag = await this.findOne({tag: newTag});
   if(!isTag){
-    this.create({tag: newTag});
-    console.log(`------> new "${newTag}"  has been created`);
+    await this.create({tag: newTag});
+    console.log(`------> new "${newTag}" tag has been created`);
   }
-  else {console.log("-----> tag exists already ");}
+  //else {console.log("-----> tag exists already ");}
 
   const addmentor = await this.findOneAndUpdate(
         {tag: newTag},
@@ -36,7 +36,7 @@ static async addMentorToTag(newTag, mentor) {
 
   console.log(`------->${mentor} is added to the "${newTag}" tag`);
   return addmentor;
-  };
+};
 
 
 
