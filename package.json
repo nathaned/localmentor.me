@@ -24,5 +24,8 @@
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-gravatar": "^2.6.3"
+  },
+  "devDependencies": {
+    "bootstrap": "4.0.0-alpha.6"
   }
 }
