@@ -34,6 +34,10 @@ const mongoSchema = new mongoose.Schema({
 		type: String,
 		default: ""
 	},
+	tags: {
+		type: [String],
+		default: []
+	},
 	mentors: {
 		type: [String],
 		default: []
@@ -49,16 +53,6 @@ const mongoSchema = new mongoose.Schema({
 });
 
 class ProfileClass {
-	static publicFields() {
-		return [
-			'id',
-			'username',
-			/*
-			 * add things here
-			*/
-		];
-	}
-
 	static async createEmptyProfile(username) {
 		this.create({ username });
 	}
@@ -68,24 +62,6 @@ class ProfileClass {
 		console.log("user in find function: ", user);
 		return user;
 	}
-
-	/* need to setup how you want the user profile creation to work.
-	* possibly this funciton would be called by the createUser() function of the User.js model
-	static async createProfile (username, password, passwordHash) {
-		// if the user is already in the database, then don't allow it to be added
-		if ( await this.find(username) ) {
-			console.log("username already in datbase");
-			return false;
-		}
-
-		const user = await this.create({
-			username,
-			password,
-			passwordHash
-		});
-		return user;
-	}
-	*/
 
 	// returns everything except bio and connections list ( TODO add to this )
 	static async getShortProfile(username) {
@@ -140,11 +116,29 @@ class ProfileClass {
 
 	static async appendUnread(recipient, sender) {
 		const user = await this.find(recipient);
+		if (!user) {
+			console.log("user not found in appendUnread: ", recipient);
+			return;
+		}
+		const user2 = await this.find(sender);
+		if (!user2) {
+			console.log("user not found in appendUnread: ", sender);
+			return;
+		}
 		let unreads = user.unreads;
 		if (unreads.indexOf(sender) == -1) {
 			unreads.push(sender);
 		}
 		await this.findOneAndUpdate( {username: recipient }, { unreads });
+	}
+
+	static async getUserTags(username) {
+		const user = await this.findOne({ username }, { tags: 1 });
+		if (!user) {
+			console.log("user not found in getUserTags: ", sender);
+			return;
+		}
+		return user.tags || [];
 	}
 }
 

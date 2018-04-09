@@ -4,15 +4,13 @@ const Schema = mongoose.Schema;
 
 const TagsSchema = new Schema({
 	tag: {
-			type: String,
-			unique: true
-		},
-		tagMentors: {
-			type: [String]
-		}
+		type: String,
+		unique: true
+	},
+	tagMentors: {
+		type: [String]
+	}
 })
-
-
 
 class TagsClass {
 	static async addMentorToTag(newTag, mentor) {
@@ -26,9 +24,9 @@ class TagsClass {
 		}
 		else{
 			const addmentor = await this.findOneAndUpdate(
-						{tag: newTag},
-						{$addToSet:{tagMentors: mentor}},
-						{new: true}
+				{tag: newTag},
+				{$addToSet:{tagMentors: mentor}},
+				{new: true}
 			);
 			console.log(`------->${mentor} is added to the "${newTag}" tag`);
 			return addmentor;
@@ -40,19 +38,19 @@ class TagsClass {
 		return alltags;
 	};
 
-// note: the only reason findOne is just is to be able to return false
+	// note: the only reason findOne is just is to be able to return false
 	static async findMentors(lookupTag) {
 		const mentors = await this.findOne({tag: lookupTag}, {tagMentors: 1});
 		if(!mentors){return false;}
 		return mentors;
 	};
 
-// removes mentor and also deletes tag if empty
+	// removes mentor and also deletes tag if empty
 	static async removeMentorFromTag(mentor, dtag){
 		const updatedTag = await this.findOneAndUpdate(
-			{tag: dtag},
-	    {$pull:{tagMentors: mentor}},
-	    {new: true}
+			{ tag: dtag },
+			{ $pull: { tagMentors: mentor } },
+			{ new: true }
 		);
 
 		const isEmpty = await this.find( { tagMentors: { $size: 0 }});
@@ -62,14 +60,11 @@ class TagsClass {
 		}
 		return updatedTag;
 	}
-
-
-	
 }
 
 
 TagsSchema.loadClass(TagsClass);
 
-const Tags = mongoose.model('Tags', TagsSchema);
+const Tag = mongoose.model('Tag', TagsSchema);
 
-module.exports = Tags;
+module.exports = Tag;
