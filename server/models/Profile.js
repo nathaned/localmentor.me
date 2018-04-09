@@ -140,6 +140,32 @@ class ProfileClass {
 		}
 		return user.tags || [];
 	}
+
+	static async updateProfile(username, profile) {
+		const {
+			firstName,
+			lastName,
+			email,
+			location,
+			isMentee,
+			isMentor,
+			bio,
+			tags
+		} = profile;
+		await this.findOneAndUpdate(
+			{username},
+			{
+				firstName,
+				lastName,
+				email,
+				location,
+				isMentee,
+				isMentor,
+				bio,
+				tags
+			}
+		);
+	}
 }
 
 mongoSchema.loadClass(ProfileClass);
