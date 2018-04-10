@@ -12,9 +12,9 @@ export default class FindAMentor extends Component {
 			inputSearch: ''
 		};
 	}
-	
+
 	async sendSearch(id, query) {
-		
+
 		const body = JSON.stringify({ query, id });
 		const headers = { 'Content-Type': 'application/json' };
 		const url = this.props.baseUrl + '/api/mentor-list';
@@ -26,12 +26,13 @@ export default class FindAMentor extends Component {
 		// note that if we do just `query`, it's shorthand for `query: query`
 		this.setState({ mentors: res.list, query });
 	}
-	
+
 	handleChange(e) {
+		const value = e.target.value;
 		if (e.target.id == "inputSearch")
-			this.setState({inputSearch: e.target.value});
+			this.setState({inputSearch: value});
 		else if (e.target.id == "inputPassword")
-			this.setState({inputPassword: e.target.value});
+			this.setState({inputPassword: value});
 	}
 
 	async componentDidMount() {
@@ -45,9 +46,9 @@ export default class FindAMentor extends Component {
 
 		this.setState({ user });
 	}
-	
-	
-	
+
+
+
 	testButton()
 	{
 		this.sendSearch(0, "someOtherQuery");
@@ -58,7 +59,7 @@ export default class FindAMentor extends Component {
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		return { baseUrl };
 	}
-	
+
 
 	render() {
 		const pageTitle = "Find a Mentor";
@@ -69,38 +70,38 @@ export default class FindAMentor extends Component {
 					<div className="site-wrapper">
 						<div className="site-wrapper-inner">
 							<div className="cover-container">
-								
+
 								<DashboardNav
 									pageTitle={pageTitle}
 									user={this.state.user}
 								/>
-								
+
 								<div id = "whaterver-you-want-to-call-that-id">
 									FIND A MENTOR
 								</div>
-								
+
 								<div className="search-bar" >
 									<input type="text" id="inputSearch" className="form-control" placeholder="Search for a Mentor" value={this.state.inputSearch} onChange={this.handleChange.bind(this)} required autoFocus/>
-									
+
 									<button className="btn btn-primary" onClick={() => this.testButon()}>
 									{"MENTOR ME"}
 									</button>
-									
+
 									<p></p>
 									<p></p>
 								</div>
-								
+
 								<div className="mentor-list" id="test">
 									<MentorList
 										baseUrl={this.props.baseUrl}
 										user={this.state.user}/>
 								</div>
-								
+
 							</div>
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 		);
 	}

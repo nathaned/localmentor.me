@@ -114,3 +114,17 @@ a:hover {
 	margin-bottom: 30px;
 	text-align: left;
 }
+
+.tag {
+	display: inline;
+}
+
+.Select {
+	max-width: 300px;
+	color: black;
+	text-shadow: none;
+}
+
+#submit-button {
+	margin-left: 100px;
+}

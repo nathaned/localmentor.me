@@ -32,7 +32,14 @@ export default class MyProfile extends Component {
 		const pageTitle = "My Profile";
 		return (
 			<div>
-				<Head title={pageTitle} cssFiles={ ["dashboardNav.css", "profile.css"] }/>
+				<Head
+					cssFiles={[
+						"dashboardNav.css",
+						"profile.css",
+						"nprogress.css",
+						"react-select.min.css"
+					]}
+					title={pageTitle} />
 				<div className="app-container">
 					<div className="site-wrapper">
 						<div className="site-wrapper-inner">

@@ -30,7 +30,8 @@ export default class Chat extends Component {
 	}
 
 	handleChange(e) {
-		this.setState({ inputText: e.target.value });
+		const inputText = e.target.value;
+		this.setState({ inputText });
 	}
 
 	sendMessage() {

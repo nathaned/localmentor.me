@@ -34,6 +34,10 @@ const mongoSchema = new mongoose.Schema({
 		type: String,
 		default: ""
 	},
+	tags: {
+		type: [String],
+		default: []
+	},
 	mentors: {
 		type: [String],
 		default: []
@@ -57,16 +61,6 @@ const mongoSchema = new mongoose.Schema({
 });
 
 class ProfileClass {
-	static publicFields() {
-		return [
-			'id',
-			'username',
-			/*
-			 * add things here
-			*/
-		];
-	}
-
 	static async createEmptyProfile(username) {
 		this.create({ username });
 	}
@@ -130,11 +124,55 @@ class ProfileClass {
 
 	static async appendUnread(recipient, sender) {
 		const user = await this.find(recipient);
+		if (!user) {
+			console.log("user not found in appendUnread: ", recipient);
+			return;
+		}
+		const user2 = await this.find(sender);
+		if (!user2) {
+			console.log("user not found in appendUnread: ", sender);
+			return;
+		}
 		let unreads = user.unreads;
 		if (unreads.indexOf(sender) == -1) {
 			unreads.push(sender);
 		}
 		await this.findOneAndUpdate( {username: recipient }, { unreads });
+	}
+
+	static async getUserTags(username) {
+		const user = await this.findOne({ username }, { tags: 1 });
+		if (!user) {
+			console.log("user not found in getUserTags: ", sender);
+			return;
+		}
+		return user.tags || [];
+	}
+
+	static async updateProfile(username, profile) {
+		const {
+			firstName,
+			lastName,
+			email,
+			location,
+			isMentee,
+			isMentor,
+			bio,
+			tags
+		} = profile;
+		await this.findOneAndUpdate(
+			{username},
+			{
+				firstName,
+				lastName,
+				email,
+				location,
+				isMentee,
+				isMentor,
+				bio,
+				tags
+			}
+		);
 	}
 
 	static async requestMentor(requester, requested) {

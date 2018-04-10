@@ -23,9 +23,7 @@ class UserClass {
 	static publicFields() {
 		return [
 			'id',
-			'username',
-			'password',
-			'passwordHash'
+			'username'
 		];
 	}
 
