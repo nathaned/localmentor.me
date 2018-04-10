@@ -173,6 +173,7 @@ class ProfileClass {
 				tags
 			}
 		);
+	}
 
 	static async requestMentor(requester, requested) {
 		const mentee = await this.find(requester);
