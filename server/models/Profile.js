@@ -46,6 +46,14 @@ const mongoSchema = new mongoose.Schema({
 		type: [String],
 		default: []
 	},
+	requestedMentors: {
+		type: [String],
+		default: []
+	},
+	requestedMentees: {
+		type: [String],
+		default: []
+	},
 	unreads: {
 		type: [String],
 		default: []
@@ -165,6 +173,30 @@ class ProfileClass {
 				tags
 			}
 		);
+
+	static async requestMentor(requester, requested) {
+		const mentee = await this.find(requester);
+		if (!mentee) {
+			console.log("requestMentor: requester (mentee) not found");
+			return;
+		}
+		const mentor = await this.find(requested);
+		if (!mentor) {
+			console.log("requestMentor: requested (mentor) not found");
+			return;
+		}
+
+		let requestedMentors = mentee.requestedMentors;
+		if (requestedMentors.indexOf(requested) == -1) {
+			requestedMentors.push(requested);
+		}
+		await this.findOneAndUpdate({ username: requester }, { requestedMentors });
+
+		let requestedMentees = mentor.requestedMentees;
+		if (requestedMentees.indexof(requester) == -1) {
+			requestedMentees.push(requestMentor);
+		}
+		await this.findOneAndUpdate({ username: requester }, { requestedMentees });
 	}
 }
 
