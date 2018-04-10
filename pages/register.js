@@ -66,12 +66,13 @@ export default class Register extends Component {
 	}
 
 	handleChange(e) {
+		value = e.target.value;
 		if (e.target.id == "inputUsername")
-			this.setState({ inputUsername: e.target.value });
+			this.setState({ inputUsername: value });
 		else if (e.target.id == "inputPassword")
-			this.setState({ inputPassword: e.target.value });
+			this.setState({ inputPassword: value });
 		else if (e.target.id == "inputPassword2")
-			this.setState({ inputPassword2: e.target.value });
+			this.setState({ inputPassword2: value });
 	}
 
 	render() {

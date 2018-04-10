@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import ProfileCard from './profileCard';
 import Gravatar from 'react-gravatar';
-import { getProfile, getTags } from '../../lib/api/user';
+import { getProfile, getTags, updateProfile } from '../../lib/api/user';
 import NProgress from 'nprogress';
+import Select from 'react-select'
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -23,29 +24,24 @@ export default class Profile extends Component {
 
 	async loadTags() {
 		console.log("getting tags");
+		const tags = [
+			{ label: "do (3)", value: "do" },
+			{ label: "re (3)", value: "re" },
+			{ label: "me (3)", value: "me" },
+			{ label: "fa (3)", value: "fa" },
+			{ label: "really long one! (0)", value: "really long one!" }
+		];
+		this.setState({ tags });
 	}
 
 	async handleSubmit(e) {
 		NProgress.start();   // start the cool loading bar
 		e.preventDefault();  // prevents default behavior
 
-		// params needed to send to the server to validate the login
-		const body = JSON.stringify({
-			profile: this.state.profile
-		});
-		const headers = { 'Content-Type': 'application/json' };
-		const credentials = 'include';
-		NProgress.set(0.4);
-		const response = await fetch(
-			'/api/profile',
-			{ method: "POST", body, headers, credentials }
-		);
-		console.log("here in handleSubmit");
-		NProgress.set(0.7);
-
+		const response = await updateProfile(this.props.baseUrl, this.state.profile);
 		console.log(response);
 		// server will send a 403 if login failed
-		if (response.status == 403) {
+		if (!response || response.status == 403) {
 			// should show an error message, TODO
 			return;
 		}
@@ -56,7 +52,6 @@ export default class Profile extends Component {
 		}
 		NProgress.done();
 	}
-
 
 	handleChange(e) {
 		const value = e.target.value;
@@ -93,6 +88,13 @@ export default class Profile extends Component {
 				break;
 		}
 		console.log(this.state);
+	}
+
+	handleTagChange(value) {
+		const savedValue = value;
+		this.setState( ({profile}) => ({
+			profile: { ...profile, tags: savedValue }
+		}));
 	}
 
 	render() {
@@ -203,19 +205,33 @@ export default class Profile extends Component {
 										</div>
 									</div>
 									<div className="form-group">
+										<div className="col-md-8">
+											<span>Tags:</span>
+											<Select.Creatable
+												arrowRenderer={null}
+												backspaceRemoves={false}
+												clearable={false}
+												multi={true}
+												onChange={this.handleTagChange.bind(this)}
+												options={this.state.tags}
+												placeholder="Select some tags"
+												value={this.state.profile.tags}/>
+										</div>
+									</div>
+									<div className="form-group">
 										<label className="col-md-3 control-label"></label>
 										<div className="col-md-8">
-											<input
-												type="button"
-												className="btn btn-primary"
-												onClick={this.handleSubmit.bind(this)}
-												value="Save Changes"/>
-											<span></span>
 											<input
 												type="reset"
 												className="btn btn-default"
 												onClick={this.loadProfile.bind(this)}
-												value="Cancel"/>
+												value="Reset"/>
+											<input
+												id="submit-button"
+												type="button"
+												className="btn btn-primary"
+												onClick={this.handleSubmit.bind(this)}
+												value="Save Changes"/>
 										</div>
 									</div>
 								</form>
