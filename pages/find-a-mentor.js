@@ -64,38 +64,18 @@ export default class FindAMentor extends Component {
 	render() {
 		const pageTitle = "Find a Mentor";
 		return (
+
 			<div>
-				<Head title="Dashboard" cssFiles={ ["dashboard.css", "dashboardNav.css"] }/>
+				<Head title="Dashboard" cssFiles={ ["dashboard.css", "findMentor.css"] }/>
 				<div className="app-container">
 					<div className="site-wrapper">
 						<div className="site-wrapper-inner">
 							<div className="cover-container">
 
-								<DashboardNav
-									pageTitle={pageTitle}
-									user={this.state.user}
-								/>
-
-								<div id = "whaterver-you-want-to-call-that-id">
-									FIND A MENTOR
-								</div>
-
-								<div className="search-bar" >
-									<input type="text" id="inputSearch" className="form-control" placeholder="Search for a Mentor" value={this.state.inputSearch} onChange={this.handleChange.bind(this)} required autoFocus/>
-
-									<button className="btn btn-primary" onClick={() => this.testButon()}>
-									{"MENTOR ME"}
-									</button>
-
-									<p></p>
-									<p></p>
-								</div>
-
-								<div className="mentor-list" id="test">
-									<MentorList
-										baseUrl={this.props.baseUrl}
-										user={this.state.user}/>
-								</div>
+							<DashboardNav
+								pageTitle={pageTitle}
+								user={this.state.user}
+							/>
 
 							</div>
 						</div>
