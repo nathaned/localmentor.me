@@ -7,7 +7,9 @@ export default class Header extends Component {
 	render(props) {
 		return (
 			<div className="masthead ">
+			<div className="inner">
 					<nav className="navbar nnavbar-expand-xl navbar-dark bg-primary">
+					<img src="../../static/images/handshake.png" height="42" width="42"/>
 						<a	href="/"
 							className={"btn btn-primary" + (
 								this.props.page == "home"
@@ -33,6 +35,7 @@ export default class Header extends Component {
 							Contact
 						</a>
 					</nav>
+					</div>
 			</div>
 		);
 	}

@@ -14,10 +14,10 @@ export default class DashboardNav extends Component {
 		return (
 			<div className="masthead clearfix">
 				<div className="inner">
-					<h3 className="masthead-brand">MentorMe</h3>
-					<nav className="nav nav-masthead">
+					<nav className="navbar nnavbar-expand-xl navbar-dark bg-primary">
+					<img src="../../static/images/handshake.png" height="42" width="42"/>
 						<a	href="/find-a-mentor"
-							className={"nav-link" + (
+							className={"btn btn-primary" + (
 								this.props.pageTitle == "Find a Mentor"
 									? " active"
 									: " "
@@ -25,7 +25,7 @@ export default class DashboardNav extends Component {
 							Find Mentor
 						</a>
 						<a	href="/my-connections"
-							className={"nav-link" + (
+							className={"btn btn-primary" + (
 								this.props.pageTitle == "My Connections"
 									? " active"
 									: " "
@@ -33,26 +33,22 @@ export default class DashboardNav extends Component {
 							Connections
 						</a>
 						<a	href="/messenger"
-							className={"nav-link" + (
+							className={"btn btn-primary" + (
 								this.props.pageTitle == "Messenger"
 									? " active"
 									: " "
 							)}>
 							Messages
 						</a>
-						<div onClick={this.toggleProfileMenu.bind(this)}id="nav-profile">{this.props.user}
-							<img src="static/images/download.png"/>
-							{ this.state.showProfileMenu
-								? (
-									<ul>
-										<li>
-											<a href="/my-profile">My Profile</a>
-										</li>
-										<li>
-											<a href="/logout">Logout</a>
-										</li>
-									</ul>
-							) : null}
+
+						<div class="dropdown">
+  						<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img src="../../static/images/user.png" height="42" width="42"/>
+  						</button>
+  						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    						<a class="dropdown-item" href="/my-profile">Profile</a>
+    						<a class="dropdown-item" href="/logout">Logout</a>
+  						</div>
 						</div>
 					</nav>
 				</div>
