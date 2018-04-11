@@ -8,8 +8,13 @@ export default class SearchBar extends Component {
 	}
 
 	handleTagChange(value) {
-		const inputSearch = e.target.value;
+		const inputSearch = value;
 		this.setState({ inputSearch });
+	}
+
+	async handleSearch () {
+		const params = this.state.inputSearch.map( ({value}) => value);
+		await this.props.onClick(params);
 	}
 
 	render(props) {
@@ -26,8 +31,8 @@ export default class SearchBar extends Component {
 					value={this.state.inputSearch}/>
 				<button
 					className="btn btn-primary"
-					onClick={() => this.testButon()}>
-					Seach
+					onClick={this.handleSearch.bind(this)}>
+					Search
 				</button>
 			</div>
 		);

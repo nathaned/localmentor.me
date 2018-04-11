@@ -66,7 +66,7 @@ class ProfileClass {
 		this.create({ username });
 	}
 
-	static async find (username) {
+	static async findByUsername (username) {
 		const user = await this.findOne({ username });
 		console.log("user in find function: ", user);
 		return user;
@@ -124,12 +124,12 @@ class ProfileClass {
 	}
 
 	static async appendUnread(recipient, sender) {
-		const user = await this.find(recipient);
+		const user = await this.findByUsername(recipient);
 		if (!user) {
 			console.log("user not found in appendUnread: ", recipient);
 			return;
 		}
-		const user2 = await this.find(sender);
+		const user2 = await this.findByUsername(sender);
 		if (!user2) {
 			console.log("user not found in appendUnread: ", sender);
 			return;
@@ -181,12 +181,12 @@ class ProfileClass {
 	}
 
 	static async requestMentor(requester, requested) {
-		const mentee = await this.find(requester);
+		const mentee = await this.findByUsername(requester);
 		if (!mentee) {
 			console.log("requestMentor: requester (mentee) not found");
 			return;
 		}
-		const mentor = await this.find(requested);
+		const mentor = await this.findByUsername(requested);
 		if (!mentor) {
 			console.log("requestMentor: requested (mentor) not found");
 			return;
@@ -203,6 +203,13 @@ class ProfileClass {
 			requestedMentees.push(requestMentor);
 		}
 		await this.findOneAndUpdate({ username: requester }, { requestedMentees });
+	}
+
+	static async getProfiles(usernames) {
+		const profiles = await this.find(
+			{ username: { $in: usernames } }
+		);
+		return profiles || [];
 	}
 }
 

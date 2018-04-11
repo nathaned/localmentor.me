@@ -12,11 +12,9 @@ const TagsSchema = new Schema({
 	}
 })
 
-class TagsClass {
+class TagClass {
 	// todo use same format for addTag and removeTag (username, tag)
 	static async addMentorToTag(newTag, mentor) {
-		console.log(`------>addMentorToTag function`);
-
 		const isTag = await this.findOne({tag: newTag});
 		if(!isTag){
 			const newRecord = await this.create({ tag: newTag, tagMentors: mentor });
@@ -42,9 +40,28 @@ class TagsClass {
 	// note: the only reason findOne is just is to be able to return false
 	static async findMentors(lookupTag) {
 		const mentors = await this.findOne({tag: lookupTag}, {tagMentors: 1});
-		if(!mentors){return false;}
+		if(!mentors) {
+			return false;
+		}
 		return mentors;
 	};
+
+	static async searchTags(tags) {
+		const result = await this.find(
+			{ tag: { $in: tags } }
+		);
+		console.log(result);
+		if (!result) {
+			console.log("no users found for tags: ", tags);
+			return [];
+		}
+		let usernames = {};
+		// todo this is a mess, oops
+		result.map( ({tagMentors}) => tagMentors.map( x => usernames[x] = true) );
+		console.log(result);
+		console.log("keys: ", Object.keys(usernames));
+		return Object.keys(usernames);
+	}
 
 	// removes username and also deletes tag if empty
 	static async removeMentorFromTag(username, dtag){
@@ -69,7 +86,7 @@ class TagsClass {
 }
 
 
-TagsSchema.loadClass(TagsClass);
+TagsSchema.loadClass(TagClass);
 
 const Tag = mongoose.model('Tag', TagsSchema);
 

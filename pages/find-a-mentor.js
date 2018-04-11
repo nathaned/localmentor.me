@@ -4,7 +4,7 @@ import Head from '../components/head'
 import MentorList from '../components/user/mentorList'
 import { getTags } from '../lib/api/user';
 import SearchBar from '../components/user/searchBar'
-import { checkAuth } from '../lib/api/user'
+import { checkAuth, searchTags } from '../lib/api/user'
 
 export default class FindAMentor extends Component {
 	constructor(props) {
@@ -13,21 +13,6 @@ export default class FindAMentor extends Component {
 			inputSearch: ''
 		};
 	}
-
-	async sendSearch(id, query) {
-
-		const body = JSON.stringify({ query, id });
-		const headers = { 'Content-Type': 'application/json' };
-		const url = this.props.baseUrl + '/api/mentor-list';
-		const response = await fetch(
-			url,
-			{ method: "POST", body, headers }
-		);
-		const res = await response.json();
-		// note that if we do just `query`, it's shorthand for `query: query`
-		this.setState({ mentors: res.list, query });
-	}
-
 	async loadTags() {
 		const tags = await getTags(this.props.baseUrl);
 		this.setState({ tags });
@@ -54,9 +39,11 @@ export default class FindAMentor extends Component {
 		await this.loadTags();
 	}
 
-	testButton()
-	{
-		this.sendSearch(0, "someOtherQuery");
+	async handleSearch (tags) {
+		console.log("going to search, got tags:", tags);
+		const mentors = await searchTags(this.props.baseUrl, tags);
+		console.log("got these guys back: ", mentors);
+		this.setState({ mentors });
 	}
 
 
@@ -84,23 +71,23 @@ export default class FindAMentor extends Component {
 
 								<DashboardNav
 									pageTitle={pageTitle}
-									user={this.state.user}
-								/>
+									user={this.state.user} />
 
 								<div id = "whaterver-you-want-to-call-that-id">
 									FIND A MENTOR
 								</div>
 								{this.state.tags
 									? (
-										<SearchBar tags={this.state.tags}/>
+										<SearchBar
+											onClick={this.handleSearch.bind(this)}
+											tags={this.state.tags} />
 									) : null
 								}
 
-								<div className="mentor-list" id="test">
-									<MentorList
-										baseUrl={this.props.baseUrl}
-										user={this.state.user}/>
-								</div>
+								<MentorList
+									mentors={this.state.mentors}
+									baseUrl={this.props.baseUrl}
+									user={this.state.user} />
 
 							</div>
 						</div>
