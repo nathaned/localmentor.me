@@ -13,20 +13,21 @@ const TagsSchema = new Schema({
 })
 
 class TagsClass {
+	// todo use same format for addTag and removeTag (username, tag)
 	static async addMentorToTag(newTag, mentor) {
 		console.log(`------>addMentorToTag function`);
 
 		const isTag = await this.findOne({tag: newTag});
 		if(!isTag){
-			const newRecord = await this.create({tag: newTag, tagMentors: mentor} );
+			const newRecord = await this.create({ tag: newTag, tagMentors: mentor });
 			console.log(`------> new "${newTag}" tag has been created`);
 			return newRecord;
 		}
 		else{
 			const addmentor = await this.findOneAndUpdate(
-				{tag: newTag},
-				{$addToSet:{tagMentors: mentor}},
-				{new: true}
+				{ tag: newTag },
+				{ $addToSet: { tagMentors: mentor } },
+				{ new: true }
 			);
 			console.log(`------->${mentor} is added to the "${newTag}" tag`);
 			return addmentor;
@@ -34,7 +35,7 @@ class TagsClass {
 	};
 
 	static async exploreAllTags() {
-		const alltags = await this.find({}, {tag: 1});
+		const alltags = await this.find({});
 		return alltags;
 	};
 
@@ -45,20 +46,25 @@ class TagsClass {
 		return mentors;
 	};
 
-	// removes mentor and also deletes tag if empty
-	static async removeMentorFromTag(mentor, dtag){
+	// removes username and also deletes tag if empty
+	static async removeMentorFromTag(username, dtag){
 		const updatedTag = await this.findOneAndUpdate(
 			{ tag: dtag },
-			{ $pull: { tagMentors: mentor } },
+			{ $pull: { tagMentors: username } },
 			{ new: true }
 		);
 
 		const isEmpty = await this.find( { tagMentors: { $size: 0 }});
-		if(isEmpty){
-			await this.remove({tag: dtag});
+		if(isEmpty) {
+			await this.remove({ tag: dtag });
 			return false;
 		}
 		return updatedTag;
+	}
+
+	static async updateUserTags(username, oldTags, newTags) {
+		oldTags.map( tag => this.removeMentorFromTag(username, tag) );
+		newTags.map( tag => this.addMentorToTag(tag, username) );
 	}
 }
 

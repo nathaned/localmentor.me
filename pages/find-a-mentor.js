@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DashboardNav from '../components/user/dashboardNav'
 import Head from '../components/head'
 import MentorList from '../components/user/mentorList'
+import { getTags } from '../lib/api/user';
 import SearchBar from '../components/user/searchBar'
 import { checkAuth } from '../lib/api/user'
 
@@ -27,6 +28,11 @@ export default class FindAMentor extends Component {
 		this.setState({ mentors: res.list, query });
 	}
 
+	async loadTags() {
+		const tags = await getTags(this.props.baseUrl);
+		this.setState({ tags });
+	}
+
 	handleChange(e) {
 		const value = e.target.value;
 		if (e.target.id == "inputSearch")
@@ -45,9 +51,8 @@ export default class FindAMentor extends Component {
 			window.location = '/login';
 
 		this.setState({ user });
+		await this.loadTags();
 	}
-
-
 
 	testButton()
 	{
@@ -65,7 +70,13 @@ export default class FindAMentor extends Component {
 		const pageTitle = "Find a Mentor";
 		return (
 			<div>
-				<Head title="Dashboard" cssFiles={ ["dashboard.css", "dashboardNav.css"] }/>
+				<Head
+					cssFiles={[
+						"dashboard.css",
+						"dashboardNav.css",
+						"react-select.min.css"
+					]}
+					title="Dashboard" />
 				<div className="app-container">
 					<div className="site-wrapper">
 						<div className="site-wrapper-inner">
@@ -79,17 +90,11 @@ export default class FindAMentor extends Component {
 								<div id = "whaterver-you-want-to-call-that-id">
 									FIND A MENTOR
 								</div>
-
-								<div className="search-bar" >
-									<input type="text" id="inputSearch" className="form-control" placeholder="Search for a Mentor" value={this.state.inputSearch} onChange={this.handleChange.bind(this)} required autoFocus/>
-
-									<button className="btn btn-primary" onClick={() => this.testButon()}>
-									{"MENTOR ME"}
-									</button>
-
-									<p></p>
-									<p></p>
-								</div>
+								{this.state.tags
+									? (
+										<SearchBar tags={this.state.tags}/>
+									) : null
+								}
 
 								<div className="mentor-list" id="test">
 									<MentorList

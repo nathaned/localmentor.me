@@ -17,8 +17,16 @@ tagsApi.post('/api/tags/:slug', async (req, res) => {
 // returns all tags in the database
 tagsApi.get('/api/tags', async (req, res) => {
 	const all = await Tags.exploreAllTags();
-	if(!all) {return res.status(403).json("empty tags list");}
-	return res.status(200).json(all);
+	if(!all) {
+		return res.status(403).json({ error: "empty tags list" });
+	}
+	const formattedTags = all.map( ({tagMentors, tag}) =>
+		({
+			value: tag,
+			label: tag + " (" + tagMentors.length + ")"
+		})
+	);
+	return res.status(200).json(formattedTags);
 });
 
 // returns all mentors related to the `slug` tag

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Tag = require('./Tag');
 
 const mongoSchema = new mongoose.Schema({
 	username: {
@@ -160,6 +161,10 @@ class ProfileClass {
 			bio,
 			tags
 		} = profile;
+		if (tags) {
+			const oldTags = await this.getUserTags(username);
+			Tag.updateUserTags(username, oldTags, tags);
+		}
 		await this.findOneAndUpdate(
 			{username},
 			{
