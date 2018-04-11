@@ -201,15 +201,15 @@ class ProfileClass {
 	}
 
 
-	// // called when Mentor accepts a request! uses user in session  (mentor)
-	// // takes care of moving menotrs/mentees from the requested section to actual mentors/mentees
-	// static async acceptRequest(mentor, mentee) {
-	// 	const addmentee = await this.findOne({username: mentor}, {$pull: {requestedMentees: mentee}}, {$addToSet: {mentees: mentee}});
-	// 	if (!user) {return res.status(403).json("not logged in");}
-	//
-	// 	const addmentee = await this.findOne({username: mentee}, {$pull: {requestedMentors: mentor}}, {$addToSet: {mentors: mentor}});
-	// 	if (!user) {return res.status(403).json("mentee not found");}  			// dont see why this is relavent tho, lol
-	// }
+	// called when Mentor accepts a request! uses user in session  (mentor)
+	// takes care of moving menotrs/mentees from the requested section to actual mentors/mentees
+	static async acceptRequest(mentor, mentee) {
+		const addmentee = await this.findOne({username: mentor}, {$pull: {requestedMentees: mentee}}, {$addToSet: {mentees: mentee}});
+		if (!user) {return res.status(403).json("not logged in");}
+
+		const addmentee = await this.findOne({username: mentee}, {$pull: {requestedMentors: mentor}}, {$addToSet: {mentors: mentor}});
+		if (!user) {return res.status(403).json("mentee not found");}  			// dont see why this is relavent tho, lol
+	}
 
 	// must be signed in to work, uses user in session
 	static async checkMentors(user) {
