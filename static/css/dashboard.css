@@ -88,6 +88,9 @@ a:hover {
 
 #search-bar {
 	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding: 10px;
 }
 
 .Select {
@@ -98,12 +101,11 @@ a:hover {
 
 .Select--multi {
 	flex: 30;
+	margin-right: 5%;
+	min-width: 200px;
 }
 
 .Select--single {
 	flex: 10;
-}
-
-#search-button {
-	margin-left: 15px;
+	min-width: 150px;
 }

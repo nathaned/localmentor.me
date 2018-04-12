@@ -62,10 +62,10 @@ export default class FindAMentor extends Component {
 					cssFiles={[
 						"dashboard.css",
 						"dashboardNav.css",
+						"profileCard.css",
 						"react-select.min.css"
 					]}
 					title="Dashboard" />
-				<Head title="Dashboard" cssFiles={ ["dashboard.css", "findMentor.css"] }/>
 				<div className="app-container">
 					<div className="site-wrapper">
 						<div className="site-wrapper-inner">
