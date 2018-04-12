@@ -73,8 +73,8 @@ export default class FindAMentor extends Component {
 
 								<DashboardNav
 									pageTitle={pageTitle}
-									user={this.state.user} 
-                />
+									user={this.state.user}
+								/>
 
 								<div id = "whaterver-you-want-to-call-that-id">
 									FIND A MENTOR
