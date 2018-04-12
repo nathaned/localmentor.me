@@ -7,9 +7,11 @@ export default class Header extends Component {
 	render(props) {
 		return (
 			<div className="masthead ">
-					<nav className="navbar nnavbar-expand-xl navbar-dark bg-primary">
+			<div className="inner">
+					<nav className="navbar nnavbar-expand-xl navbar-dark bg-dark">
+					<img src="../../static/images/network.png" height="42" width="42"/>
 						<a	href="/"
-							className={"btn btn-primary" + (
+							className={"btn btn-dark" + (
 								this.props.page == "home"
 									? " active"
 									: " "
@@ -17,7 +19,7 @@ export default class Header extends Component {
 							Home
 						</a>
 						<a	href="/login"
-							className={"btn btn-primary" + (
+							className={"btn btn-dark" + (
 								this.props.page == "login"
 									? " active"
 									: " "
@@ -25,7 +27,7 @@ export default class Header extends Component {
 							Sign In
 						</a>
 						<a	href="/contact"
-							className={"btn btn-primary" + (
+							className={"btn btn-dark" + (
 								this.props.page == "Contact"
 									? " active"
 									: " "
@@ -33,6 +35,7 @@ export default class Header extends Component {
 							Contact
 						</a>
 					</nav>
+					</div>
 			</div>
 		);
 	}

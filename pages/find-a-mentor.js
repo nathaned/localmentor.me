@@ -56,6 +56,7 @@ export default class FindAMentor extends Component {
 	render() {
 		const pageTitle = "Find a Mentor";
 		return (
+
 			<div>
 				<Head
 					cssFiles={[
@@ -64,6 +65,7 @@ export default class FindAMentor extends Component {
 						"react-select.min.css"
 					]}
 					title="Dashboard" />
+				<Head title="Dashboard" cssFiles={ ["dashboard.css", "findMentor.css"] }/>
 				<div className="app-container">
 					<div className="site-wrapper">
 						<div className="site-wrapper-inner">
@@ -71,7 +73,8 @@ export default class FindAMentor extends Component {
 
 								<DashboardNav
 									pageTitle={pageTitle}
-									user={this.state.user} />
+									user={this.state.user} 
+                />
 
 								<div id = "whaterver-you-want-to-call-that-id">
 									FIND A MENTOR
