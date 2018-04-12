@@ -220,7 +220,7 @@ class ProfileClass {
 	static async getProfiles(usernames) {
 		const profiles = await this.find(
 			{ username: { $in: usernames } }
-		).sort({ rating500: descending });
+		).sort({ rating500: 'descending' });
 		return profiles || [];
 	}
 
