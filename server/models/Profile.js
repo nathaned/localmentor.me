@@ -230,7 +230,9 @@ class ProfileClass {
 			console.log("user " + username + " not found in rateUser");
 			return false;
 		}
-		const newRating = (profile.sumRatings + rating) / (profile.numRatings + 1) * 100;
+		const newRating = Math.floor(
+			(profile.sumRatings + rating) / (profile.numRatings + 1) * 100
+		);
 		await this.findOneAndUpdate(
 			{ username },
 			{
