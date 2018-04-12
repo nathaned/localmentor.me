@@ -86,11 +86,14 @@ export default class FindAMentor extends Component {
 											tags={this.state.tags} />
 									) : null
 								}
-
-								<MentorList
-									mentors={this.state.mentors}
-									baseUrl={this.props.baseUrl}
-									user={this.state.user} />
+								{this.state.mentors
+									? (
+										<MentorList
+											mentors={this.state.mentors}
+											baseUrl={this.props.baseUrl}
+											user={this.state.user} />
+									) : null
+								}
 
 							</div>
 						</div>

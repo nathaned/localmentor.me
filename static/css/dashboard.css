@@ -86,9 +86,24 @@ a:hover {
 	}
 }
 
+#search-bar {
+	display: flex;
+}
+
 .Select {
 	color: black;
 	text-shadow: none;
 	float: left;
-	width: calc(100% - 100px);
+}
+
+.Select--multi {
+	flex: 30;
+}
+
+.Select--single {
+	flex: 10;
+}
+
+#search-button {
+	margin-left: 15px;
 }
