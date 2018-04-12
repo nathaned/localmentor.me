@@ -31,7 +31,7 @@ a:hover {
 #whaterver-you-want-to-call-that-id {
 	font-size: 75px;
 	color: yellow;
-	background-color: white;
+	background-color: gray;
 }
 
 .app-container {
@@ -84,4 +84,11 @@ a:hover {
 	.cover-container {
 		width: 62rem;
 	}
+}
+
+.Select {
+	color: black;
+	text-shadow: none;
+	float: left;
+	width: calc(100% - 100px);
 }

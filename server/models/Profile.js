@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Tag = require('./Tag');
 
 const mongoSchema = new mongoose.Schema({
 	username: {
@@ -57,6 +58,18 @@ const mongoSchema = new mongoose.Schema({
 	unreads: {
 		type: [String],
 		default: []
+	},
+	numRatings: {
+		type: Number,
+		default: 0
+	},
+	sumRatings: {
+		type: Number,
+		default: 0
+	},
+	rating500: {
+		type: Number,
+		default: 0
 	}
 });
 
@@ -65,7 +78,7 @@ class ProfileClass {
 		this.create({ username });
 	}
 
-	static async find (username) {
+	static async findByUsername (username) {
 		const user = await this.findOne({ username });
 		console.log("user in find function: ", user);
 		return user;
@@ -123,12 +136,12 @@ class ProfileClass {
 	}
 
 	static async appendUnread(recipient, sender) {
-		const user = await this.find(recipient);
+		const user = await this.findByUsername(recipient);
 		if (!user) {
 			console.log("user not found in appendUnread: ", recipient);
 			return;
 		}
-		const user2 = await this.find(sender);
+		const user2 = await this.findByUsername(sender);
 		if (!user2) {
 			console.log("user not found in appendUnread: ", sender);
 			return;
@@ -160,6 +173,10 @@ class ProfileClass {
 			bio,
 			tags
 		} = profile;
+		if (tags) {
+			const oldTags = await this.getUserTags(username);
+			Tag.updateUserTags(username, oldTags, tags);
+		}
 		await this.findOneAndUpdate(
 			{username},
 			{
@@ -176,12 +193,12 @@ class ProfileClass {
 	}
 
 	static async requestMentor(requester, requested) {
-		const mentee = await this.find(requester);
+		const mentee = await this.findByUsername(requester);
 		if (!mentee) {
 			console.log("requestMentor: requester (mentee) not found");
 			return;
 		}
-		const mentor = await this.find(requested);
+		const mentor = await this.findByUsername(requested);
 		if (!mentor) {
 			console.log("requestMentor: requested (mentor) not found");
 			return;
@@ -198,6 +215,33 @@ class ProfileClass {
 			requestedMentees.push(requestMentor);
 		}
 		await this.findOneAndUpdate({ username: requester }, { requestedMentees });
+	}
+
+	static async getProfiles(usernames) {
+		const profiles = await this.find(
+			{ username: { $in: usernames } }
+		).sort({ rating500: 'descending' });
+		return profiles || [];
+	}
+
+	static async rateUser(username, rating) {
+		const profile = await this.findByUsername(username);
+		if (!profile) {
+			console.log("user " + username + " not found in rateUser");
+			return false;
+		}
+		const newRating = Math.floor(
+			(profile.sumRatings + rating) / (profile.numRatings + 1) * 100
+		);
+		await this.findOneAndUpdate(
+			{ username },
+			{
+				sumRatings: (profile.sumRatings + rating),
+				numRatings: (profile.numRatings + 1),
+				rating500: newRating
+			}
+		);
+
 	}
 }
 
