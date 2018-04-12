@@ -58,6 +58,18 @@ const mongoSchema = new mongoose.Schema({
 	unreads: {
 		type: [String],
 		default: []
+	},
+	numRatings: {
+		type: Number,
+		default: 0
+	},
+	sumRatings: {
+		type: Number,
+		default: 0
+	},
+	rating500: {
+		type: Number,
+		default: 0
 	}
 });
 
@@ -208,8 +220,26 @@ class ProfileClass {
 	static async getProfiles(usernames) {
 		const profiles = await this.find(
 			{ username: { $in: usernames } }
-		);
+		).sort({ rating500: descending });
 		return profiles || [];
+	}
+
+	static async rateUser(username, rating) {
+		const profile = await this.findByUsername(username);
+		if (!profile) {
+			console.log("user " + username + " not found in rateUser");
+			return false;
+		}
+		const newRating = (profile.sumRatings + rating) / (profile.numRatings + 1) * 100;
+		await this.findOneAndUpdate(
+			{ username },
+			{
+				sumRatings: (profile.sumRatings + rating),
+				numRatings: (profile.numRatings + 1),
+				rating500: newRating
+			}
+		);
+
 	}
 }
 
