@@ -13,7 +13,7 @@ dotenv.config();
 
 // create a connection to the mongodb (MONGO_URI needs to be defined in .env file)
 const URI = process.env.MONGO_URI;
-if (!URI) return 	console.log("\n\n\n\n\n\n!!!!!! You need to set up .env !!!!\n\n\n");
+if (!URI) return console.log("\n\n\n\n\n\n!!!!!! You need to set up .env !!!!\n\n\n");
 mongoose.connect(URI);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

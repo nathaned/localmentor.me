@@ -28,7 +28,7 @@ class UserClass {
 	}
 
 	static async authenticate (username, password, passwordHash) {
-		const user = await this.find(username);
+		const user = await this.findByUsername(username);
 		if (!user) {
 			console.log("user not found");
 			return false;
@@ -45,7 +45,7 @@ class UserClass {
 		return user;
 	}
 
-	static async find (username) {
+	static async findByUsername (username) {
 		const user = await this.findOne({ username });
 		console.log("user in find function: ", user);
 		return user;
@@ -53,7 +53,7 @@ class UserClass {
 
 	static async createUser (username, password) {
 		// if the user is already in the database, then don't allow it to be added
-		if ( await this.find(username) ) {
+		if ( await this.findByUsername(username) ) {
 			const error = "Username Taken";
 			console.log(error);
 			return { error };
