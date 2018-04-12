@@ -33,11 +33,15 @@ class UserClass {
 			console.log("user not found");
 			return false;
 		}
-		console.log(user);
-		console.log(user.password)
-		console.log(password)
+		console.log("found user: ", user);
+		console.log("actual password", user.password);
+		console.log("entered password", password);
 
-		if (user.password != password) { // todo change this to hash
+		const isMatch = await bcrypt.compare(password, user.passwordHash).
+			catch(error => false);
+		console.log("isMatch", isMatch);
+
+		if (!isMatch) {
 			console.log("incorrect password");
 			return false;
 		}
@@ -69,6 +73,27 @@ class UserClass {
 		return user;
 	}
 }
+
+mongoSchema.pre('save', function(next) {
+	var user = this;
+
+	// only hash the password if it has been modified (or is new)
+	if (!user.isModified('password')) return next();
+
+	// generate a salt
+	bcrypt.genSalt(3, function(err, salt) {
+		if (err) return next(err);
+
+		// hash the password along with our new salt
+		bcrypt.hash(user.password, salt, function(err, hash) {
+			if (err) return next(err);
+
+			// override the cleartext password with the hashed one
+			user.passwordHash = hash;
+			next();
+		});
+	});
+});
 
 mongoSchema.loadClass(UserClass);
 
