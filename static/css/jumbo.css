@@ -1,4 +1,5 @@
 .trans {
    background: rgb(0, 0, 0) !important; /* This is for ie8 and below */
    background: rgba(0, 0, 0, .7) !important;
+       border-radius: 1rem !important;
 }
