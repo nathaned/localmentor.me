@@ -10,7 +10,7 @@ connectionsApi.get('/api/connections/acceptRequest/:mentee', async (req, res) =>
 		return res.sendStatus(403);
 	}
 
-	const accepted = Profile.acceptRequest(user, req.params.slug);
+	const accepted = Profile.acceptRequest(user, req.params.mentee);
 	if (!accepted) {
 		const error = "failed accept request";
 		return res.status(404).json({ error });
@@ -26,7 +26,7 @@ connectionsApi.get('/api/connections/ignoreRequest/:mentee', async (req, res) =>
 		return res.sendStatus(403);
 	}
 
-	const ignored = Profile.ignoreRequest(user, req.params.slug);
+	const ignored = Profile.ignoreRequest(user, req.params.mentee);
 	if (!ignored) {
 		const error = "failed accept request";
 		return res.status(404).json({ error });
