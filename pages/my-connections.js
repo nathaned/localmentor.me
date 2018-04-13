@@ -1,25 +1,116 @@
-import Head from '../components/head'
+import React, { Component } from 'react';
 import DashboardNav from '../components/user/dashboardNav'
-import Dashboard from '../components/user/dashboard'
+import ConnectionsList from '../components/user/connectionsList'
+import Head from '../components/head'
+import { getTags } from '../lib/api/user';
+import SearchBar from '../components/user/searchBar'
+import { checkAuth, searchTags } from '../lib/api/user'
 
-const pageTitle = "My Connections";
 
-export default () => (
-	<div>
-		<Head
-			cssFiles={[
-				"dashboardNav.css", "connections.css", "profileCard.css"
-			]}
-			title={pageTitle} />
-		<div className="app-container">
-			<div className="site-wrapper">
-				<div className="site-wrapper-inner">
-					<div className="cover-container">
-						<DashboardNav pageTitle={pageTitle}/>
-						<Dashboard pageTitle={pageTitle}/>
+
+export default class MyConnectionsTest extends Component {
+	
+	constructor(props) {
+		super(props);
+		this.state = {
+			inputSearch: ''
+		};
+	}
+	
+	async loadTags() {
+		const tags = await getTags(this.props.baseUrl);
+		this.setState({ tags });
+	}
+
+
+	async componentDidMount() {
+		// check if the user is logged in
+		const user = await checkAuth(this.props.baseUrl);
+
+		// if not logged in, send them to the login page
+		// TODO send them to something like /login?redirect=find-a-mentor
+		if (!user)
+			window.location = '/login';
+
+		this.setState({ user });
+		await this.loadTags();
+	}
+
+	async handleSearch (tags) {
+		console.log("going to search, got tags:", tags);
+		const mentors = await searchTags(this.props.baseUrl, tags);
+		console.log("got these guys back: ", mentors);
+		this.setState({ mentors });
+	}
+
+
+	static getInitialProps({ req }) {
+		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
+		return { baseUrl };
+	}
+
+
+	render() {
+		const pageTitle = "My Connections";
+		return (
+
+			<div>
+				<Head
+					cssFiles={[
+						"dashboard.css",
+						"dashboardNav.css",
+						"profileCard.css",
+						"react-select.min.css",
+						"jumbo.css"
+					]}
+					title="Dashboard" />
+				<div className="app-container">
+					<div className="site-wrapper">
+						<div >
+							<div className="cover-container">
+							<p></p>
+								<DashboardNav
+									pageTitle={pageTitle}
+									user={this.state.user}
+								/>
+
+								<p>&nbsp;</p>
+								<p>&nbsp;</p>
+								<p>&nbsp;</p>
+								
+								<div className="jumbotron trans">
+									<h1>Connections</h1>
+
+									
+									{this.state.connections
+										? (
+											<ConnectionsList
+												mentors={this.state.mentors}
+												mentees={this.state.mentees}
+												baseUrl={this.props.baseUrl}
+												user={this.state.user} />
+										) : <h2>NULL</h2>
+									}
+									
+									
+										
+									<ConnectionsList
+										
+										baseUrl={this.props.baseUrl}
+										user={this.state.user} />
+										
+									
+									
+									
+								</div>
+
+								
+							</div>
+						</div>
 					</div>
 				</div>
+
 			</div>
-		</div>
-	</div>
-)
+		);
+	}
+}

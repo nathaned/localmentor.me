@@ -73,4 +73,26 @@ export default class ProfileCard extends Component {
 			</div>
 		);
 	}
+	
+	
+	renderConnectionsProfile() {
+		const {
+			email,
+			firstName,
+			lastName,
+			location,
+			tags,
+			bio
+		} = this.props;
+
+		return (
+			<div className="profileCard">
+
+				<Gravatar protocol="https://" email={email} />
+				{ " " + firstName + " " + lastName + " Location: " + location + " " }
+				<p></p>
+
+			</div>
+		);
+	}
 }
