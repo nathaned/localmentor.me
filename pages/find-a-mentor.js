@@ -66,7 +66,6 @@ export default class FindAMentor extends Component {
 						"jumbo.css"
 					]}
 					title="Dashboard" />
-				<Head title="Dashboard" cssFiles={ ["dashboard.css", "findMentor.css"] }/>
 				<div className="app-container">
 					<div className="site-wrapper">
 						<div >
@@ -75,7 +74,7 @@ export default class FindAMentor extends Component {
 								<DashboardNav
 									pageTitle={pageTitle}
 									user={this.state.user}
-                />
+								/>
 								<p>&nbsp;</p>
 								<p>&nbsp;</p>
 								<p>&nbsp;</p>
