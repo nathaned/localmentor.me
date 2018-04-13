@@ -3,7 +3,7 @@ import ProfileCard from './profileCard';
 import Gravatar from 'react-gravatar';
 import { getProfile, getTags, updateProfile } from '../../lib/api/user';
 import NProgress from 'nprogress';
-import Select from 'react-select'
+import Select from 'react-select';
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -23,14 +23,7 @@ export default class Profile extends Component {
 	}
 
 	async loadTags() {
-		console.log("getting tags");
-		const tags = [
-			{ label: "do (3)", value: "do" },
-			{ label: "re (3)", value: "re" },
-			{ label: "me (3)", value: "me" },
-			{ label: "fa (3)", value: "fa" },
-			{ label: "really long one! (0)", value: "really long one!" }
-		];
+		const tags = await getTags(this.props.baseUrl);
 		this.setState({ tags });
 	}
 

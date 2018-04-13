@@ -66,7 +66,7 @@ export default class Register extends Component {
 	}
 
 	handleChange(e) {
-		value = e.target.value;
+		const value = e.target.value;
 		if (e.target.id == "inputUsername")
 			this.setState({ inputUsername: value });
 		else if (e.target.id == "inputPassword")
