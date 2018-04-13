@@ -62,7 +62,8 @@ export default class FindAMentor extends Component {
 					cssFiles={[
 						"dashboard.css",
 						"dashboardNav.css",
-						"react-select.min.css",
+						"profileCard.css",
+						"react-select.min.css"
 						"jumbo.css"
 					]}
 					title="Dashboard" />
@@ -75,6 +76,7 @@ export default class FindAMentor extends Component {
 									pageTitle={pageTitle}
 									user={this.state.user}
 								/>
+
 								<p>&nbsp;</p>
 								<p>&nbsp;</p>
 								<p>&nbsp;</p>
@@ -89,11 +91,14 @@ export default class FindAMentor extends Component {
 											tags={this.state.tags} />
 									) : null
 								}
-
-								<MentorList
-									mentors={this.state.mentors}
-									baseUrl={this.props.baseUrl}
-									user={this.state.user} />
+								{this.state.mentors
+									? (
+										<MentorList
+											mentors={this.state.mentors}
+											baseUrl={this.props.baseUrl}
+											user={this.state.user} />
+									) : null
+								}
 
 
 								</div>

@@ -36,6 +36,7 @@ export default class MyProfile extends Component {
 					cssFiles={[
 						"dashboardNav.css",
 						"profile.css",
+						"profileCard.css"
 						"nprogress.css",
 						"react-select.min.css"
 					]}

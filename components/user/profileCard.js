@@ -6,60 +6,70 @@ export default class ProfileCard extends Component {
 		super(props);
 	}
 
-
 	render() {
 		return (
 			this.props.expanded
 				? this.renderExpandedProfile()
 				: this.renderShortProfile()
-
 		);
 	}
-	
+
 	// This currently isnt working
 	toggleExpanded(){
-		
-		alert('click');
 		this.setState({expanded: !this.state.expanded});
-		
+
 	}
-	
+
 	renderActionButton() {
 		return (
 			<button className="btn btn-primary" onClick={() => this.toggleExpanded()}>
-						{"MENTOR ME"}
+				{"MENTOR ME"}
 			</button>
 		)
 	}
-	
-	
 
 	renderExpandedProfile() {
+		const {
+			email,
+			firstName,
+			lastName,
+			location,
+			bio,
+			tags,
+			rating500,
+			numRatings
+		} = this.props;
+
 		return (
 			<div className="profileCard" onClick={this.props.onClick}>
 				<div className="profle-picture">
-					<Gravatar protocol="https://" email={this.props.email} />
+					<Gravatar protocol="https://" email={email} />
 				</div>
 				<div className="profile-content">
-					{ this.props.firstName + this.props.lastName } <br/>
-					{ this.props.title }
+					{ firstName + lastName } <br/>
 					{ this.renderActionButton() }
 				</div>
-				
-				
-				
 			</div>
 		);
 	}
 
 	renderShortProfile() {
+		const {
+			email,
+			firstName,
+			lastName,
+			location,
+			tags,
+			bio
+		} = this.props;
+
 		return (
 			<div className="profileCard">
-				
-				<Gravatar protocol="https://" email="mathews.kyle@gmail.com" />
-				{ " " + this.props.firstName + " " + this.props.lastName + " Distance: " + this.props.distanceAway + " " } 
+
+				<Gravatar protocol="https://" email={email} />
+				{ " " + firstName + " " + lastName + " Location: " + location + " " }
 				<p></p>
-				
+
 			</div>
 		);
 	}

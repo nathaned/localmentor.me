@@ -21,27 +21,6 @@ export default class MentorList extends Component {
 		this.setState({ mentors: res.list, query });
 	}
 
-	getMentors(id, query){
-		if (this.state && this.state.query == query) {
-			return (
-				this.state.mentors.map((item, i) =>
-					<ProfileCard
-						username = {item.username}
-						rating = {item.rating}
-						profileText = {item.profileText}
-						distanceAway = {item.distanceAway}
-						tags = {item.Tags}
-						key = {i}
-						expanded = {0}
-						firstName = {item.firstName}
-						lastName = {item.lastName}
-					/>
-
-			));
-		}
-		else this.loadMentors(id, query)
-	}
-
 	renderMentors() {
 		const mentors = this.props.mentors;
 		console.log("mentors in renderMentors");
