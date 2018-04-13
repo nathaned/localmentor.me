@@ -63,7 +63,7 @@ export default class FindAMentor extends Component {
 						"dashboard.css",
 						"dashboardNav.css",
 						"profileCard.css",
-						"react-select.min.css"
+						"react-select.min.css",
 						"jumbo.css"
 					]}
 					title="Dashboard" />
@@ -80,27 +80,25 @@ export default class FindAMentor extends Component {
 								<p>&nbsp;</p>
 								<p>&nbsp;</p>
 								<p>&nbsp;</p>
-								<div class="jumbotron trans">
 
-								<h1>Find a Mentor</h1>
+								<div className="jumbotron trans">
+									<h1>Find a Mentor</h1>
 
-								{this.state.tags
-									? (
-										<SearchBar
-											onClick={this.handleSearch.bind(this)}
-											tags={this.state.tags} />
-									) : null
-								}
-								{this.state.mentors
-									? (
-										<MentorList
-											mentors={this.state.mentors}
-											baseUrl={this.props.baseUrl}
-											user={this.state.user} />
-									) : null
-								}
-
-
+									{this.state.tags
+										? (
+											<SearchBar
+												onClick={this.handleSearch.bind(this)}
+												tags={this.state.tags} />
+										) : null
+									}
+									{this.state.mentors
+										? (
+											<MentorList
+												mentors={this.state.mentors}
+												baseUrl={this.props.baseUrl}
+												user={this.state.user} />
+										) : null
+									}
 								</div>
 							</div>
 						</div>
