@@ -85,7 +85,6 @@ class TagClass {
 	}
 }
 
-
 TagsSchema.loadClass(TagClass);
 
 const Tag = mongoose.model('Tag', TagsSchema);

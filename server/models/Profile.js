@@ -70,9 +70,10 @@ const mongoSchema = new mongoose.Schema({
 	rating500: {
 		type: Number,
 		default: 0
-	}
+	},
 	blocked: {
-		type: String
+		type: [String],
+		default: []
 	}
 });
 
@@ -220,43 +221,36 @@ class ProfileClass {
 		await this.findOneAndUpdate({ username: requester }, { requestedMentees });
 	}
 
-
 	// called when Mentor accepts a request! uses user in session  (mentor)
 	// takes care of moving menotrs/mentees from the requested section to actual mentors/mentees
 	static async acceptRequest(mentor, mentee) {
-		const addmentee = await this.findOne({username: mentor}, {$pull: {requestedMentees: mentee}}, {$addToSet: {mentees: mentee}});
-		if (!addmentee) {return res.status(403).json("not logged in");}
-
-		const addmentor = await this.findOne({username: mentee}, {$pull: {requestedMentors: mentor}}, {$addToSet: {mentors: mentor}});
-		if (!addmentor) {return res.status(403).json("mentee not found");}  			// dont see why this is relavent tho, lol
+		const addedMentee = await this.findOne({username: mentor}, {$pull: {requestedMentees: mentee}}, {$addToSet: {mentees: mentee}});
+		console.log("added mentee in acceptRequest:", addedMentee);
+		return addedMentee;
 	}
 
 	static async ignoreRequest(mentor, mentee) {
-		const addmentee = await this.findOne({username: mentor}, {$pull: {requestedMentees: mentee}});
-		if (!addmentee) {return res.status(403).json("not logged in");}
-
-		const addmentor = await this.findOne({username: mentee}, {$pull: {requestedMentors: mentor}});
-		if (!addmentor) {return res.status(403).json("mentee not found");}
+		const ignoredMentee = await this.findOne(
+			{username: mentor}, {$pull: {requestedMentees: mentee}}
+		);
+		console.log("ignoredMentee in ignoreRequest: ", ignoredMentee);
+		return ignoredMentee;
 	}
 
-	// must be signed in to work, uses user in session
-	static async checkMentors(user) {
-		const mentorList = await this.findOne({username: user}, {mentors: 1});
-		if(!mentorList){return false;}
-
-		// gonna try to figure out a way iterate thru the array and have
-		// the profile of each as an object in a json array
-
-		return mentorList;
+	static async getMentors(username) {
+		const profile = await this.findOne({ username }, {mentors: 1});
+		console.log("profile in checkMentors", mentorList);
+		if (!profile) {
+			return false;
+		}
+		return profile.mentors;
 	}
 
 	static async checkMentees(user) {
 		const menteeList = await this.findOne({username: user}, {mentors: 1});
 		if(!menteeList){return false;}
-
-		// gonna try to figure out a way iterate thru the array and have
-		// the profile of each as an object in a json array
 		return menteeList;
+	}
 
 	static async getProfiles(usernames) {
 		const profiles = await this.find(
@@ -265,18 +259,13 @@ class ProfileClass {
 		return profiles || [];
 	}
 
-
-// assumes being passed an already Taged list
 	static async limitLocation(usernames, currentLocation) {
-		const profiles = await this.find(
-			{ location: currentLocation }
-		);
+		const profiles = await this.find({
+				location: currentLocation,
+				username: { $in: usernames }
+		});
 		return profiles || [];
 	}
-
-
-
-
 
 	static async rateUser(username, rating) {
 		const profile = await this.findByUsername(username);
@@ -298,8 +287,6 @@ class ProfileClass {
 
 	}
 }
-
-
 
 mongoSchema.loadClass(ProfileClass);
 
