@@ -52,6 +52,9 @@ export default class MyConnectionsTest extends Component {
 
 	render() {
 		const pageTitle = "My Connections";
+		
+		
+		
 		return (
 
 			<div>
@@ -80,6 +83,7 @@ export default class MyConnectionsTest extends Component {
 								
 								<div className="jumbotron trans">
 									<h1>Connections</h1>
+									
 
 									
 									{this.state.connections
@@ -93,14 +97,12 @@ export default class MyConnectionsTest extends Component {
 									}
 									
 									
-										
+
 									<ConnectionsList
 										
 										baseUrl={this.props.baseUrl}
 										user={this.state.user} />
 										
-									
-									
 									
 								</div>
 

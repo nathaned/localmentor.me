@@ -11,7 +11,7 @@ export default class ConnectionList extends Component {
 	async loadMentors(id, query) {
 		const body = JSON.stringify({ query, id });
 		const headers = { 'Content-Type': 'application/json' };
-		const url = this.props.baseUrl + '/api/mentor-list';
+		const url = this.props.baseUrl + '/api/connections/mentors';
 		const response = await fetch(
 			url,
 			{ method: "POST", body, headers }
@@ -24,7 +24,7 @@ export default class ConnectionList extends Component {
 	async loadMentees(id, query) {
 		const body = JSON.stringify({ query, id });
 		const headers = { 'Content-Type': 'application/json' };
-		const url = this.props.baseUrl + '/api/mentor-list';
+		const url = this.props.baseUrl + '/api/connections/mentees';
 		const response = await fetch(
 			url,
 			{ method: "POST", body, headers }
@@ -80,46 +80,23 @@ export default class ConnectionList extends Component {
 		const mentors = this.props.mentors;
 		const mentees = this.props.mentees;
 		
-		if (!mentors || mentors.length == 0) {
-			
-			if (!mentees || mentees.length == 0) {
-			
-			
-				return (
-					<div>No results.</div>
-				)
-				}
-			else
-			{
-				return (
-					<div className="mentee list">
-						{ this.renderMentees() }
-					</div>
-				)
-			}
-		}
+		return (
 		
-		if (!mentees || mentees.length == 0) {
-			
-			
-			return (
-				
-				<div className="mentor list">
-					{ this.renderMentors() }
-				</div>
-			)
-		}
-		
-		else
-		{
-			return (
-			
-				<div className="mentee list">
-					{ this.renderMentees() }
-					{ this.renderMentors() }
-				</div>
-			)
-		}
+			<div className="mentee list">
+				<ProfileCard
+					username = {"abc"}
+					rating = {5}
+					profileText = {"NOTHING"}
+					distanceAway = {5}
+					tags = {"hahah"}
+					key = {0}
+					connections = {1}
+					expanded = {1}
+					firstName = {"ajjjjay "}
+					lastName = {"something"}
+				/>
+			</div>
+		)
 
 	}
 }

@@ -8,9 +8,14 @@ export default class ProfileCard extends Component {
 
 	render() {
 		return (
-			this.props.expanded
-				? this.renderExpandedProfile()
-				: this.renderShortProfile()
+			
+			this.props.connections
+				? this.renderConnectionsProfile()
+				:(this.props.expanded
+					? this.renderExpandedProfile()
+					: this.renderShortProfile()
+				
+				)
 		);
 	}
 
@@ -19,14 +24,40 @@ export default class ProfileCard extends Component {
 		this.setState({expanded: !this.state.expanded});
 
 	}
+	
+	
+	acceptMentor(){
+		
+	}
+	
+	ignoreMentor(){
+		
+	}
 
-	renderActionButton() {
+	renderRequestButton() {
 		return (
-			<button className="btn btn-primary" onClick={() => this.toggleExpanded()}>
+			<button id = "requestButton" className="btn btn-primary" onClick={() => this.toggleExpanded()}>
 				{"MENTOR ME"}
 			</button>
 		)
 	}
+	
+	renderAcceptButton() {
+		return (
+			<button id = "acceotButton" className="btn btn-primary" onClick={() => this.acceptMentor()}>
+				{"Accept"}
+			</button>
+		)
+	}
+	
+	renderIgnoreButton() {
+		return (
+			<button id = "ignoreButton" className="btn btn-primary" onClick={() => this.ignoreMentor()}>
+				{"Ignore"}
+			</button>
+		)
+	}
+	
 
 	renderExpandedProfile() {
 		const {
@@ -47,7 +78,7 @@ export default class ProfileCard extends Component {
 				</div>
 				<div className="profile-content">
 					{ firstName + lastName } <br/>
-					{ this.renderActionButton() }
+					{ this.renderRequestButton() }
 				</div>
 			</div>
 		);
@@ -81,17 +112,22 @@ export default class ProfileCard extends Component {
 			firstName,
 			lastName,
 			location,
+			bio,
 			tags,
-			bio
+			rating500,
+			numRatings
 		} = this.props;
 
 		return (
-			<div className="profileCard">
-
-				<Gravatar protocol="https://" email={email} />
-				{ " " + firstName + " " + lastName + " Location: " + location + " " }
-				<p></p>
-
+			<div className="profileCard" onClick={this.props.onClick}>
+				<div className="profle-picture">
+					<Gravatar protocol="https://" email={email} />
+				</div>
+				<div className="profile-content">
+					{ firstName + lastName } <br/>
+					{ this.renderAcceptButton() }
+					{ this.renderIgnoreButton() }
+				</div>
 			</div>
 		);
 	}
