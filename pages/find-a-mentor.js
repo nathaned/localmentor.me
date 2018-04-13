@@ -9,9 +9,7 @@ import { checkAuth, searchTags } from '../lib/api/user'
 export default class FindAMentor extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			inputSearch: ''
-		};
+		this.state = { inputSearch: '', tags: [] };
 	}
 	async loadTags() {
 		const tags = await getTags(this.props.baseUrl);
@@ -71,19 +69,14 @@ export default class FindAMentor extends Component {
 						pageTitle={pageTitle}
 						user={this.state.user}
 					/>
-					<div className="app-container">
-						<div className="cover-container">
-							<div className="jumbotron trans">
-
+					<div className="cover-container">
+						<div className="jumbotron trans">
 							<h1>Find a Mentor</h1>
 
-							{this.state.tags
-								? (
-									<SearchBar
-										onClick={this.handleSearch.bind(this)}
-										tags={this.state.tags} />
-								) : null
-							}
+							<SearchBar
+								onClick={this.handleSearch.bind(this)}
+								tags={this.state.tags} />
+
 							{this.state.mentors
 								? (
 									<MentorList
@@ -92,10 +85,8 @@ export default class FindAMentor extends Component {
 										user={this.state.user} />
 								) : null
 							}
-							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		);
