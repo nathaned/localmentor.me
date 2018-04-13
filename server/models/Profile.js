@@ -70,6 +70,10 @@ const mongoSchema = new mongoose.Schema({
 	rating500: {
 		type: Number,
 		default: 0
+	},
+	blocked: {
+		type: [String],
+		default: []
 	}
 });
 
@@ -217,10 +221,49 @@ class ProfileClass {
 		await this.findOneAndUpdate({ username: requester }, { requestedMentees });
 	}
 
+	// called when Mentor accepts a request! uses user in session  (mentor)
+	// takes care of moving menotrs/mentees from the requested section to actual mentors/mentees
+	static async acceptRequest(mentor, mentee) {
+		const addedMentee = await this.findOne({username: mentor}, {$pull: {requestedMentees: mentee}}, {$addToSet: {mentees: mentee}});
+		console.log("added mentee in acceptRequest:", addedMentee);
+		return addedMentee;
+	}
+
+	static async ignoreRequest(mentor, mentee) {
+		const ignoredMentee = await this.findOne(
+			{username: mentor}, {$pull: {requestedMentees: mentee}}
+		);
+		console.log("ignoredMentee in ignoreRequest: ", ignoredMentee);
+		return ignoredMentee;
+	}
+
+	static async getMentors(username) {
+		const profile = await this.findOne({ username }, {mentors: 1});
+		console.log("profile in checkMentors", mentorList);
+		if (!profile) {
+			return false;
+		}
+		return profile.mentors;
+	}
+
+	static async checkMentees(user) {
+		const menteeList = await this.findOne({username: user}, {mentors: 1});
+		if(!menteeList){return false;}
+		return menteeList;
+	}
+
 	static async getProfiles(usernames) {
 		const profiles = await this.find(
 			{ username: { $in: usernames } }
 		).sort({ rating500: 'descending' });
+		return profiles || [];
+	}
+
+	static async limitLocation(usernames, currentLocation) {
+		const profiles = await this.find({
+				location: currentLocation,
+				username: { $in: usernames }
+		});
 		return profiles || [];
 	}
 

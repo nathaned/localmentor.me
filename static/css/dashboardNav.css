@@ -49,6 +49,12 @@
 	margin: 5px;
 }
 
+#profile-menu {
+	position: absolute;
+	background: #343a40;
+	right: -16px;
+}
+
 @media (min-width: 48em) {
 	.masthead-brand {
 		float: left;

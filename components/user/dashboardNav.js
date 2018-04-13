@@ -42,13 +42,17 @@ export default class DashboardNav extends Component {
 						</a>
 
 						<div className="dropdown">
-						<button className="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button className="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={this.toggleProfileMenu.bind(this)}>
 							<img src="../../static/images/user.png" height="42" width="42"/>
 						</button>
-						<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a className="dropdown-item" href="/my-profile">Profile</a>
-							<a className="dropdown-item" href="/logout">Logout</a>
-						</div>
+						{this.state.showProfileMenu
+							? (
+								<div id="profile-menu" aria-labelledby="dropdownMenuButton">
+									<a className="dropdown-item" href="/my-profile">Profile</a>
+									<a className="dropdown-item" href="/logout">Logout</a>
+								</div>
+							) : null
+						}
 						</div>
 					</nav>
 				</div>

@@ -46,6 +46,10 @@ export default class MyProfile extends Component {
 						<div className="site-wrapper-inner">
 							<div className="cover-container">
 								<DashboardNav pageTitle={pageTitle}/>
+								<div>
+								<p>&nbsp;</p>
+								<p>&nbsp;</p>
+								</div>
 								<Profile
 									baseUrl={this.props.baseUrl}
 									user={this.state.user}/>
