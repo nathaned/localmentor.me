@@ -49,7 +49,7 @@ export default class Register extends Component {
 		if (response.status == 200) {
 			// if login successful, load the find-a-mentor page.
 			// we may put a redirect page in the url ( TODO )
-			window.location = '/find-a-mentor';
+			window.location = '/my-profile';
 		}
 		else {
 			console.log(response);
