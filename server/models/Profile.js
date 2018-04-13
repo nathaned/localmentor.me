@@ -71,6 +71,9 @@ const mongoSchema = new mongoose.Schema({
 		type: Number,
 		default: 0
 	}
+	blocked: {
+		type: String
+	}
 });
 
 class ProfileClass {
@@ -217,12 +220,63 @@ class ProfileClass {
 		await this.findOneAndUpdate({ username: requester }, { requestedMentees });
 	}
 
+
+	// called when Mentor accepts a request! uses user in session  (mentor)
+	// takes care of moving menotrs/mentees from the requested section to actual mentors/mentees
+	static async acceptRequest(mentor, mentee) {
+		const addmentee = await this.findOne({username: mentor}, {$pull: {requestedMentees: mentee}}, {$addToSet: {mentees: mentee}});
+		if (!addmentee) {return res.status(403).json("not logged in");}
+
+		const addmentor = await this.findOne({username: mentee}, {$pull: {requestedMentors: mentor}}, {$addToSet: {mentors: mentor}});
+		if (!addmentor) {return res.status(403).json("mentee not found");}  			// dont see why this is relavent tho, lol
+	}
+
+	static async ignoreRequest(mentor, mentee) {
+		const addmentee = await this.findOne({username: mentor}, {$pull: {requestedMentees: mentee}});
+		if (!addmentee) {return res.status(403).json("not logged in");}
+
+		const addmentor = await this.findOne({username: mentee}, {$pull: {requestedMentors: mentor}});
+		if (!addmentor) {return res.status(403).json("mentee not found");}
+	}
+
+	// must be signed in to work, uses user in session
+	static async checkMentors(user) {
+		const mentorList = await this.findOne({username: user}, {mentors: 1});
+		if(!mentorList){return false;}
+
+		// gonna try to figure out a way iterate thru the array and have
+		// the profile of each as an object in a json array
+
+		return mentorList;
+	}
+
+	static async checkMentees(user) {
+		const menteeList = await this.findOne({username: user}, {mentors: 1});
+		if(!menteeList){return false;}
+
+		// gonna try to figure out a way iterate thru the array and have
+		// the profile of each as an object in a json array
+		return menteeList;
+
 	static async getProfiles(usernames) {
 		const profiles = await this.find(
 			{ username: { $in: usernames } }
 		).sort({ rating500: 'descending' });
 		return profiles || [];
 	}
+
+
+// assumes being passed an already Taged list
+	static async limitLocation(usernames, currentLocation) {
+		const profiles = await this.find(
+			{ location: currentLocation }
+		);
+		return profiles || [];
+	}
+
+
+
+
 
 	static async rateUser(username, rating) {
 		const profile = await this.findByUsername(username);
@@ -244,6 +298,8 @@ class ProfileClass {
 
 	}
 }
+
+
 
 mongoSchema.loadClass(ProfileClass);
 
