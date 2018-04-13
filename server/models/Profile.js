@@ -229,6 +229,12 @@ class ProfileClass {
 		return addedMentee;
 	}
 
+	static async block(mentor, mentee) {
+		const addedMentee = await this.findOne({username: mentor}, {$pull: {requestedMentees: mentee}}, {$addToSet: {blocked: mentee}});
+		console.log("added mentee in acceptRequest:", addedMentee);
+		return addedMentee;
+	}
+
 	static async ignoreRequest(mentor, mentee) {
 		const ignoredMentee = await this.findOne(
 			{username: mentor}, {$pull: {requestedMentees: mentee}}

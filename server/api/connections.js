@@ -35,6 +35,23 @@ connectionsApi.get('/api/connections/ignoreRequest/:mentee', async (req, res) =>
 	return res.sendStatus(200);
 });
 
+
+connectionsApi.get('/api/connections/block/:mentee', async (req, res) => {
+	const user = getUserFromSession(req);
+	if (!user) {
+		return res.sendStatus(403);
+	}
+
+	const blocked = Profile.block(user, req.params.mentee);
+	if (!blocked) {
+		const error = "failed accept request";
+		return res.status(404).json({ error });
+	}
+
+	return res.sendStatus(200);
+});
+
+
 // get users' current mentors
 connectionsApi.get('/api/connections/mentors', async (req, res) => {
 	const user = getUserFromSession(req);
@@ -47,7 +64,7 @@ connectionsApi.get('/api/connections/mentors', async (req, res) => {
 		const error = "error in find mentor";
 		return res.status(404).json({ error });
 	}
-	
+
 	const profiles = await Profile.getProfiles(mentorList);
 	return res.status(200).json({profiles});
 });
