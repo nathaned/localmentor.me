@@ -62,23 +62,27 @@ export default class FindAMentor extends Component {
 					cssFiles={[
 						"dashboard.css",
 						"dashboardNav.css",
-						"react-select.min.css"
+						"react-select.min.css",
+						"jumbo.css"
 					]}
 					title="Dashboard" />
 				<Head title="Dashboard" cssFiles={ ["dashboard.css", "findMentor.css"] }/>
 				<div className="app-container">
 					<div className="site-wrapper">
-						<div className="site-wrapper-inner">
+						<div >
 							<div className="cover-container">
-
+							<p></p>
 								<DashboardNav
 									pageTitle={pageTitle}
-									user={this.state.user} 
+									user={this.state.user}
                 />
+								<p>&nbsp;</p>
+								<p>&nbsp;</p>
+								<p>&nbsp;</p>
+								<div class="jumbotron trans">
 
-								<div id = "whaterver-you-want-to-call-that-id">
-									FIND A MENTOR
-								</div>
+								<h1>Find a Mentor</h1>
+
 								{this.state.tags
 									? (
 										<SearchBar
@@ -92,6 +96,8 @@ export default class FindAMentor extends Component {
 									baseUrl={this.props.baseUrl}
 									user={this.state.user} />
 
+
+								</div>
 							</div>
 						</div>
 					</div>
