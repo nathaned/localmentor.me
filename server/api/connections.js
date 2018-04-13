@@ -10,7 +10,7 @@ connectionsApi.get('/api/connections/acceptRequest/:mentee', async (req, res) =>
 		return res.sendStatus(403);
 	}
 
-	const accepted = Profile.acceptRequest(user, req.params.slug);
+	const accepted = Profile.acceptRequest(user, req.params.mentee);
 	if (!accepted) {
 		const error = "failed accept request";
 		return res.status(404).json({ error });
@@ -18,6 +18,39 @@ connectionsApi.get('/api/connections/acceptRequest/:mentee', async (req, res) =>
 
 	return res.sendStatus(200);
 });
+
+
+connectionsApi.get('/api/connections/ignoreRequest/:mentee', async (req, res) => {
+	const user = getUserFromSession(req);
+	if (!user) {
+		return res.sendStatus(403);
+	}
+
+	const ignored = Profile.ignoreRequest(user, req.params.mentee);
+	if (!ignored) {
+		const error = "failed accept request";
+		return res.status(404).json({ error });
+	}
+
+	return res.sendStatus(200);
+});
+
+
+connectionsApi.get('/api/connections/block/:mentee', async (req, res) => {
+	const user = getUserFromSession(req);
+	if (!user) {
+		return res.sendStatus(403);
+	}
+
+	const blocked = Profile.block(user, req.params.mentee);
+	if (!blocked) {
+		const error = "failed accept request";
+		return res.status(404).json({ error });
+	}
+
+	return res.sendStatus(200);
+});
+
 
 // get users' current mentors
 connectionsApi.get('/api/connections/mentors', async (req, res) => {
@@ -32,7 +65,8 @@ connectionsApi.get('/api/connections/mentors', async (req, res) => {
 		return res.status(404).json({ error });
 	}
 
-	return res.status(200).json(mentorList);
+	const profiles = await Profile.getProfiles(mentorList);
+	return res.status(200).json({profiles});
 });
 
 // get users' current mentees
@@ -47,6 +81,7 @@ connectionsApi.get('/api/connections/mentees', async (req, res) => {
 		const error = "error in find mentee";
 		return res.status(404).json({ error });
 	}
+	//const profiles = await Profile.getProfiles(menteeList);
 
 	return res.status(200).json({ menteeList });
 });

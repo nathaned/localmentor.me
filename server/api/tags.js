@@ -5,6 +5,7 @@ const Profile = require('../models/Profile');
 
 tagsApi.post('/api/tags/search', async (req, res) => {
 	const tags = req.body.tags;
+	const location = req.body.location;
 	const usernames = await Tag.searchTags(tags);
 	const locatedUsernames = await Profile.limitLocation(usernames, location);
 	const profiles = await Profile.getProfiles(locatedUsernames);

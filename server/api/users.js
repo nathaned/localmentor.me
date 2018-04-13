@@ -14,7 +14,7 @@ usersApi.get('/api/profile', async (req, res) => {
 		return res.sendStatus(403);
 	}
 
-	const profile = await Profile.find(user);
+	const profile = await Profile.findByUsername(user);
 	if (!profile) {
 		return res.sendStatus(404);
 	}

@@ -229,6 +229,12 @@ class ProfileClass {
 		return addedMentee;
 	}
 
+	static async block(mentor, mentee) {
+		const addedMentee = await this.findOne({username: mentor}, {$pull: {requestedMentees: mentee}}, {$addToSet: {blocked: mentee}});
+		console.log("added mentee in acceptRequest:", addedMentee);
+		return addedMentee;
+	}
+
 	static async ignoreRequest(mentor, mentee) {
 		const ignoredMentee = await this.findOne(
 			{username: mentor}, {$pull: {requestedMentees: mentee}}
@@ -237,13 +243,18 @@ class ProfileClass {
 		return ignoredMentee;
 	}
 
-	static async getMentors(username) {
-		const profile = await this.findOne({ username }, {mentors: 1});
+	static async checkMentors(username) {
+		const result = await this.findOne({ username }, {mentors: 1});
 		console.log("profile in checkMentors", mentorList);
-		if (!profile) {
+		if (!result) {
 			return false;
 		}
-		return profile.mentors;
+
+		let usernames = {};
+		result.map( ({mentors}) => mentors.map( x => usernames[x] = true) );
+		console.log(result);
+		console.log("keys: ", Object.keys(usernames));
+		return Object.keys(usernames);
 	}
 
 	static async checkMentees(user) {
