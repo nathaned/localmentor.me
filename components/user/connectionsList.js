@@ -47,6 +47,7 @@ export default class ConnectionList extends Component {
 					distanceAway = {item.distanceAway}
 					tags = {item.tags}
 					key = {i}
+					connections = {1}
 					expanded = {0}
 					firstName = {item.firstName}
 					lastName = {item.lastName}
@@ -68,6 +69,7 @@ export default class ConnectionList extends Component {
 					distanceAway = {item.distanceAway}
 					tags = {item.tags}
 					key = {i}
+					connections = {1}
 					expanded = {0}
 					firstName = {item.firstName}
 					lastName = {item.lastName}
