@@ -87,10 +87,10 @@ export default class ConnectionList extends Component {
 			<div className="mentee list">
 				<ProfileCard
 					username = {"abc"}
-					rating = {5}
-					profileText = {"NOTHING"}
-					distanceAway = {5}
-					tags = {"hahah"}
+					rating500 = {5}
+					bio = {"NOTHING bio"}
+					distanceAway = {1000}
+					tags = { ["hahah TAgs", "LOL"] }
 					key = {0}
 					connections = {1}
 					expanded = {1}

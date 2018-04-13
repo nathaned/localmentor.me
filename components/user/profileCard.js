@@ -115,7 +115,8 @@ export default class ProfileCard extends Component {
 			bio,
 			tags,
 			rating500,
-			numRatings
+			numRatings,
+			distanceAway
 		} = this.props;
 
 		return (
@@ -124,9 +125,33 @@ export default class ProfileCard extends Component {
 					<Gravatar protocol="https://" email={email} />
 				</div>
 				<div className="profile-content">
-					{ firstName + lastName } <br/>
-					{ this.renderAcceptButton() }
-					{ this.renderIgnoreButton() }
+					<div className="name">
+						{ firstName + lastName } <br/>
+					</div>
+					
+					<Gravatar protocol="https://" email={email} />
+										
+					<div className="bio">
+						{ bio } <br/>
+					</div>
+					
+					<div className="tags">
+						{ tags } <br/>
+					</div>
+					
+					<div className="rating">
+						{ rating500 } <br/>
+					</div>
+					
+					<div className="distance">
+						{ distanceAway + " Miles" } <br/>
+					</div>
+					
+					<div className="buttons">
+						{ this.renderAcceptButton() }
+						{ this.renderIgnoreButton() }
+					</div>
+					
 				</div>
 			</div>
 		);
