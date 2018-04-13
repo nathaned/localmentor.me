@@ -47,8 +47,9 @@ connectionsApi.get('/api/connections/mentors', async (req, res) => {
 		const error = "error in find mentor";
 		return res.status(404).json({ error });
 	}
-
-	return res.status(200).json(mentorList);
+	
+	const profiles = await Profile.getProfiles(mentorList);
+	return res.status(200).json({profiles});
 });
 
 // get users' current mentees
@@ -63,6 +64,7 @@ connectionsApi.get('/api/connections/mentees', async (req, res) => {
 		const error = "error in find mentee";
 		return res.status(404).json({ error });
 	}
+	//const profiles = await Profile.getProfiles(menteeList);
 
 	return res.status(200).json({ menteeList });
 });
