@@ -19,6 +19,22 @@ connectionsApi.get('/api/connections/acceptRequest/:mentee', async (req, res) =>
 	return res.sendStatus(200);
 });
 
+
+connectionsApi.get('/api/connections/ignoreRequest/:mentee', async (req, res) => {
+	const user = getUserFromSession(req);
+	if (!user) {
+		return res.sendStatus(403);
+	}
+
+	const ignored = Profile.ignoreRequest(user, req.params.slug);
+	if (!ignored) {
+		const error = "failed accept request";
+		return res.status(404).json({ error });
+	}
+
+	return res.sendStatus(200);
+});
+
 // get users' current mentors
 connectionsApi.get('/api/connections/mentors', async (req, res) => {
 	const user = getUserFromSession(req);
