@@ -1,53 +1,67 @@
 import React, { Component } from 'react';
+import Gravatar from 'react-gravatar';
 
 export default class DashboardNav extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { showProfileMenu: false };
+		this.state = { showProfileMenu: false, showDropdown: false };
 	}
 
 	toggleProfileMenu() {
 		this.setState({ showProfileMenu: !this.state.showProfileMenu });
 	}
 
+	toggleDropdown() {
+		this.setState({ showDropdown: !this.state.showDropdown });
+	}
+
 	render(props) {
+		const { showDropdown, showProfileMenu } = this.state;
+		const { pageTitle } = this.props;
 		return (
-			<nav className="navbar navbar-default navbar-static-top">
-				<div className="container">
-					<div className="navbar-header">
-						<button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-							<span className="sr-only">Toggle navigation</span>
-							<span className="icon-bar"></span>
-							<span className="icon-bar"></span>
-							<span className="icon-bar"></span>
-						</button>
-						<a className="navbar-brand" href="#">Project name</a>
-					</div>
-					<div id="navbar" className="navbar-collapse collapse">
-						<ul className="nav navbar-nav">
-							<li className="active"><a href="#">Home</a></li>
-							<li><a href="#about">About</a></li>
-							<li><a href="#contact">Contact</a></li>
-							<li className="dropdown">
-								<a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
-								<ul className="dropdown-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
-									<li><a href="#">Something else here</a></li>
-									<li role="separator" className="divider"></li>
-									<li className="dropdown-header">Nav header</li>
-									<li><a href="#">Separated link</a></li>
-									<li><a href="#">One more separated link</a></li>
-								</ul>
-							</li>
-						</ul>
-						<ul className="nav navbar-nav navbar-right">
-							<li><a href="../navbar/">Default</a></li>
-							<li className="active"><a href="./">Static top <span className="sr-only">(current)</span></a></li>
-							<li><a href="../navbar-fixed-top/">Fixed top</a></li>
-						</ul>
+			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+				<a className="navbar-brand" href="/">MentorMe</a>
+				<button className="navbar-toggler" type="button" data-target="#navbarSupportedContent" onClick={this.toggleDropdown.bind(this)}>
+					<span className="navbar-toggler-icon"></span>
+				</button>
+
+				<div className={"navbar-collapse " + (showDropdown ? "" : "collapse")} id="navbarSupportedContent">
+					<ul className="navbar-nav mr-auto">
+						<li className="nav-item">
+							<a className={"nav-link " + (pageTitle == "Find a Mentor" ? "active" : "")} href="/find-a-mentor">
+								Find a Mentor
+							</a>
+						</li>
+						<li className="nav-item">
+							<a className={"nav-link " + (pageTitle == "My Connections" ? "active" : "")} href="/my-connections">
+								My Connections
+							</a>
+						</li>
+						<li className="nav-item">
+							<a className={"nav-link " + (pageTitle == "Messenger" ? "active" : "")} href="/messenger">
+								Messenger
+							</a>
+						</li>
+					</ul>
+					<div id="profile-dropdown" className={"dropdown " + (showProfileMenu ? "show" : "")}>
+						<a className="nav-link dropdown-toggle" role="button" onClick={this.toggleProfileMenu.bind(this)}>
+							<Gravatar id="navbar-gravatar" size={30} protocol="https://" email="mathews.kyle@gmail.com" />
+							Dropdownasdfefaewe
+						</a>
+						<div className={"dropdown-menu " + (showProfileMenu ? "show" : "")} aria-labelledby="navbarDropdown">
+							<a className="dropdown-item" href="/my-profile">My Profile</a>
+							<div className="dropdown-divider"></div>
+							<a className="dropdown-item" href="/logout">Logout</a>
+						</div>
 					</div>
 				</div>
+				{ showProfileMenu
+					? (
+						<div id="fill-page" onClick={this.toggleProfileMenu.bind(this)}>
+							a
+						</div>
+					): null
+				}
 			</nav>
 		);
 	}

@@ -1,5 +1,34 @@
-.navbar-static-top {
-	margin-bottom: 19px;
-	background: white;
+nav {
+	margin-bottom: 20px;
 }
 
+#profile-dropdown a.nav-link{
+	color: white;
+}
+
+@media (min-width: 62em) {
+	#profile-dropdown.dropdown {
+		left: -10px;
+	}
+
+	#profile-dropdown.dropdown .dropdown-menu {
+		left: -20px;
+		right: 0;
+	}
+}
+
+.navbar-brand {
+	margin-right: 3rem;
+}
+
+#navbar-gravatar {
+	margin-right: 10px;
+}
+
+#fill-page {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 90vh;
+}
