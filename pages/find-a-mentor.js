@@ -56,57 +56,47 @@ export default class FindAMentor extends Component {
 	render() {
 		const pageTitle = "Find a Mentor";
 		return (
-
-			<div>
+			<div id="fullpage-container">
 				<Head
 					cssFiles={[
-						"dashboard.css",
+						"findMentor.css",
 						"dashboardNav.css",
 						"profileCard.css",
-						"react-select.min.css"
+						"react-select.min.css",
 						"jumbo.css"
 					]}
 					title="Dashboard" />
-				<div className="app-container">
-					<div className="site-wrapper">
-						<div >
-							<div className="cover-container">
-							<p></p>
-								<DashboardNav
-									pageTitle={pageTitle}
-									user={this.state.user}
-								/>
+				<div>
+					<DashboardNav
+						pageTitle={pageTitle}
+						user={this.state.user}
+					/>
+					<div className="app-container">
+						<div className="cover-container">
+							<div className="jumbotron trans">
 
-								<p>&nbsp;</p>
-								<p>&nbsp;</p>
-								<p>&nbsp;</p>
-								<div class="jumbotron trans">
+							<h1>Find a Mentor</h1>
 
-								<h1>Find a Mentor</h1>
-
-								{this.state.tags
-									? (
-										<SearchBar
-											onClick={this.handleSearch.bind(this)}
-											tags={this.state.tags} />
-									) : null
-								}
-								{this.state.mentors
-									? (
-										<MentorList
-											mentors={this.state.mentors}
-											baseUrl={this.props.baseUrl}
-											user={this.state.user} />
-									) : null
-								}
-
-
-								</div>
+							{this.state.tags
+								? (
+									<SearchBar
+										onClick={this.handleSearch.bind(this)}
+										tags={this.state.tags} />
+								) : null
+							}
+							{this.state.mentors
+								? (
+									<MentorList
+										mentors={this.state.mentors}
+										baseUrl={this.props.baseUrl}
+										user={this.state.user} />
+								) : null
+							}
 							</div>
 						</div>
 					</div>
-				</div>
 
+				</div>
 			</div>
 		);
 	}
