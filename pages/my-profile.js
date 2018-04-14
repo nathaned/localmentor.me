@@ -31,7 +31,7 @@ export default class MyProfile extends Component {
 	render () {
 		const pageTitle = "My Profile";
 		return (
-			<div>
+			<div id="fullpage-container">
 				<Head
 					cssFiles={[
 						"dashboardNav.css",
@@ -41,20 +41,15 @@ export default class MyProfile extends Component {
 						"react-select.min.css"
 					]}
 					title={pageTitle} />
-				<div className="app-container">
-					<div className="site-wrapper">
-						<div className="site-wrapper-inner">
-							<div className="cover-container">
-								<DashboardNav pageTitle={pageTitle}/>
-								<div>
-								<p>&nbsp;</p>
-								<p>&nbsp;</p>
-								</div>
-								<Profile
-									baseUrl={this.props.baseUrl}
-									user={this.state.user}/>
-							</div>
-						</div>
+				<div>
+					<DashboardNav
+						pageTitle={pageTitle}
+						user={this.state.user}
+					/>
+					<div className="cover-container">
+						<Profile
+							baseUrl={this.props.baseUrl}
+							user={this.state.user}/>
 					</div>
 				</div>
 			</div>

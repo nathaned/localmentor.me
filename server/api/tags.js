@@ -7,9 +7,10 @@ tagsApi.post('/api/tags/search', async (req, res) => {
 	const tags = req.body.tags;
 	const location = req.body.location;
 	const usernames = await Tag.searchTags(tags);
-	const locatedUsernames = await Profile.limitLocation(usernames, location);
-	const profiles = await Profile.getProfiles(locatedUsernames);
-	return res.status(200).json({profiles});
+	console.log("found these usernames matching those tags: ", usernames);
+	const locatedProfiles = await Profile.limitLocation(usernames, location);
+	console.log("limited by location: ", locatedProfiles);
+	return res.status(200).json({ mentors: locatedProfiles});
 });
 
 // returns all tags in the database

@@ -179,7 +179,7 @@ class ProfileClass {
 		} = profile;
 		if (tags) {
 			const oldTags = await this.getUserTags(username);
-			Tag.updateUserTags(username, oldTags, tags);
+			await Tag.updateUserTags(username, oldTags, tags);
 		}
 		await this.findOneAndUpdate(
 			{username},
@@ -272,8 +272,8 @@ class ProfileClass {
 
 	static async limitLocation(usernames, currentLocation) {
 		const profiles = await this.find({
-				location: currentLocation,
-				username: { $in: usernames }
+			location: currentLocation,
+			username: { $in: usernames }
 		});
 		return profiles || [];
 	}

@@ -9,9 +9,7 @@ import { checkAuth, searchTags } from '../lib/api/user'
 export default class FindAMentor extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			inputSearch: ''
-		};
+		this.state = { inputSearch: '', tags: [] };
 	}
 	async loadTags() {
 		const tags = await getTags(this.props.baseUrl);
@@ -39,72 +37,55 @@ export default class FindAMentor extends Component {
 		await this.loadTags();
 	}
 
-	async handleSearch (tags) {
+	async handleSearch (tags, location) {
 		console.log("going to search, got tags:", tags);
-		const mentors = await searchTags(this.props.baseUrl, tags);
+		const mentors = await searchTags(this.props.baseUrl, tags, location);
 		console.log("got these guys back: ", mentors);
 		this.setState({ mentors });
 	}
-
 
 	static getInitialProps({ req }) {
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		return { baseUrl };
 	}
 
-
 	render() {
 		const pageTitle = "Find a Mentor";
 		return (
-
-			<div>
+			<div id="fullpage-container">
 				<Head
 					cssFiles={[
-						"dashboard.css",
+						"findMentor.css",
 						"dashboardNav.css",
 						"profileCard.css",
 						"react-select.min.css",
 						"jumbo.css"
 					]}
 					title="Dashboard" />
-				<div className="app-container">
-					<div className="site-wrapper">
-						<div >
-							<div className="cover-container">
-							<p></p>
-								<DashboardNav
-									pageTitle={pageTitle}
-									user={this.state.user}
-								/>
+				<div>
+					<DashboardNav
+						pageTitle={pageTitle}
+						user={this.state.user}
+					/>
+					<div className="cover-container">
+						<div className="jumbotron trans">
+							<h1>Find a Mentor</h1>
 
-								<p>&nbsp;</p>
-								<p>&nbsp;</p>
-								<p>&nbsp;</p>
+							<SearchBar
+								onClick={this.handleSearch.bind(this)}
+								tags={this.state.tags} />
 
-								<div className="jumbotron trans">
-									<h1>Find a Mentor</h1>
-
-									{this.state.tags
-										? (
-											<SearchBar
-												onClick={this.handleSearch.bind(this)}
-												tags={this.state.tags} />
-										) : null
-									}
-									{this.state.mentors
-										? (
-											<MentorList
-												mentors={this.state.mentors}
-												baseUrl={this.props.baseUrl}
-												user={this.state.user} />
-										) : null
-									}
-								</div>
-							</div>
+							{this.state.mentors
+								? (
+									<MentorList
+										mentors={this.state.mentors}
+										baseUrl={this.props.baseUrl}
+										user={this.state.user} />
+								) : null
+							}
 						</div>
 					</div>
 				</div>
-
 			</div>
 		);
 	}

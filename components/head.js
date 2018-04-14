@@ -35,8 +35,8 @@ export default class Head extends Component {
 
 
 				{/*  This stuff is what I added: */}
-				{ this.renderCSS() }
 				<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+				{ this.renderCSS() }
 			</NextHead>
 		);
 	}
