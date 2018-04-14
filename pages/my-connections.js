@@ -36,25 +36,17 @@ export default class MyConnectionsTest extends Component {
 		await this.loadTags();
 	}
 
-	async handleSearch (tags) {
-		console.log("going to search, got tags:", tags);
-		const mentors = await searchTags(this.props.baseUrl, tags);
-		console.log("got these guys back: ", mentors);
-		this.setState({ mentors });
-	}
-
+	
 
 	static getInitialProps({ req }) {
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		return { baseUrl };
 	}
-
-
+	
 	render() {
 		const pageTitle = "My Connections";
 		
-		
-		
+	
 		return (
 
 			<div>
@@ -83,19 +75,6 @@ export default class MyConnectionsTest extends Component {
 								
 								<div className="jumbotron trans">
 									<h1>Connections</h1>
-									
-
-									
-									{this.state.connections
-										? (
-											<ConnectionsList
-												mentors={this.state.mentors}
-												mentees={this.state.mentees}
-												baseUrl={this.props.baseUrl}
-												user={this.state.user} />
-										) : <h2>NULL</h2>
-									}
-									
 									
 
 									<ConnectionsList
