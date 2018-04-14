@@ -8,7 +8,6 @@ export default class MentorList extends Component {
 		this.state = {};
 	}
 
-	
 
 	renderMentors() {
 		const mentors = this.props.mentors;

@@ -182,6 +182,7 @@ export default class ProfileCard extends Component {
 					<div className="buttons">
 						{ this.renderAcceptButton() }
 						{ this.renderIgnoreButton() }
+						{ this.renderBlockButton() }
 					</div>
 					
 				</div>
