@@ -9,3 +9,9 @@
    background: rgba(0, 255, 255, .7) !important;
        border-radius: 1rem !important;
 }
+
+.cards {
+   background: rgb(252, 47, 37) !important; /* This is for ie8 and below */
+   background: rgba(252, 47, 37, .7) !important;
+       border-radius: 1rem !important;
+}

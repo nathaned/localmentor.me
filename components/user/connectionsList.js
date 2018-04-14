@@ -21,7 +21,7 @@ export default class ConnectionList extends Component {
 					profileText = {item.profileText}
 					distanceAway = {item.distanceAway}
 					tags = {item.tags}
-					key = {i}
+					key = {item.username}
 					connected = {1}
 					connections = {1}
 					expanded = {0}
@@ -44,7 +44,7 @@ export default class ConnectionList extends Component {
 					profileText = {item.profileText}
 					distanceAway = {item.distanceAway}
 					tags = {item.tags}
-					key = {i}
+					key = {item.username}
 					connections = {1}
 					connected = {1}
 					expanded = {0}
@@ -67,7 +67,7 @@ export default class ConnectionList extends Component {
 					profileText = {item.profileText}
 					distanceAway = {item.distanceAway}
 					tags = {item.tags}
-					key = {i}
+					key = {item.username}
 					connections = {0}
 					expanded = {0}
 					firstName = {item.firstName}
@@ -90,7 +90,7 @@ export default class ConnectionList extends Component {
 					profileText = {item.profileText}
 					distanceAway = {item.distanceAway}
 					tags = {item.tags}
-					key = {i}
+					key = {item.username}
 					connections = {0}
 					expanded = {0}
 					firstName = {item.firstName}
@@ -161,6 +161,21 @@ export default class ConnectionList extends Component {
 					<div className="jumbotron connections">
 						
 						<h2> MENTEES </h2>
+						<ProfileCard
+							username = {"abc"}
+							rating500 = {5}
+							bio = {"NOTHING bio"}
+							distanceAway = {1000}
+							tags = { ["hahah TAgs", "LOL"] }
+							location = {"Orlando"}
+							key = {0}
+							connections = {1}
+							connected = {1}
+							expanded = {1}
+							firstName = {"ajjjjay "}
+							lastName = {"Mentee"}
+						/>
+						
 						<ProfileCard
 							username = {"abc"}
 							rating500 = {5}

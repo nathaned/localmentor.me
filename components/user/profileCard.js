@@ -164,7 +164,9 @@ export default class ProfileCard extends Component {
 		} = this.props;
 
 		return (
-			<div className="profileCard" onClick={this.props.onClick}>
+			<div cssFiles={["cards.css", "jumbo.css"]}>
+			
+			<div className="jumbotron cards"  >
 				<div className="profle-picture">
 					<Gravatar protocol="https://" email={email} />
 				</div>
@@ -197,6 +199,7 @@ export default class ProfileCard extends Component {
 						{ this.renderBlockButton() }
 					</div>
 					
+				</div>	
 				</div>
 			</div>
 		);
@@ -218,7 +221,7 @@ export default class ProfileCard extends Component {
 		} = this.props;
 
 		return (
-			<div className="profileCard" onClick={this.props.onClick}>
+			<div className="jumbotron cards"  >
 				<div className="profle-picture">
 					<Gravatar protocol="https://" email={email} />
 				</div>

@@ -12,10 +12,7 @@ export default class MyConnectionsTest extends Component {
 	
 	constructor(props) {
 		super(props);
-		this.state = {
-			inputSearch: '',
-			tab: 0
-		};
+		this.state = {};
 	}
 	
 	async loadTags() {
@@ -46,52 +43,36 @@ export default class MyConnectionsTest extends Component {
 	
 	render() {
 		const pageTitle = "My Connections";
-		
-	
 		return (
-
-			<div>
+			<div id="fullpage-container">
 				<Head
 					cssFiles={[
-						"dashboard.css",
+						"connections.css",
 						"dashboardNav.css",
 						"profileCard.css",
 						"react-select.min.css",
 						"jumbo.css"
 					]}
 					title="Dashboard" />
-				<div className="app-container">
-					<div className="site-wrapper">
-						<div >
-							<div className="cover-container">
-							<p></p>
-								<DashboardNav
-									pageTitle={pageTitle}
-									user={this.state.user}
+				
+				<div>
+					<DashboardNav
+						pageTitle={pageTitle}
+						user={this.state.user}
+					/>
+					<div className="cover-container">
+						<div className="jumbotron trans">
+							<h1>Connections</h1>
+								
+								<ConnectionsList
+									baseUrl={this.props.baseUrl}
+									user={this.state.user} 
+									tab = {this.state.tab}
 								/>
-
-								<p>&nbsp;</p>
-								<p>&nbsp;</p>
-								<p>&nbsp;</p>
-								
-								<div className="jumbotron trans">
 									
-									<h1>Connections</h1>
-									<ConnectionsList
-										
-										baseUrl={this.props.baseUrl}
-										user={this.state.user} 
-										tab = {this.state.tab}
-									/>
-										
-									
-								</div>
-								
-							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
 		);
 	}
