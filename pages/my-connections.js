@@ -77,11 +77,11 @@ export default class MyConnectionsTest extends Component {
 								<div className="jumbotron trans">
 									<h1>Connections</h1>
 									
-									<button id = "requestButton" className="btn btn-primary" onClick={() => this.state.tab = 0}>
+									<button id = "mentorButton" className="btn btn-primary" onClick={() => this.state.tab = 0}>
 										{"Mentors"}
 									</button>
 									
-									<button id = "requestButton" className="btn btn-primary" onClick={() => this.state.tab = 1}>
+									<button id = "menteeButton" className="btn btn-primary" onClick={() => this.state.tab = 1}>
 										{"MENTES"}
 									</button>
 									
