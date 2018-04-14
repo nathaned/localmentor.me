@@ -21,7 +21,7 @@ export default class DashboardNav extends Component {
 		const { md5, pageTitle, user } = this.props;
 		return (
 			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-				<a className="navbar-brand" href="/">MentorMe</a>
+				<a className="navbar-brand" href="/"><img src="../../static/images/network.png" height="42" width="42" /></a>
 				<button className="navbar-toggler" type="button" data-target="#navbarSupportedContent" onClick={this.toggleDropdown.bind(this)}>
 					<span className="navbar-toggler-icon"></span>
 				</button>
