@@ -37,9 +37,9 @@ export default class FindAMentor extends Component {
 		await this.loadTags();
 	}
 
-	async handleSearch (tags) {
+	async handleSearch (tags, location) {
 		console.log("going to search, got tags:", tags);
-		const mentors = await searchTags(this.props.baseUrl, tags);
+		const mentors = await searchTags(this.props.baseUrl, tags, location);
 		console.log("got these guys back: ", mentors);
 		this.setState({ mentors });
 	}

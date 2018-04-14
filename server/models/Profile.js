@@ -272,8 +272,8 @@ class ProfileClass {
 
 	static async limitLocation(usernames, currentLocation) {
 		const profiles = await this.find({
-				location: currentLocation,
-				username: { $in: usernames }
+			location: currentLocation,
+			username: { $in: usernames }
 		});
 		return profiles || [];
 	}

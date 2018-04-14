@@ -4,7 +4,14 @@ import Select from 'react-select';
 export default class SearchBar extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			locations: [
+				{ label: "Orlando, FL", value: "Orlando, FL"},
+				{ label: "Tampa, FL", value: "Tampa, FL"},
+				{ label: "Miami, FL", value: "Miami, FL"},
+				{ label: "Atlanta, GA", value: "Atlanta, GA"}
+			]
+		};
 	}
 
 	handleTagChange(value) {
@@ -18,9 +25,9 @@ export default class SearchBar extends Component {
 	}
 
 	async handleSearch () {
-		const params = this.state.inputSearch.map( ({value}) => value);
-		const location = this.state.location;
-		await this.props.onClick(params, location);
+		const tags = this.state.inputSearch.map( ({value}) => value);
+		const location = this.state.inputLocation.value;
+		await this.props.onClick(tags, location);
 	}
 
 	render(props) {
@@ -43,6 +50,7 @@ export default class SearchBar extends Component {
 					onChange={this.handleLocationChange.bind(this)}
 					placeholder="Location"
 					required={true}
+					options={this.state.locations}
 					value={this.state.inputLocation} />
 				<button
 					id="search-button"
