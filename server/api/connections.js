@@ -3,6 +3,22 @@ const connectionsApi = express.Router();
 const Profile = require('../models/Profile');
 const { getUserFromSession } = require('./auth')
 
+connectionsApi.get('/api/connections/request/:mentor', async (req, res) => {
+	const user = getUserFromSession(req);
+	if (!user) {
+		return res.sendStatus(403);
+	}
+
+	const requested = Profile.requestMentor(user, req.params.mentor);
+	if (!requested) {
+		const error = "failed to request";
+		return res.status(404).json({ error });
+	}
+
+	return res.sendStatus(200);
+});
+
+
 // slug = mentee the request is coming from
 connectionsApi.get('/api/connections/acceptRequest/:mentee', async (req, res) => {
 	const user = getUserFromSession(req);
@@ -28,7 +44,7 @@ connectionsApi.get('/api/connections/ignoreRequest/:mentee', async (req, res) =>
 
 	const ignored = Profile.ignoreRequest(user, req.params.mentee);
 	if (!ignored) {
-		const error = "failed accept request";
+		const error = "failed ignore request";
 		return res.status(404).json({ error });
 	}
 
