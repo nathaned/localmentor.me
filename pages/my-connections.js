@@ -75,17 +75,17 @@ export default class MyConnectionsTest extends Component {
 								<p>&nbsp;</p>
 								
 								<div className="jumbotron trans">
+									
 									<h1>Connections</h1>
-							
 									<ConnectionsList
 										
 										baseUrl={this.props.baseUrl}
 										user={this.state.user} 
-										tab = {this.state.tab}/>
+										tab = {this.state.tab}
+									/>
 										
 									
 								</div>
-
 								
 							</div>
 						</div>
