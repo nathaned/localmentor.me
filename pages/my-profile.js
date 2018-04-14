@@ -15,7 +15,7 @@ export default class MyProfile extends Component {
 			window.location = '/login';
 	}
 
-	static getInitialProps({ req }) {
+	static async getInitialProps({ req }) {
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		const user = req.session.user;
 		const limitedProfile = await getLimitedProfile(baseUrl, user);
