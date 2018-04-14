@@ -5,7 +5,9 @@ import fetch from 'isomorphic-fetch';
 export default class ConnectionList extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			tab: 3
+		};
 	}
 
 	renderMentors() {
@@ -21,6 +23,7 @@ export default class ConnectionList extends Component {
 					distanceAway = {item.distanceAway}
 					tags = {item.tags}
 					key = {i}
+					connected = {1}
 					connections = {1}
 					expanded = {0}
 					firstName = {item.firstName}
@@ -35,7 +38,7 @@ export default class ConnectionList extends Component {
 		console.log("mentees in renderMentees");
 		console.log(mentees);
 		return (
-			mentors.map( (item, i) =>
+			mentees.map( (item, i) =>
 				<ProfileCard
 					username = {item.username}
 					rating = {item.rating}
@@ -44,6 +47,52 @@ export default class ConnectionList extends Component {
 					tags = {item.tags}
 					key = {i}
 					connections = {1}
+					connected = {1}
+					expanded = {0}
+					firstName = {item.firstName}
+					lastName = {item.lastName}
+				/>
+			)
+		);
+	}
+	
+	renderMentorRequests() {
+		const mentorRequests = this.props.mentorRequests;
+		console.log("mentorRequests in renderMentorRequests");
+		console.log(mentorRequests);
+		return (
+			mentorRequests.map( (item, i) =>
+				<ProfileCard
+					username = {item.username}
+					rating = {item.rating}
+					profileText = {item.profileText}
+					distanceAway = {item.distanceAway}
+					tags = {item.tags}
+					key = {i}
+					connections = {0}
+					expanded = {0}
+					firstName = {item.firstName}
+					lastName = {item.lastName}
+				/>
+			)
+		);
+	}
+	
+	
+	renderMenteeRequests() {
+		const menteeRequests = this.props.menteeRequests;
+		console.log("menteeRequests in renderMenteeRequests");
+		console.log(menteeRequests);
+		return (
+			menteeRequests.map( (item, i) =>
+				<ProfileCard
+					username = {item.username}
+					rating = {item.rating}
+					profileText = {item.profileText}
+					distanceAway = {item.distanceAway}
+					tags = {item.tags}
+					key = {i}
+					connections = {0}
 					expanded = {0}
 					firstName = {item.firstName}
 					lastName = {item.lastName}
@@ -56,23 +105,86 @@ export default class ConnectionList extends Component {
 		const mentors = this.props.mentors;
 		const mentees = this.props.mentees;
 		
-		return (
 		
-			<div className="mentee list">
-				<ProfileCard
-					username = {"abc"}
-					rating500 = {5}
-					bio = {"NOTHING bio"}
-					distanceAway = {1000}
-					tags = { ["hahah TAgs", "LOL"] }
-					key = {0}
-					connections = {1}
-					expanded = {1}
-					firstName = {"ajjjjay "}
-					lastName = {"something"}
-				/>
-			</div>
-		)
+		if(this.state.tab == 0)
+			return (
+			
+				<div className="Mentor list">
+					<ProfileCard
+						username = {"abc"}
+						rating500 = {5}
+						bio = {"NOTHING bio"}
+						distanceAway = {1000}
+						tags = { ["hahah TAgs", "LOL"] }
+						key = {0}
+						connections = {1}
+						expanded = {1}
+						firstName = {"ajjjjay "}
+						lastName = {"Mentor"}
+					/>
+				
+				</div>
+			)
+		if(this.state.tab == 1)
+			return(
+			
+				<div className="Mentee list">
+					<ProfileCard
+						username = {"abc"}
+						rating500 = {5}
+						bio = {"NOTHING bio"}
+						distanceAway = {1000}
+						tags = { ["hahah TAgs", "LOL"] }
+						key = {0}
+						connections = {1}
+						expanded = {1}
+						firstName = {"ajjjjay "}
+						lastName = {"Mentee"}
+					/>
+				
+				</div>
+					
+			)
+		
+		else
+			return (
+					
+				<div className="not connected list">
+					<h2> MENTORS </h2>
+					<ProfileCard
+						username = {"abc"}
+						rating500 = {0}
+						bio = {"Something bio"}
+						distanceAway = {0}
+						tags = { ["SAd TAgs", "Im SAd"] }
+						key = {0}
+						connected = {1}
+						connections = {1}
+						expanded = {1}
+						firstName = {"NATHANNN "}
+						lastName = {"nothing"}
+					/>
+					
+					<h2> MENTEES </h2>
+					
+					<ProfileCard
+						username = {"abc"}
+						rating500 = {0}
+						bio = {"Something bio"}
+						distanceAway = {0}
+						tags = { ["SAd TAgs", "Im SAd"] }
+						key = {0}
+						connected = {1}
+						connections = {1}
+						expanded = {1}
+						firstName = {"NATHANNN2 "}
+						lastName = {"nothing2"}
+					/>
+				
+				</div>
+				
+			)
+
 
 	}
 }

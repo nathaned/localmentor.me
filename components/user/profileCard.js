@@ -52,7 +52,7 @@ export default class ProfileCard extends Component {
 
 	renderRequestButton() {
 		return (
-			<button id = "requestButton" className="btn btn-primary" onClick={() => RequestMentor()()}>
+			<button id = "requestButton" className="btn btn-primary" onClick={() => RequestMentor()}>
 				{"MENTOR ME"}
 			</button>
 		)
