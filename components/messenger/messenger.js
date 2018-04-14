@@ -31,6 +31,7 @@ export default class Messenger extends Component {
 				return (
 					<Contact
 						key={contact.username}
+						email={contact.email}
 						username={contact.username}
 						firstName={contact.firstName}
 						lastName={contact.lastName}
@@ -92,7 +93,7 @@ export default class Messenger extends Component {
 								contact={this.state.contact}
 								messages={this.state.messages}
 								sendMessage={this.handleMessage.bind(this)}/>
-							: <p>Select someone to chat.</p>
+							: <div id="chat-noselection">Select someone to chat.</div>
 						}
 					</div>
 				</div>

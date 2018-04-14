@@ -9,13 +9,19 @@ export default class Chat extends Component {
 
 	renderMessages() {
 		if (!this.props.messages) return null;
+		let previousSender = false;
 		const selectedUsername = this.props.contact.username;
 		const renderedMessages = (
-			this.props.messages.map( (message) => {
-			const type = (message.from == selectedUsername) ? "received" : "sent"
+			this.props.messages.map( (message, i) => {
+				const showName = (previousSender != message.sender);
+				console.log(message);
+				previousSender = message.sender;
+				const type = (message.sender == selectedUsername) ? "received" : "sent"
 				return (
 					<Message
-						key={message.text}
+						sender={message.sender}
+						key={message.text + i}
+						showName={showName}
 						type={type}
 						text={message.text}/>
 				);
@@ -37,8 +43,16 @@ export default class Chat extends Component {
 	sendMessage() {
 		const message = this.state.inputText;
 		this.props.sendMessage(message);
+		this.setState({ inputText: '' })
+
 	}
 
+	onKeyDown(e) {
+		if(e.keyCode == 13 && e.shiftKey == false) {
+			e.preventDefault();
+			this.sendMessage();
+		}
+	}
 
 	render() {
 		console.log(this.props);
@@ -49,9 +63,10 @@ export default class Chat extends Component {
 				</div>
 				<div id="chat-input">
 					<textarea
-						placeholder={"Message " + this.props.contact}
+						placeholder={"Message " + this.props.contact.firstName}
 						value={this.state.inputText}
-						onChange={this.handleChange.bind(this)}>
+						onChange={this.handleChange.bind(this)}
+						onKeyDown={this.onKeyDown.bind(this)}>
 					</textarea>
 					<input
 						id="send-button"

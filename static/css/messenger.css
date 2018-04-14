@@ -31,6 +31,7 @@
 	padding: 10px;
 	background: goldenrod;
 	font-size: 14px;
+	position: relative;
 }
 
 .contact.selected {
@@ -45,6 +46,17 @@
 	margin-right: 15px;
 }
 
+.unread-dot {
+	height: 15px;
+	width: 15px;
+	border-radius: 100%;
+	background-color: red;
+	border: 2px solid darkred;
+	position: absolute;
+	top: 3px;
+	right: 3px;
+}
+
 #chat-container {
 	height: 100%;
 	margin-left: 325px;
@@ -53,15 +65,15 @@
 	text-shadow: none;
 }
 
-#chat-container > p {
-	position: absolute;
-	top: 40%;
-	left: 51%;
-	font-size: 30px;
-}
-
 #chat {
 	height: 100%;
+}
+
+#chat-noselection {
+	height: 100%;
+	font-size: 30px;
+	padding-top: 25%;
+	padding-left: 20%;
 }
 
 #chat-input {
