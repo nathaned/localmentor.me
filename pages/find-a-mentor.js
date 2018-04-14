@@ -4,7 +4,7 @@ import Head from '../components/head'
 import MentorList from '../components/user/mentorList'
 import { getTags } from '../lib/api/user';
 import SearchBar from '../components/user/searchBar'
-import { checkAuth, searchTags } from '../lib/api/user'
+import { getLimitedProfile, searchTags } from '../lib/api/user'
 
 export default class FindAMentor extends Component {
 	constructor(props) {
@@ -12,7 +12,7 @@ export default class FindAMentor extends Component {
 		this.state = { inputSearch: '', tags: [] };
 	}
 	async loadTags() {
-		const tags = await getTags(this.props.baseUrl);
+		const tags = await getTags();
 		this.setState({ tags });
 	}
 
@@ -25,32 +25,31 @@ export default class FindAMentor extends Component {
 	}
 
 	async componentDidMount() {
-		// check if the user is logged in
-		const user = await checkAuth(this.props.baseUrl);
-
-		// if not logged in, send them to the login page
-		// TODO send them to something like /login?redirect=find-a-mentor
-		if (!user)
+		if (!this.props.user)
 			window.location = '/login';
 
-		this.setState({ user });
 		await this.loadTags();
 	}
 
 	async handleSearch (tags, location) {
 		console.log("going to search, got tags:", tags);
-		const mentors = await searchTags(this.props.baseUrl, tags, location);
+		const mentors = await searchTags(tags, location);
 		console.log("got these guys back: ", mentors);
 		this.setState({ mentors });
 	}
 
-	static getInitialProps({ req }) {
+	static async getInitialProps({ req }) {
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
-		return { baseUrl };
+		const user = req.session.user;
+		const limitedProfile = await getLimitedProfile(baseUrl, user);
+		return { limitedProfile, user };
 	}
 
 	render() {
 		const pageTitle = "Find a Mentor";
+		if (!this.props.limitedProfile.isMentee) {
+			return this.renderRestrictedPage();
+		}
 		return (
 			<div id="fullpage-container">
 				<Head
@@ -61,11 +60,12 @@ export default class FindAMentor extends Component {
 						"react-select.min.css",
 						"jumbo.css"
 					]}
-					title="Dashboard"/>
+					title={pageTitle} />
 				<div>
 					<DashboardNav
 						pageTitle={pageTitle}
-						user={this.state.user}
+						user={this.props.user}
+						md5={this.props.limitedProfile.email}
 					/>
 					<div className="cover-container">
 						<div className="jumbotron trans">
@@ -79,10 +79,38 @@ export default class FindAMentor extends Component {
 								? (
 									<MentorList
 										mentors={this.state.mentors}
-										baseUrl={this.props.baseUrl}
-										user={this.state.user} />
+										user={this.props.user} />
 								) : null
 							}
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
+	renderRestrictedPage() {
+		const pageTitle = "Find a Mentor";
+		return (
+			<div id="fullpage-container">
+				<Head
+					cssFiles={[
+						"findMentor.css",
+						"dashboardNav.css",
+						"jumbo.css"
+					]}
+					title={pageTitle} />
+				<div>
+					<DashboardNav
+						pageTitle={pageTitle}
+						user={this.props.user}
+						md5={this.props.limitedProfile.email}
+					/>
+					<div className="cover-container">
+						<div className="jumbotron trans">
+							<h1>Oops!</h1>
+							<p>Your profile isn't set up to be a mentee, so you can't search/request any mentors until you update it.</p>
+							<a href="/register" className="btn btn-lg btn-primary">Edit Profile</a>
 						</div>
 					</div>
 				</div>

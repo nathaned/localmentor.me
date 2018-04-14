@@ -23,14 +23,14 @@ export default class Messenger extends Component {
 
 	render() {
 		console.log(this.props);
-		const { firstName, lastName, image, relation, selected, username } = this.props;
+		const { firstName, lastName, email, relation, selected, username } = this.props;
 		return (
 			<div className={ "contact" + (this.props.selected ? " selected" : "") } onClick={this.props.onClick}>
-				<Gravatar protocol="https://" email="mathews.kyle@gmail.com" />
+				<Gravatar protocol="https://" email={email} />
 				{ this.renderName() } <br/>
 				{ this.renderTitle() }
 				{ this.props.unread
-					? ( <div className="unread-dot">dot</div>
+					? ( <div className="unread-dot"></div>
 					) : null
 				}
 			</div>

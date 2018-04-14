@@ -10,13 +10,12 @@ export default class Messenger extends Component {
 	}
 
 	async fetchMessages(contact) {
-		const baseUrl = this.props.baseUrl;
 		console.log("fetching messages in chat");
 		if (!contact) {
 			console.log("no contact selected", contact);
 			return;
 		}
-		const messages = await getMessagesWithUser(baseUrl, contact.username);
+		const messages = await getMessagesWithUser(contact.username);
 		console.log("fetched messages: ", messages);
 		return messages;
 	}
@@ -32,6 +31,7 @@ export default class Messenger extends Component {
 				return (
 					<Contact
 						key={contact.username}
+						email={contact.email}
 						username={contact.username}
 						firstName={contact.firstName}
 						lastName={contact.lastName}
@@ -47,7 +47,7 @@ export default class Messenger extends Component {
 
 	handleMessage(text) {
 		console.log("going to send message with text: ", text);
-		sendMessage(this.props.baseUrl, this.state.contact.username, text);
+		sendMessage(this.state.contact.username, text);
 	}
 
 	async selectContact(index) {
@@ -90,11 +90,10 @@ export default class Messenger extends Component {
 					<div id="chat-container">
 						{ this.state.contact && this.state.messages
 							? <Chat
-								baseUrl={this.props.baseUrl}
 								contact={this.state.contact}
 								messages={this.state.messages}
 								sendMessage={this.handleMessage.bind(this)}/>
-							: <p>Select someone to chat.</p>
+							: <div id="chat-noselection">Select someone to chat.</div>
 						}
 					</div>
 				</div>

@@ -4,45 +4,36 @@ import ConnectionsList from '../components/user/connectionsList'
 import Head from '../components/head'
 import { getTags } from '../lib/api/user';
 import SearchBar from '../components/user/searchBar'
-import { checkAuth, searchTags } from '../lib/api/user'
-
-
+import { getLimitedProfile, searchTags } from '../lib/api/user'
 
 export default class MyConnectionsTest extends Component {
-	
+
 	constructor(props) {
 		super(props);
 		this.state = {};
 	}
-	
+
 	async loadTags() {
-		const tags = await getTags(this.props.baseUrl);
+		const tags = await getTags();
 		this.setState({ tags });
 	}
 
-
 	async componentDidMount() {
-		// check if the user is logged in
-		const user = await checkAuth(this.props.baseUrl);
-
-		// if not logged in, send them to the login page
-		// TODO send them to something like /login?redirect=find-a-mentor
-		if (!user)
+		if (!this.props.user)
 			window.location = '/login';
-
-		this.setState({ user });
 		await this.loadTags();
 	}
 
-	
-
-	static getInitialProps({ req }) {
+	static async getInitialProps({ req }) {
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
-		return { baseUrl };
+		const user = req.session.user;
+		const limitedProfile = await getLimitedProfile(baseUrl, user);
+		return { limitedProfile, user };
 	}
-	
+
 	render() {
 		const pageTitle = "My Connections";
+
 		return (
 			<div id="fullpage-container">
 				<Head
@@ -54,22 +45,22 @@ export default class MyConnectionsTest extends Component {
 						"jumbo.css"
 					]}
 					title="Dashboard" />
-				
+
 				<div>
 					<DashboardNav
 						pageTitle={pageTitle}
-						user={this.state.user}
+						user={this.props.user}
+						md5={this.props.limitedProfile.email}
 					/>
 					<div className="cover-container">
 						<div className="jumbotron trans">
 							<h1>Connections</h1>
-								
+
 								<ConnectionsList
-									baseUrl={this.props.baseUrl}
-									user={this.state.user} 
+									user={this.props.user}
 									tab = {this.state.tab}
 								/>
-									
+
 						</div>
 					</div>
 				</div>

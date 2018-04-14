@@ -69,6 +69,10 @@ class TagClass {
 			{ $pull: { tagMentors: username } }
 		);
 		// note: update returns the previous obj
+		if (!updatedTag) {
+			console.log("tag " + dtag + " not found");
+			return false;
+		}
 		const isEmpty = updatedTag.tagMentors.length <= 1
 		console.log(isEmpty);
 		if(isEmpty) {

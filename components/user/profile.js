@@ -25,13 +25,13 @@ export default class Profile extends Component {
 	}
 
 	async loadProfile() {
-		let profile = await getProfile(this.props.baseUrl);
+		let profile = await getProfile();
 		console.log(profile);
 		this.setState({ profile });
 	}
 
 	async loadTags() {
-		const tags = await getTags(this.props.baseUrl);
+		const tags = await getTags();
 		this.setState({ tags });
 	}
 
@@ -39,7 +39,7 @@ export default class Profile extends Component {
 		NProgress.start();   // start the cool loading bar
 		e.preventDefault();  // prevents default behavior
 
-		const response = await updateProfile(this.props.baseUrl, this.state.profile);
+		const response = await updateProfile(this.state.profile);
 		console.log(response);
 		// server will send a 403 if login failed
 		if (!response || response.status == 403) {
@@ -82,9 +82,14 @@ export default class Profile extends Component {
 					profile: { ...profile, email: value}
 				}));
 				break;
-			case "bio":
+			case "mentorBio":
 				this.setState( ({profile}) => ({
-					profile: { ...profile, bio: value}
+					profile: { ...profile, mentorBio: value}
+				}));
+				break;
+			case "menteeBio":
+				this.setState( ({profile}) => ({
+					profile: { ...profile, menteeBio: value}
 				}));
 				break;
 			case "mentor-checkbox":
@@ -209,20 +214,39 @@ export default class Profile extends Component {
 											value={this.state.profile.location}/>
 									</div>
 								</div>
-								<div className="form-group">
-									<label className="col-md-3 control-label">Bio:</label>
-									<div className="col-md-8">
-										<textarea
-											className="form-control"
-											id="bio"
-											onChange={this.handleChange.bind(this)}
-											placeholder="Write a little about yourself. What you know, what you do, what you're looking for..."
-											type="text"
-											rows="8"
-											value={this.state.profile.bio}>
-										</textarea>
+								{ this.state.profile.isMentor ? (
+									<div className="form-group">
+										<label className="col-md-3 control-label">Mentor Bio:</label>
+										<div className="col-md-8">
+											<textarea
+												className="form-control"
+												id="mentorBio"
+												onChange={this.handleChange.bind(this)}
+												placeholder="Write a little about yourself. What you know, what you do, what you're looking for..."
+												type="text"
+												rows="6"
+												value={this.state.profile.mentorBio}>
+											</textarea>
+										</div>
 									</div>
-								</div>
+								): null }
+								{ this.state.profile.isMentee ? (
+									<div className="form-group">
+										<label className="col-md-3 control-label">Mentee Bio:</label>
+										<div className="col-md-8">
+											<textarea
+												className="form-control"
+												id="menteeBio"
+												onChange={this.handleChange.bind(this)}
+												placeholder="Write a little about yourself. What you know, what you do, what you're looking for..."
+												type="text"
+												rows="6"
+												value={this.state.profile.menteeBio}>
+											</textarea>
+										</div>
+									</div>
+
+								) : null }
 								<div className="form-group">
 									<label className="col-md-3 control-label">Status:</label>
 									<div className="col-md-8" id="status-container">
