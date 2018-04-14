@@ -76,22 +76,7 @@ export default class MyConnectionsTest extends Component {
 								
 								<div className="jumbotron trans">
 									<h1>Connections</h1>
-									
-									<button id = "mentorButton" className="btn btn-primary" onClick={() => this.state.tab = 0}>
-										{"Mentors"}
-									</button>
-									
-									<button id = "menteeButton" className="btn btn-primary" onClick={() => this.state.tab = 1}>
-										{"MENTES"}
-									</button>
-									
-									<button id = "requestButton" className="btn btn-primary" onClick={() => this.state.tab = 2}>
-										{"Requests"}
-									</button>
-									
-									<p><p></p></p>
-									
-
+							
 									<ConnectionsList
 										
 										baseUrl={this.props.baseUrl}
