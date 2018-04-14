@@ -10,10 +10,7 @@ export default class MyConnectionsTest extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			inputSearch: '',
-			tab: 0
-		};
+		this.state = {};
 	}
 
 	async loadTags() {
@@ -36,61 +33,35 @@ export default class MyConnectionsTest extends Component {
 		const pageTitle = "My Connections";
 
 		return (
-			<div>
+			<div id="fullpage-container">
 				<Head
 					cssFiles={[
-						"dashboard.css",
+						"connections.css",
 						"dashboardNav.css",
 						"profileCard.css",
 						"react-select.min.css",
 						"jumbo.css"
 					]}
 					title="Dashboard" />
-				<div className="app-container">
-					<div className="site-wrapper">
-						<div >
-							<div className="cover-container">
-							<p></p>
-								<DashboardNav
-									pageTitle={pageTitle}
-									user={this.props.user}
+
+				<div>
+					<DashboardNav
+						pageTitle={pageTitle}
+						user={this.state.user}
+					/>
+					<div className="cover-container">
+						<div className="jumbotron trans">
+							<h1>Connections</h1>
+
+								<ConnectionsList
+									baseUrl={this.props.baseUrl}
+									user={this.state.user}
+									tab = {this.state.tab}
 								/>
 
-								<p>&nbsp;</p>
-								<p>&nbsp;</p>
-								<p>&nbsp;</p>
-
-								<div className="jumbotron trans">
-									<h1>Connections</h1>
-
-									<button id = "mentorButton" className="btn btn-primary" onClick={() => this.state.tab = 0}>
-										{"Mentors"}
-									</button>
-
-									<button id = "menteeButton" className="btn btn-primary" onClick={() => this.state.tab = 1}>
-										{"MENTES"}
-									</button>
-
-									<button id = "requestButton" className="btn btn-primary" onClick={() => this.state.tab = 2}>
-										{"Requests"}
-									</button>
-
-									<p><p></p></p>
-
-
-									<ConnectionsList
-										user={this.props.user}
-										tab = {this.state.tab}/>
-
-
-								</div>
-
-
-							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
 		);
 	}

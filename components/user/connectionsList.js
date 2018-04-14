@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ProfileCard from './profileCard'
+import Head from '../head'
 import fetch from 'isomorphic-fetch';
 
 export default class ConnectionList extends Component {
@@ -20,7 +21,7 @@ export default class ConnectionList extends Component {
 					profileText = {item.profileText}
 					distanceAway = {item.distanceAway}
 					tags = {item.tags}
-					key = {i}
+					key = {item.username}
 					connected = {1}
 					connections = {1}
 					expanded = {0}
@@ -43,7 +44,7 @@ export default class ConnectionList extends Component {
 					profileText = {item.profileText}
 					distanceAway = {item.distanceAway}
 					tags = {item.tags}
-					key = {i}
+					key = {item.username}
 					connections = {1}
 					connected = {1}
 					expanded = {0}
@@ -66,7 +67,7 @@ export default class ConnectionList extends Component {
 					profileText = {item.profileText}
 					distanceAway = {item.distanceAway}
 					tags = {item.tags}
-					key = {i}
+					key = {item.username}
 					connections = {0}
 					expanded = {0}
 					firstName = {item.firstName}
@@ -89,7 +90,7 @@ export default class ConnectionList extends Component {
 					profileText = {item.profileText}
 					distanceAway = {item.distanceAway}
 					tags = {item.tags}
-					key = {i}
+					key = {item.username}
 					connections = {0}
 					expanded = {0}
 					firstName = {item.firstName}
@@ -102,66 +103,99 @@ export default class ConnectionList extends Component {
 	render() {
 		const mentors = this.props.mentors;
 		const mentees = this.props.mentees;
+		const menteesRequests = this.props.menteesRequests;
+		const mentorsRequests = this.props.mentorsRequests;
 		
 		return (
-			
-			<div className="not connected list">
-				<h2> Requests</h2>
-					
-				<ProfileCard
-						username = {"abc"}
-						rating500 = {0}
-						bio = {"Something bio"}
-						distanceAway = {0}
-						tags = { ["SAd TAgs", "Im SAd"] }
-						location = {"Orlando"}
-						key = {0}
-						connected = {0}
-						connections = {1}
-						expanded = {1}
-						firstName = {"NATHANNN2 "}
-						lastName = {"nothing2"}
-				/>
-			
-				<h2> MENTORS </h2>
-					<ProfileCard
-						username = {"abc"}
-						rating500 = {5}
-						bio = {"NOTHING bio"}
-						distanceAway = {1000}
-						tags = { ["hahah TAgs", "LOL"] }
-						location = {"Orlando"}
-						key = {0}
-						connections = {1}
-						connected = {1}
-						expanded = {1}
-						firstName = {"ajjjjay "}
-						lastName = {"Mentor"}
-					/>
-				
-			
 		
-				<h2> MENTEES </h2>
-					<ProfileCard
-						username = {"abc"}
-						rating500 = {5}
-						bio = {"NOTHING bio"}
-						distanceAway = {1000}
-						tags = { ["hahah TAgs", "LOL"] }
-						location = {"Orlando"}
-						key = {0}
-						connections = {1}
-						connected = {1}
-						expanded = {1}
-						firstName = {"ajjjjay "}
-						lastName = {"Mentee"}
-					/>
+			<div>
+		
+				<Head
+					cssFiles={[
+						"dashboard.css",
+						"dashboardNav.css",
+						"profileCard.css",
+						"react-select.min.css",
+						"jumbo.css"
+					]}
+					title="Dashboard" />
+			
+				<div>
+					<div className="jumbotron connections">
+						<h2> Requests</h2>	
+						<ProfileCard
+								username = {"abc"}
+								rating500 = {0}
+								bio = {"Something bio"}
+								distanceAway = {0}
+								tags = { ["SAd TAgs", "Im SAd"] }
+								location = {"Orlando"}
+								key = {0}
+								connected = {0}
+								connections = {1}
+								expanded = {1}
+								firstName = {"NATHANNN2 "}
+								lastName = {"nothing2"}
+						/>
+					</div>
+					
+					<div className="jumbotron connections">
+					
+						<h2> MENTORS </h2>
+							<ProfileCard
+								username = {"abc"}
+								rating500 = {5}
+								bio = {"NOTHING bio"}
+								distanceAway = {1000}
+								tags = { ["hahah TAgs", "LOL"] }
+								location = {"Orlando"}
+								key = {0}
+								connections = {1}
+								connected = {1}
+								expanded = {1}
+								firstName = {"ajjjjay "}
+								lastName = {"Mentor"}
+							/>
+					</div>
+					
+					<div className="jumbotron connections">
+						
+						<h2> MENTEES </h2>
+						<ProfileCard
+							username = {"abc"}
+							rating500 = {5}
+							bio = {"NOTHING bio"}
+							distanceAway = {1000}
+							tags = { ["hahah TAgs", "LOL"] }
+							location = {"Orlando"}
+							key = {0}
+							connections = {1}
+							connected = {1}
+							expanded = {1}
+							firstName = {"ajjjjay "}
+							lastName = {"Mentee"}
+						/>
+						
+						<ProfileCard
+							username = {"abc"}
+							rating500 = {5}
+							bio = {"NOTHING bio"}
+							distanceAway = {1000}
+							tags = { ["hahah TAgs", "LOL"] }
+							location = {"Orlando"}
+							key = {0}
+							connections = {1}
+							connected = {1}
+							expanded = {1}
+							firstName = {"ajjjjay "}
+							lastName = {"Mentee"}
+						/>
+					</div>
 				
 				</div>
 				
+			</div>
 				
 			)
-
-
 	}
 }
