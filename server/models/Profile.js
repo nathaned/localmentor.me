@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const md5 = require('md5');
 const Tag = require('./Tag');
 
 const mongoSchema = new mongoose.Schema({
@@ -88,19 +89,25 @@ class ProfileClass {
 		return user;
 	}
 
-	// returns everything except bio and connections list ( TODO add to this )
-	static async getShortProfile(username) {
-		const shortProfile = await this.findOne( {username}, { bio: 0, connections: 0 });
-		console.log("shortProfile: ", shortProfile);
-		return shortProfile;
-	}
-
 	// return only the info necessary to draw the contact card in the messages view
 	static async getContactInfo(username) {
 		const contactInfo = await this.findOne(
 			{username},
 			{ firstName: 1, lastName: 1, isMentee: 1, isMentor: 1, email: 1 });
 		return contactInfo;
+	}
+
+	static async getLimitedProfile(username) {
+		const profile = await this.findOne(
+			{ username },
+			{ isMentor: 1, isMentee: 1, email: 1 }
+		);
+		if (!profile) {
+			return false;
+		}
+		// calculate md5 for the email and hide the actual address
+		profile.email = md5(profile.email);
+		return profile;
 	}
 
 	static async getContactList(username) {

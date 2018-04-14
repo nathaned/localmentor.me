@@ -3,6 +3,7 @@ import Head from '../components/head'
 import DashboardNav from '../components/user/dashboardNav'
 import Dashboard from '../components/user/dashboard'
 import Profile from '../components/user/profile'
+import { getLimitedProfile } from '../lib/api/user'
 
 export default class MyProfile extends Component {
 	constructor(props) {
@@ -15,8 +16,10 @@ export default class MyProfile extends Component {
 	}
 
 	static getInitialProps({ req }) {
+		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		const user = req.session.user;
-		return { user };
+		const limitedProfile = await getLimitedProfile(baseUrl, user);
+		return { limitedProfile, user };
 	}
 
 	render () {
@@ -34,6 +37,7 @@ export default class MyProfile extends Component {
 					title={pageTitle} />
 				<div>
 					<DashboardNav
+						md5={this.props.limitedProfile.email}
 						pageTitle={pageTitle}
 						user={this.props.user}
 					/>

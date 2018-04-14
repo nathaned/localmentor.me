@@ -37,4 +37,14 @@ usersApi.post('/api/profile', async (req, res) => {
 	return res.sendStatus(200);
 })
 
+// this call is used to grab parts of a profile from any user
+usersApi.get('/api/profiles/:slug', async (req, res) => {
+	const user = req.params.slug;
+	const limitedProfile = await Profile.getLimitedProfile(user);
+	if (!limitedProfile) {
+		return res.sendStatus(404);
+	}
+	return res.status(200).json({ limitedProfile });
+})
+
 module.exports = { usersApi, getUserProfile };

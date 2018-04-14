@@ -4,7 +4,7 @@ import ConnectionsList from '../components/user/connectionsList'
 import Head from '../components/head'
 import { getTags } from '../lib/api/user';
 import SearchBar from '../components/user/searchBar'
-import { searchTags } from '../lib/api/user'
+import { getLimitedProfile, searchTags } from '../lib/api/user'
 
 export default class MyConnectionsTest extends Component {
 
@@ -24,9 +24,11 @@ export default class MyConnectionsTest extends Component {
 		await this.loadTags();
 	}
 
-	static getInitialProps({ req }) {
+	static async getInitialProps({ req }) {
+		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		const user = req.session.user;
-		return { user };
+		const limitedProfile = await getLimitedProfile(baseUrl, user);
+		return { limitedProfile, user };
 	}
 
 	render() {
@@ -47,15 +49,15 @@ export default class MyConnectionsTest extends Component {
 				<div>
 					<DashboardNav
 						pageTitle={pageTitle}
-						user={this.state.user}
+						user={this.props.user}
+						md5={this.props.limitedProfile.email}
 					/>
 					<div className="cover-container">
 						<div className="jumbotron trans">
 							<h1>Connections</h1>
 
 								<ConnectionsList
-									baseUrl={this.props.baseUrl}
-									user={this.state.user}
+									user={this.props.user}
 									tab = {this.state.tab}
 								/>
 

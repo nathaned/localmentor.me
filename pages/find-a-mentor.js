@@ -4,7 +4,7 @@ import Head from '../components/head'
 import MentorList from '../components/user/mentorList'
 import { getTags } from '../lib/api/user';
 import SearchBar from '../components/user/searchBar'
-import { searchTags } from '../lib/api/user'
+import { getLimitedProfile, searchTags } from '../lib/api/user'
 
 export default class FindAMentor extends Component {
 	constructor(props) {
@@ -38,9 +38,11 @@ export default class FindAMentor extends Component {
 		this.setState({ mentors });
 	}
 
-	static getInitialProps({ req }) {
+	static async getInitialProps({ req }) {
+		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		const user = req.session.user;
-		return { user };
+		const limitedProfile = await getLimitedProfile(baseUrl, user);
+		return { limitedProfile, user };
 	}
 
 	render() {
@@ -60,6 +62,7 @@ export default class FindAMentor extends Component {
 					<DashboardNav
 						pageTitle={pageTitle}
 						user={this.props.user}
+						md5={this.props.limitedProfile.email}
 					/>
 					<div className="cover-container">
 						<div className="jumbotron trans">

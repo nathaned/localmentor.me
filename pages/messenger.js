@@ -4,6 +4,7 @@ import DashboardNav from '../components/user/dashboardNav'
 import Dashboard from '../components/user/dashboard'
 import Messenger from '../components/messenger/messenger'
 import { getContactList, getUnreads } from '../lib/api/messages'
+import { getLimitedProfile } from '../lib/api/user'
 
 export default class MessengerPage extends Component {
 	constructor(props) {
@@ -18,8 +19,10 @@ export default class MessengerPage extends Component {
 
 
 	static async getInitialProps({ req }) {
+		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		const user = req.session.user;
-		return { user };
+		const limitedProfile = await getLimitedProfile(baseUrl, user);
+		return { limitedProfile, user };
 	}
 
 	continuouslyCheckUnreads() {
@@ -55,6 +58,7 @@ export default class MessengerPage extends Component {
 				<DashboardNav
 					pageTitle={pageTitle}
 					user={this.props.user}
+					md5={this.props.limitedProfile.email}
 				/>
 				{ this.state.contactList
 					? (

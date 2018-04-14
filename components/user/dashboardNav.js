@@ -8,13 +8,6 @@ export default class DashboardNav extends Component {
 		this.state = { showProfileMenu: false, showDropdown: false };
 	}
 
-	async componentDidMount() {
-		const profile = await getProfile();
-		if (profile) {
-			this.setState({ email: profile.email });
-		}
-	}
-
 	toggleProfileMenu() {
 		this.setState({ showProfileMenu: !this.state.showProfileMenu });
 	}
@@ -24,8 +17,8 @@ export default class DashboardNav extends Component {
 	}
 
 	render(props) {
-		const { email, showDropdown, showProfileMenu } = this.state;
-		const { pageTitle, user } = this.props;
+		const { showDropdown, showProfileMenu } = this.state;
+		const { md5, pageTitle, user } = this.props;
 		return (
 			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
 				<a className="navbar-brand" href="/">MentorMe</a>
@@ -53,7 +46,7 @@ export default class DashboardNav extends Component {
 					</ul>
 					<div id="profile-dropdown" className={"dropdown " + (showProfileMenu ? "show" : "")}>
 						<a className="nav-link dropdown-toggle" role="button" onClick={this.toggleProfileMenu.bind(this)}>
-							<Gravatar id="navbar-gravatar" size={30} protocol="https://" email={email} />
+							<Gravatar id="navbar-gravatar" size={30} protocol="https://" md5={md5} />
 							{user}
 						</a>
 						<div className={"dropdown-menu " + (showProfileMenu ? "show" : "")} aria-labelledby="navbarDropdown">
