@@ -32,7 +32,11 @@ const mongoSchema = new mongoose.Schema({
 		type: Boolean,
 		default: true
 	},
-	bio: {
+	mentorBio: {
+		type: String,
+		default: ""
+	},
+	menteeBio: {
 		type: String,
 		default: ""
 	},
@@ -181,7 +185,8 @@ class ProfileClass {
 			location,
 			isMentee,
 			isMentor,
-			bio,
+			mentorBio,
+			menteeBio,
 			tags
 		} = profile;
 		if (tags) {
@@ -197,7 +202,8 @@ class ProfileClass {
 				location,
 				isMentee,
 				isMentor,
-				bio,
+				mentorBio,
+				menteeBio,
 				tags
 			}
 		);
