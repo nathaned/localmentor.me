@@ -10,7 +10,12 @@ export default class ProfileCard extends Component {
 		return (
 			
 			this.props.connections
-				? this.renderConnectionsProfile()
+				?(this.props.connected
+					? this.renderConnectedProfile()
+					: this.renderConnectionsProfile()
+				
+				)
+				
 				:(this.props.expanded
 					? this.renderExpandedProfile()
 					: this.renderShortProfile()
@@ -25,18 +30,29 @@ export default class ProfileCard extends Component {
 
 	}
 	
+	RequestMentor(){
+		// API call to accept mentor
+	}
 	
 	acceptMentor(){
-		
+		// API call to accept mentor
 	}
 	
 	ignoreMentor(){
-		
+		// API call to ignore mentor
+	}
+	
+	messageMentor(){
+		// API call to message mentor
+	}
+	
+	blockMentor(){
+		// API call to ignore mentor
 	}
 
 	renderRequestButton() {
 		return (
-			<button id = "requestButton" className="btn btn-primary" onClick={() => this.toggleExpanded()}>
+			<button id = "requestButton" className="btn btn-primary" onClick={() => RequestMentor()()}>
 				{"MENTOR ME"}
 			</button>
 		)
@@ -54,6 +70,22 @@ export default class ProfileCard extends Component {
 		return (
 			<button id = "ignoreButton" className="btn btn-primary" onClick={() => this.ignoreMentor()}>
 				{"Ignore"}
+			</button>
+		)
+	}
+	
+	renderMessageButton() {
+		return (
+			<button id = "ignoreButton" className="btn btn-primary" onClick={() => this.ignoreMentor()}>
+				{"Message"}
+			</button>
+		)
+	}
+	
+	renderBlockButton() {
+		return (
+			<button id = "ignoreButton" className="btn btn-primary" onClick={() => this.ignoreMentor()}>
+				{"Block"}
 			</button>
 		)
 	}
@@ -150,6 +182,59 @@ export default class ProfileCard extends Component {
 					<div className="buttons">
 						{ this.renderAcceptButton() }
 						{ this.renderIgnoreButton() }
+					</div>
+					
+				</div>
+			</div>
+		);
+	}
+	
+	
+	
+	renderConnectedProfile() {
+		const {
+			email,
+			firstName,
+			lastName,
+			location,
+			bio,
+			tags,
+			rating500,
+			numRatings,
+			distanceAway
+		} = this.props;
+
+		return (
+			<div className="profileCard" onClick={this.props.onClick}>
+				<div className="profle-picture">
+					<Gravatar protocol="https://" email={email} />
+				</div>
+				<div className="profile-content">
+					<div className="name">
+						{ firstName + lastName } <br/>
+					</div>
+					
+					<Gravatar protocol="https://" email={email} />
+										
+					<div className="bio">
+						{ bio } <br/>
+					</div>
+					
+					<div className="tags">
+						{ tags } <br/>
+					</div>
+					
+					<div className="rating">
+						{ rating500 } <br/>
+					</div>
+					
+					<div className="distance">
+						{ distanceAway + " Miles" } <br/>
+					</div>
+					
+					<div className="buttons">
+						{ this.renderMessageButton() }
+						{ this.renderBlockButton() }
 					</div>
 					
 				</div>

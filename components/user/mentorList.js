@@ -8,18 +8,7 @@ export default class MentorList extends Component {
 		this.state = {};
 	}
 
-	async loadMentors(id, query) {
-		const body = JSON.stringify({ query, id });
-		const headers = { 'Content-Type': 'application/json' };
-		const url = this.props.baseUrl + '/api/mentor-list';
-		const response = await fetch(
-			url,
-			{ method: "POST", body, headers }
-		);
-		const res = await response.json();
-		// note that if we do just `query`, it's shorthand for `query: query`
-		this.setState({ mentors: res.list, query });
-	}
+	
 
 	renderMentors() {
 		const mentors = this.props.mentors;

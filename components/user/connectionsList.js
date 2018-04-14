@@ -8,32 +8,6 @@ export default class ConnectionList extends Component {
 		this.state = {};
 	}
 
-	async loadMentors(id, query) {
-		const body = JSON.stringify({ query, id });
-		const headers = { 'Content-Type': 'application/json' };
-		const url = this.props.baseUrl + '/api/connections/mentors';
-		const response = await fetch(
-			url,
-			{ method: "POST", body, headers }
-		);
-		const res = await response.json();
-		// note that if we do just `query`, it's shorthand for `query: query`
-		this.setState({ mentors: res.list, query });
-	}
-	
-	async loadMentees(id, query) {
-		const body = JSON.stringify({ query, id });
-		const headers = { 'Content-Type': 'application/json' };
-		const url = this.props.baseUrl + '/api/connections/mentees';
-		const response = await fetch(
-			url,
-			{ method: "POST", body, headers }
-		);
-		const res = await response.json();
-		// note that if we do just `query`, it's shorthand for `query: query`
-		this.setState({ mentees: res.list, query });
-	}
-
 	renderMentors() {
 		const mentors = this.props.mentors;
 		console.log("mentors in renderMentors");
