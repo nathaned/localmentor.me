@@ -2,56 +2,22 @@
  * Globals
  */
 
-/* Links */
-a,
-a:focus,
-a:hover {
-	color: #fff!important;
+html {
+	height: 100%;
 }
 
-/* Custom default button */
-.btn-secondary,
-.btn-secondary:hover,
-.btn-secondary:focus {
-	color: #333;
-	text-shadow: none; /* Prevent inheritance from `body` */
-	background-color: #fff;
-	border: .05rem solid #fff;
-}
-
-.app-container {
+#fullpage-container {
 	min-height: 100vh;
-	background-color: #333;
 	background-image: url("../images/miami.jpg");
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center center;
-	color: #fff;
-	text-align: center;
-	text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
 }
 
-/* Extra markup and styles for table-esque vertical and horizontal centering */
-.site-wrapper {
-	display: table;
-	width: 100%;
-	height: 100%; /* For at least Firefox */
-	min-height: 100%;
-	-webkit-box-shadow: inset 0 0 5rem rgba(0,0,0,.5);
-	        box-shadow: inset 0 0 5rem rgba(0,0,0,.5);
-}
-.site-wrapper-inner {
-	display: table-cell;
-	vertical-align: top;
-}
 .cover-container {
 	margin-right: auto;
 	margin-left: auto;
-}
-
-/* Padding for spacing */
-.inner {
-	padding: 2rem;
+	color: #fff;
+	text-align: center;
+	text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
+	padding-bottom: 30px;
 }
 
 /*
@@ -79,13 +45,12 @@ a:hover {
 
 /* Stuff for the profile page */
 #profile-container {
-	padding: 20px;
+	padding: 2rem;
+	padding-bottom: 10px;
 	margin-top: 30px;
 	overflow-y: auto;
 	overflow-x: hidden;
-	background: rgba(180, 180, 180, .9);
-	min-height: 100vh;
-	margin-bottom: 30px;
+	background: rgba(90, 90, 90, .9);
 	text-align: left;
 }
 

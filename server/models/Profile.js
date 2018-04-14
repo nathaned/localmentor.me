@@ -179,7 +179,7 @@ class ProfileClass {
 		} = profile;
 		if (tags) {
 			const oldTags = await this.getUserTags(username);
-			Tag.updateUserTags(username, oldTags, tags);
+			await Tag.updateUserTags(username, oldTags, tags);
 		}
 		await this.findOneAndUpdate(
 			{username},

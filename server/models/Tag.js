@@ -24,8 +24,7 @@ class TagClass {
 		else{
 			const addmentor = await this.findOneAndUpdate(
 				{ tag: newTag },
-				{ $addToSet: { tagMentors: mentor } },
-				{ new: true }
+				{ $addToSet: { tagMentors: mentor } }
 			);
 			console.log(`------->${mentor} is added to the "${newTag}" tag`);
 			return addmentor;
@@ -67,12 +66,13 @@ class TagClass {
 	static async removeMentorFromTag(username, dtag){
 		const updatedTag = await this.findOneAndUpdate(
 			{ tag: dtag },
-			{ $pull: { tagMentors: username } },
-			{ new: true }
+			{ $pull: { tagMentors: username } }
 		);
-
-		const isEmpty = await this.find( { tagMentors: { $size: 0 }});
+		// note: update returns the previous obj
+		const isEmpty = updatedTag.tagMentors.length <= 1
+		console.log(isEmpty);
 		if(isEmpty) {
+			console.log("removing empty tag: ", dtag);
 			await this.remove({ tag: dtag });
 			return false;
 		}
@@ -80,8 +80,8 @@ class TagClass {
 	}
 
 	static async updateUserTags(username, oldTags, newTags) {
-		oldTags.map( tag => this.removeMentorFromTag(username, tag) );
-		newTags.map( tag => this.addMentorToTag(tag, username) );
+		await Promise.all(oldTags.map( async (tag) => await this.removeMentorFromTag(username, tag)));
+		await Promise.all(newTags.map( async (tag) => await this.addMentorToTag(tag, username)));
 	}
 }
 

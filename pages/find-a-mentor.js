@@ -44,12 +44,10 @@ export default class FindAMentor extends Component {
 		this.setState({ mentors });
 	}
 
-
 	static getInitialProps({ req }) {
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		return { baseUrl };
 	}
-
 
 	render() {
 		const pageTitle = "Find a Mentor";

@@ -6,16 +6,6 @@ html {
 	height: 100%;
 }
 
-/* Custom default button */
-.btn-secondary,
-.btn-secondary:hover,
-.btn-secondary:focus {
-	color: #333;
-	text-shadow: none; /* Prevent inheritance from `body` */
-	background-color: #fff;
-	border: .05rem solid #fff;
-}
-
 #whaterver-you-want-to-call-that-id {
 	font-size: 75px;
 	color: yellow;
