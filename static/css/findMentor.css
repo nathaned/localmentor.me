@@ -14,7 +14,10 @@ html {
 
 #fullpage-container {
 	min-height: 100vh;
-	background: #333;
+	background-image: url("../images/findMentor.jpg");
+	background-size:     cover;                      /* <------ */
+	background-repeat:   no-repeat;
+	background-position: center center;
 }
 
 .cover-container {

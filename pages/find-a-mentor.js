@@ -61,7 +61,7 @@ export default class FindAMentor extends Component {
 						"react-select.min.css",
 						"jumbo.css"
 					]}
-					title="Dashboard" />
+					title="Dashboard"/>
 				<div>
 					<DashboardNav
 						pageTitle={pageTitle}

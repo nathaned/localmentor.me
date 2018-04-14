@@ -9,6 +9,9 @@ html {
 #fullpage-container {
 	min-height: 100vh;
 	background-image: url("../images/miami.jpg");
+	background-size:     cover;                      /* <------ */
+	background-repeat:   no-repeat;
+	background-position: center center;
 }
 
 .cover-container {

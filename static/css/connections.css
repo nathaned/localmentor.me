@@ -7,16 +7,19 @@
 html {
 	height: 100%;
 }
- 
+
  #fullpage-container {
-	min-height: 100vh;
-	background: #333;
+	 min-height: 100vh;
+	 background-image: url("../images/connections.jpg");
+	 background-size:     cover !important;
+	 background-repeat:   no-repeat !important;
+	 background-position: center center !important;
 }
 
 /*
  *	Patricks first CSS
  */
- 
+
  #whaterver-you-want-to-call-that-id
 {
 	font-size: 100px;
