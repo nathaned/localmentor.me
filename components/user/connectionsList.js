@@ -5,9 +5,7 @@ import fetch from 'isomorphic-fetch';
 export default class ConnectionList extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			tab: 3
-		};
+		this.state = {};
 	}
 
 	renderMentors() {
@@ -105,83 +103,62 @@ export default class ConnectionList extends Component {
 		const mentors = this.props.mentors;
 		const mentees = this.props.mentees;
 		
-		
-		if(this.state.tab == 0)
-			return (
+		return (
 			
-				<div className="Mentor list">
+			<div className="not connected list">
+				<h2> Requests</h2>
+					
+				<ProfileCard
+						username = {"abc"}
+						rating500 = {0}
+						bio = {"Something bio"}
+						distanceAway = {0}
+						tags = { ["SAd TAgs", "Im SAd"] }
+						location = {"Orlando"}
+						key = {0}
+						connected = {0}
+						connections = {1}
+						expanded = {1}
+						firstName = {"NATHANNN2 "}
+						lastName = {"nothing2"}
+				/>
+			
+				<h2> MENTORS </h2>
 					<ProfileCard
 						username = {"abc"}
 						rating500 = {5}
 						bio = {"NOTHING bio"}
 						distanceAway = {1000}
 						tags = { ["hahah TAgs", "LOL"] }
+						location = {"Orlando"}
 						key = {0}
 						connections = {1}
+						connected = {1}
 						expanded = {1}
 						firstName = {"ajjjjay "}
 						lastName = {"Mentor"}
 					/>
 				
-				</div>
-			)
-		if(this.state.tab == 1)
-			return(
 			
-				<div className="Mentee list">
+		
+				<h2> MENTEES </h2>
 					<ProfileCard
 						username = {"abc"}
 						rating500 = {5}
 						bio = {"NOTHING bio"}
 						distanceAway = {1000}
 						tags = { ["hahah TAgs", "LOL"] }
+						location = {"Orlando"}
 						key = {0}
 						connections = {1}
+						connected = {1}
 						expanded = {1}
 						firstName = {"ajjjjay "}
 						lastName = {"Mentee"}
 					/>
 				
 				</div>
-					
-			)
-		
-		else
-			return (
-					
-				<div className="not connected list">
-					<h2> MENTORS </h2>
-					<ProfileCard
-						username = {"abc"}
-						rating500 = {0}
-						bio = {"Something bio"}
-						distanceAway = {0}
-						tags = { ["SAd TAgs", "Im SAd"] }
-						key = {0}
-						connected = {1}
-						connections = {1}
-						expanded = {1}
-						firstName = {"NATHANNN "}
-						lastName = {"nothing"}
-					/>
-					
-					<h2> MENTEES </h2>
-					
-					<ProfileCard
-						username = {"abc"}
-						rating500 = {0}
-						bio = {"Something bio"}
-						distanceAway = {0}
-						tags = { ["SAd TAgs", "Im SAd"] }
-						key = {0}
-						connected = {1}
-						connections = {1}
-						expanded = {1}
-						firstName = {"NATHANNN2 "}
-						lastName = {"nothing2"}
-					/>
 				
-				</div>
 				
 			)
 

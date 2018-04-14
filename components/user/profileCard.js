@@ -176,7 +176,7 @@ export default class ProfileCard extends Component {
 					</div>
 					
 					<div className="distance">
-						{ distanceAway + " Miles" } <br/>
+						{ location + " place" } <br/>
 					</div>
 					
 					<div className="buttons">
@@ -229,8 +229,8 @@ export default class ProfileCard extends Component {
 						{ rating500 } <br/>
 					</div>
 					
-					<div className="distance">
-						{ distanceAway + " Miles" } <br/>
+					<div className="location">
+						{ location + " place" } <br/>
 					</div>
 					
 					<div className="buttons">
