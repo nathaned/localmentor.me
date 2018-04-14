@@ -47,6 +47,9 @@ export default class FindAMentor extends Component {
 
 	render() {
 		const pageTitle = "Find a Mentor";
+		if (!this.props.limitedProfile.isMentee) {
+			return this.renderRestrictedPage();
+		}
 		return (
 			<div id="fullpage-container">
 				<Head
@@ -57,7 +60,7 @@ export default class FindAMentor extends Component {
 						"react-select.min.css",
 						"jumbo.css"
 					]}
-					title="Dashboard" />
+					title={pageTitle} />
 				<div>
 					<DashboardNav
 						pageTitle={pageTitle}
@@ -79,6 +82,35 @@ export default class FindAMentor extends Component {
 										user={this.props.user} />
 								) : null
 							}
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
+	renderRestrictedPage() {
+		const pageTitle = "Find a Mentor";
+		return (
+			<div id="fullpage-container">
+				<Head
+					cssFiles={[
+						"findMentor.css",
+						"dashboardNav.css",
+						"jumbo.css"
+					]}
+					title={pageTitle} />
+				<div>
+					<DashboardNav
+						pageTitle={pageTitle}
+						user={this.props.user}
+						md5={this.props.limitedProfile.email}
+					/>
+					<div className="cover-container">
+						<div className="jumbotron trans">
+							<h1>Oops!</h1>
+							<p>Your profile isn't set up to be a mentee, so you can't search/request any mentors until you update it.</p>
+							<a href="/register" className="btn btn-lg btn-primary">Edit Profile</a>
 						</div>
 					</div>
 				</div>
