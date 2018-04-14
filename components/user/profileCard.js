@@ -49,6 +49,10 @@ export default class ProfileCard extends Component {
 	blockMentor(){
 		// API call to ignore mentor
 	}
+	
+	endMentor(){
+		// API call to end mentor
+	}
 
 	renderRequestButton() {
 		return (
@@ -86,6 +90,14 @@ export default class ProfileCard extends Component {
 		return (
 			<button id = "ignoreButton" className="btn btn-primary" onClick={() => this.ignoreMentor()}>
 				{"Block"}
+			</button>
+		)
+	}
+	
+	renderEndButton() {
+		return (
+			<button id = "endButton" className="btn btn-primary" onClick={() => this.endMentor()}>
+				{"End"}
 			</button>
 		)
 	}
@@ -236,6 +248,7 @@ export default class ProfileCard extends Component {
 					<div className="buttons">
 						{ this.renderMessageButton() }
 						{ this.renderBlockButton() }
+						{ this.renderEndButton() }
 					</div>
 					
 				</div>
