@@ -59,7 +59,7 @@ export default class FindAMentor extends Component {
 				<div>
 					<DashboardNav
 						pageTitle={pageTitle}
-						user={this.state.user}
+						user={this.props.user}
 					/>
 					<div className="cover-container">
 						<div className="jumbotron trans">
@@ -73,7 +73,7 @@ export default class FindAMentor extends Component {
 								? (
 									<MentorList
 										mentors={this.state.mentors}
-										user={this.state.user} />
+										user={this.props.user} />
 								) : null
 							}
 						</div>

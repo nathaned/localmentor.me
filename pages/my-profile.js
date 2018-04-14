@@ -7,7 +7,6 @@ import Profile from '../components/user/profile'
 export default class MyProfile extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
 	}
 
 	componentDidMount() {
@@ -36,11 +35,11 @@ export default class MyProfile extends Component {
 				<div>
 					<DashboardNav
 						pageTitle={pageTitle}
-						user={this.state.user}
+						user={this.props.user}
 					/>
 					<div className="cover-container">
 						<Profile
-							user={this.state.user}/>
+							user={this.props.user}/>
 					</div>
 				</div>
 			</div>

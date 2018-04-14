@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import Gravatar from 'react-gravatar';
+import { getProfile } from '../../lib/api/user';
 
 export default class DashboardNav extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { showProfileMenu: false, showDropdown: false };
+	}
+
+	async componentDidMount() {
+		const profile = await getProfile();
+		if (profile) {
+			this.setState({ email: profile.email });
+		}
 	}
 
 	toggleProfileMenu() {
@@ -16,7 +24,7 @@ export default class DashboardNav extends Component {
 	}
 
 	render(props) {
-		const { showDropdown, showProfileMenu } = this.state;
+		const { email, showDropdown, showProfileMenu } = this.state;
 		const { pageTitle, user } = this.props;
 		return (
 			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -45,7 +53,7 @@ export default class DashboardNav extends Component {
 					</ul>
 					<div id="profile-dropdown" className={"dropdown " + (showProfileMenu ? "show" : "")}>
 						<a className="nav-link dropdown-toggle" role="button" onClick={this.toggleProfileMenu.bind(this)}>
-							<Gravatar id="navbar-gravatar" size={30} protocol="https://" email="mathews.kyle@gmail.com" />
+							<Gravatar id="navbar-gravatar" size={30} protocol="https://" email={email} />
 							{user}
 						</a>
 						<div className={"dropdown-menu " + (showProfileMenu ? "show" : "")} aria-labelledby="navbarDropdown">

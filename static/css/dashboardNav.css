@@ -1,8 +1,15 @@
+
 #profile-dropdown a.nav-link{
 	color: white;
+	padding: 0;
 }
 
 @media (min-width: 62em) {
+	#profile-dropdown {
+		min-width: 200px;
+		text-align: right;
+	}
+
 	#profile-dropdown.dropdown {
 		left: -10px;
 	}
