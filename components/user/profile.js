@@ -25,13 +25,13 @@ export default class Profile extends Component {
 	}
 
 	async loadProfile() {
-		let profile = await getProfile(this.props.baseUrl);
+		let profile = await getProfile();
 		console.log(profile);
 		this.setState({ profile });
 	}
 
 	async loadTags() {
-		const tags = await getTags(this.props.baseUrl);
+		const tags = await getTags();
 		this.setState({ tags });
 	}
 
@@ -39,7 +39,7 @@ export default class Profile extends Component {
 		NProgress.start();   // start the cool loading bar
 		e.preventDefault();  // prevents default behavior
 
-		const response = await updateProfile(this.props.baseUrl, this.state.profile);
+		const response = await updateProfile(this.state.profile);
 		console.log(response);
 		// server will send a 403 if login failed
 		if (!response || response.status == 403) {

@@ -4,12 +4,10 @@ import ConnectionsList from '../components/user/connectionsList'
 import Head from '../components/head'
 import { getTags } from '../lib/api/user';
 import SearchBar from '../components/user/searchBar'
-import { checkAuth, searchTags } from '../lib/api/user'
-
-
+import { searchTags } from '../lib/api/user'
 
 export default class MyConnectionsTest extends Component {
-	
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -17,39 +15,27 @@ export default class MyConnectionsTest extends Component {
 			tab: 0
 		};
 	}
-	
+
 	async loadTags() {
-		const tags = await getTags(this.props.baseUrl);
+		const tags = await getTags();
 		this.setState({ tags });
 	}
 
-
 	async componentDidMount() {
-		// check if the user is logged in
-		const user = await checkAuth(this.props.baseUrl);
-
-		// if not logged in, send them to the login page
-		// TODO send them to something like /login?redirect=find-a-mentor
-		if (!user)
+		if (!this.props.user)
 			window.location = '/login';
-
-		this.setState({ user });
 		await this.loadTags();
 	}
 
-	
-
 	static getInitialProps({ req }) {
-		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
-		return { baseUrl };
+		const user = req.session.user;
+		return { user };
 	}
-	
+
 	render() {
 		const pageTitle = "My Connections";
-		
-	
-		return (
 
+		return (
 			<div>
 				<Head
 					cssFiles={[
@@ -67,41 +53,39 @@ export default class MyConnectionsTest extends Component {
 							<p></p>
 								<DashboardNav
 									pageTitle={pageTitle}
-									user={this.state.user}
+									user={this.props.user}
 								/>
 
 								<p>&nbsp;</p>
 								<p>&nbsp;</p>
 								<p>&nbsp;</p>
-								
+
 								<div className="jumbotron trans">
 									<h1>Connections</h1>
-									
+
 									<button id = "mentorButton" className="btn btn-primary" onClick={() => this.state.tab = 0}>
 										{"Mentors"}
 									</button>
-									
+
 									<button id = "menteeButton" className="btn btn-primary" onClick={() => this.state.tab = 1}>
 										{"MENTES"}
 									</button>
-									
+
 									<button id = "requestButton" className="btn btn-primary" onClick={() => this.state.tab = 2}>
 										{"Requests"}
 									</button>
-									
+
 									<p><p></p></p>
-									
+
 
 									<ConnectionsList
-										
-										baseUrl={this.props.baseUrl}
-										user={this.state.user} 
+										user={this.props.user}
 										tab = {this.state.tab}/>
-										
-									
+
+
 								</div>
 
-								
+
 							</div>
 						</div>
 					</div>

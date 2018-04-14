@@ -3,7 +3,6 @@ import Head from '../components/head'
 import DashboardNav from '../components/user/dashboardNav'
 import Dashboard from '../components/user/dashboard'
 import Profile from '../components/user/profile'
-import { checkAuth } from '../lib/api/user'
 
 export default class MyProfile extends Component {
 	constructor(props) {
@@ -11,21 +10,14 @@ export default class MyProfile extends Component {
 		this.state = {};
 	}
 
-	async componentDidMount() {
-		// check if the user is logged in
-		const user = await checkAuth(this.props.baseUrl);
-
-		// if not logged in, send them to the login page
-		// TODO send them to something like /login?redirect=find-a-mentor
-		if (!user)
+	componentDidMount() {
+		if (!this.props.user)
 			window.location = '/login';
-
-		this.setState({ user });
 	}
 
 	static getInitialProps({ req }) {
-		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
-		return { baseUrl };
+		const user = req.session.user;
+		return { user };
 	}
 
 	render () {
@@ -48,7 +40,6 @@ export default class MyProfile extends Component {
 					/>
 					<div className="cover-container">
 						<Profile
-							baseUrl={this.props.baseUrl}
 							user={this.state.user}/>
 					</div>
 				</div>
