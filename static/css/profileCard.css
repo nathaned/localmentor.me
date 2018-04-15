@@ -1,6 +1,17 @@
 .profileCard {
-	background: red;
+	background: #0ba1c7;
+	display: flex;
 	flex-wrap: wrap;
+	margin: 10px;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.profileCard .profile-top {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 5px;
 }
 
 .profileCard .profile-picture {
@@ -9,11 +20,40 @@
 }
 
 .profileCard .profile-picture .react-gravatar{
-	border: 2px solid black;
+	border: 3px solid black;
+	border-radius: 5px;
 	margin: 3px;
 }
 
 .profileCard .profile-content {
 	min-width: 350px;
+	padding: 10px;
 	flex: 70;
+}
+
+.profileCard .profile-actions {
+	flex: 10;
+}
+
+.profileCard .profile-actions button {
+	margin: 3px;
+}
+
+.tags-container {
+	padding: 0;
+}
+
+.tags-container .tag {
+	color: black;
+	background: lightblue;
+	list-style: none;
+	display: inline;
+	padding: 4px 6px;
+	margin: 5px;
+	border-radius: 2px;
+	text-shadow: none;
+}
+
+.profileCard .material-icons {
+	font-size: 18px;
 }

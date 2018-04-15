@@ -17,32 +17,32 @@ export default class ProfileCard extends Component {
 				return this.renderConnectedMenteeProfile();
 			case "connectedMentee":
 				return this.renderConnectedMenteeProfile();
-			default:
-				return this.renderShortProfile();
+			default: // todo remove this everything should have a type
+				return this.renderSearchProfile();
 		}
 	}
 
-	requestMentor(){
+	requestMentor(username){
 		// API call to accept mentor
 	}
 
-	acceptMentor(){
+	acceptMentor(username){
 		// API call to accept mentor
 	}
 
-	ignoreMentor(){
+	ignoreMentor(username){
 		// API call to ignore mentor
 	}
 
-	messageMentor(){
+	messageMentor(username){
 		// API call to message mentor
 	}
 
-	blockMentor(){
+	blockMentor(username){
 		// API call to ignore mentor
 	}
 
-	endMentor(){
+	endMentor(username){
 		// API call to end mentor
 	}
 
@@ -94,49 +94,62 @@ export default class ProfileCard extends Component {
 		)
 	}
 
-	renderExpandedProfile() {
-		const {
-			email,
-			firstName,
-			lastName,
-			location,
-			bio,
-			tags,
-			rating500,
-			numRatings
-		} = this.props;
-
+	renderTags(tags) {
+		if (!tags || tags.length == 0)
+			return null;
 		return (
-			<div className="profileCard" onClick={this.props.onClick}>
-				<div className="profile-picture">
-					<Gravatar protocol="https://" email={email} />
-				</div>
-				<div className="profile-content">
-					{ firstName + lastName } <br/>
-					{ this.renderRequestButton() }
-				</div>
-			</div>
+			<ul class="tags-container">
+				{ tags.map( tag => <li class="tag">{tag}</li>)
+				}
+			</ul>
 		);
 	}
 
-	renderShortProfile() {
+	renderRating(rating) {
+		if (!rating) return <span>Not rated yet </span>;
+		return (
+			<span>
+				{[1,2,3,4,5].map( i => {
+					if (rating >= i)
+						return <i class="material-icons">star</i>;
+					if (rating >= i - 0.5)
+						return <i class="material-icons">star_half</i>;
+					return <i class="material-icons">star_border</i>;
+				})}
+			</span>
+		)
+	}
+
+	renderSearchProfile() {
 		const {
+			bio,
 			email,
 			firstName,
 			lastName,
 			location,
+			rating,
 			tags,
-			bio
+			username
 		} = this.props;
 
 		return (
 			<div className="profileCard">
+				<div className="profile-top">
+					{ this.renderRating(Math.random()*5.0) }
+					<div> <i class="material-icons">location_on</i> { location }</div>
+				</div>
 				<div className="profile-picture">
 					<Gravatar size={100} protocol="https://" email={email} />
 				</div>
 				<div className="profile-content">
-					{ firstName + lastName } <br/>
-					{this.renderRequestButton()}
+					<h3>{ firstName + " " +  lastName }</h3>
+					{ bio } <br/>
+					{ this.renderTags(tags) }
+				</div>
+				<div className="profile-actions">
+					<button className="btn btn-primary" onClick={this.requestMentor.bind(this, username)}>
+						MENTOR ME
+					</button>
 				</div>
 			</div>
 		);

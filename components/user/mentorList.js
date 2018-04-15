@@ -16,14 +16,15 @@ export default class MentorList extends Component {
 			mentors.map( (item, i) =>
 				<ProfileCard
 					key={item.username + i}
+					bio={item.bio}
 					email={item.email}
-					firstName = {item.firstName}
-					lastName = {item.lastName}
-					location = {item.location}
-					profileText = {item.profileText}
-					rating = {item.rating500 / 100}
-					tags = {item.tags}
-					username = {item.username}
+					firstName={item.firstName}
+					lastName={item.lastName}
+					location={item.location}
+					rating={item.rating500 / 100}
+					tags={item.tags}
+					type={"search"}
+					username={item.username}
 				/>
 			)
 		);
