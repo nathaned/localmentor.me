@@ -188,20 +188,22 @@ export default class Profile extends Component {
 											value={this.state.profile.email}/>
 									</div>
 								</div>
-								<div className="form-group">
-									<div className="col-md-8">
-										<span>Tags:</span>
-										<Select.Creatable
-											arrowRenderer={null}
-											backspaceRemoves={false}
-											clearable={false}
-											multi={true}
-											onChange={this.handleTagChange.bind(this)}
-											options={this.state.tags}
-											placeholder="Select some tags"
-											value={this.state.profile.tags}/>
+								{ this.state.profile.isMentor ? (
+									<div className="form-group">
+										<div className="col-md-8">
+											<span>Tags:</span>
+											<Select.Creatable
+												arrowRenderer={null}
+												backspaceRemoves={false}
+												clearable={false}
+												multi={true}
+												onChange={this.handleTagChange.bind(this)}
+												options={this.state.tags}
+												placeholder="Select some tags"
+												value={this.state.profile.tags}/>
+										</div>
 									</div>
-								</div>
+								) : null }
 								<div className="form-group">
 									<div className="col-md-8">
 										<span>Location:</span>
