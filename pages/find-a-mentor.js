@@ -85,6 +85,7 @@ export default class FindAMentor extends Component {
 								) : null
 							}
 						</div>
+						<div className="clear"></div>
 					</div>
 				</div>
 			</div>

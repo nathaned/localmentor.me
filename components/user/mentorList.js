@@ -17,7 +17,7 @@ export default class MentorList extends Component {
 				<ProfileCard
 					key={item.username + i}
 					actionable={item.requestedMentees.indexOf(user) == -1}
-					bio={item.bio}
+					bio={item.mentorBio}
 					email={item.email}
 					firstName={item.firstName}
 					lastName={item.lastName}

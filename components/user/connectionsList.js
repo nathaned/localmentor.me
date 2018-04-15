@@ -113,18 +113,18 @@ export default class ConnectionList extends Component {
 					<div className="jumbotron connections">
 						<h2> Requests</h2>
 						<ProfileCard
-								username = {"abc"}
-								rating500 = {0}
-								bio = {"Something bio"}
-								distanceAway = {0}
-								tags = { ["SAd TAgs", "Im SAd"] }
-								location = {"Orlando"}
-								key = {0}
-								connected = {0}
-								connections = {1}
-								expanded = {1}
-								firstName = {"NATHANNN2 "}
-								lastName = {"nothing2"}
+							username = {"abc"}
+							rating500 = {0}
+							bio = {"Something bio"}
+							distanceAway = {0}
+							tags = { ["SAd TAgs", "Im SAd"] }
+							location = {"Orlando"}
+							key = {0}
+							connected = {0}
+							connections = {1}
+							expanded = {1}
+							firstName = {"NATHANNN2 "}
+							lastName = {"nothing2"}
 						/>
 					</div>
 

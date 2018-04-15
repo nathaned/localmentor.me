@@ -1,7 +1,7 @@
 .jumbotron.trans {
 	background: rgba(0, 0, 0, .7);
 	border-radius: 1rem;
-	margin-bottom: none;
+	margin-bottom: 0;
 }
 
 .jumbotron.connections {

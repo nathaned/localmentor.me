@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import DashboardNav from '../components/user/dashboardNav'
 import ConnectionsList from '../components/user/connectionsList'
 import Head from '../components/head'
-//import { getTags } from '../lib/api/user';
-//import SearchBar from '../components/user/searchBar'
-import { getLimitedProfile, acceptR, ignoreR, blockR } from '../lib/api/user'
+import { getLimitedProfile } from '../lib/api/user'
 
 export default class MyConnectionsTest extends Component {
 
@@ -69,15 +67,14 @@ export default class MyConnectionsTest extends Component {
 					user={this.props.user}
 					md5={this.props.limitedProfile.email}
 				/>
+
 				<div className="cover-container">
 					<div className="jumbotron trans">
 						<h1>Connections</h1>
-
-							<ConnectionsList
-								user={this.props.user}
-								tab = {this.state.tab}
-							/>
-
+						<ConnectionsList
+							user={this.props.user}
+							tab = {this.state.tab}
+						/>
 					</div>
 				</div>
 				<div className="clear"></div>

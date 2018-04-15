@@ -40,7 +40,7 @@
 }
 
 .tags-container {
-	padding: 0;
+	padding: 5px 0;
 }
 
 .tags-container .tag {
@@ -48,9 +48,9 @@
 	background: lightblue;
 	list-style: none;
 	display: inline;
-	padding: 4px 6px;
+	padding: 5px 10px;
 	margin: 5px;
-	border-radius: 2px;
+	border-radius: 25px;
 	text-shadow: none;
 }
 

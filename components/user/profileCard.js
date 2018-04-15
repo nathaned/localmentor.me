@@ -9,9 +9,11 @@ export default class ProfileCard extends Component {
 	}
 
 	render() {
+		return this.renderProfile();
+		/*
 		switch (this.props.type) {
 			case "search":
-				return this.renderSearchProfile();
+				return this.renderProfile();
 			case "request":
 				return this.renderRequestProfile();
 			case "connectedMentor":
@@ -19,34 +21,33 @@ export default class ProfileCard extends Component {
 			case "connectedMentee":
 				return this.renderConnectedMenteeProfile();
 			default: // todo remove this everything should have a type
-				return this.renderSearchProfile();
+				return this.renderProfile();
 		}
+		*/
 	}
 
 	async requestMentor(username) {
-		console.log("going to request user " + username);
 		this.setState({ actionable: false });
 		await sendRequest(username);
+	}
+
+	async acceptMentee(username) {
 		// API call to accept mentor
 	}
 
-	acceptMentor(username) {
-		// API call to accept mentor
-	}
-
-	ignoreMentor(username) {
+	async ignoreMentee(username) {
 		// API call to ignore mentor
 	}
 
-	messageMentor(username) {
+	async messageUser(username) {
 		// API call to message mentor
 	}
 
-	blockMentor(username) {
+	async blockUser(username) {
 		// API call to ignore mentor
 	}
 
-	endMentor(username) {
+	async endUser(username) {
 		// API call to end mentor
 	}
 
@@ -116,7 +117,58 @@ export default class ProfileCard extends Component {
 		)
 	}
 
-	renderSearchProfile() {
+	renderProfileActions() {
+		const { type, username } = this.props;
+		const actionable = this.state.actionable;
+		return (
+			<div className="profile-actions">
+				{ type == "search" ? (
+					<button
+						className={"btn btn-" + (actionable ? "primary" : "secondary")}
+						disabled={!actionable}
+						onClick={this.requestMentor.bind(this, username)}>
+						{actionable ? "MENTOR ME" : "Requested!"}
+					</button>
+				) : null }
+
+				{ (type == "request" && actionable )? (
+					<button
+						className="btn btn-secondary"
+						onClick={this.ignoreMentee.bind(this, username)}>
+						Ignore
+					</button>
+				) : null }
+
+				{ (type == "request" && actionable )? (
+					<button
+						className="btn btn-success"
+						onClick={this.acceptMentee.bind(this, username)}>
+						Accept
+					</button>
+				) : null }
+
+				{ (type == "connection" && actionable )? (
+					<button
+						className={"btn btn-" + (actionable ? "primary" : "secondary")}
+						disabled={!actionable}
+						onClick={this.requestMentor.bind(this, username)}>
+						{actionable ? "MENTOR ME" : "Requested!"}
+					</button>
+				) : null }
+
+				{ type == "request" ? (
+					<button
+						className={"btn btn-" + (actionable ? "primary" : "secondary")}
+						disabled={!actionable}
+						onClick={this.requestMentor.bind(this, username)}>
+						{actionable ? "MENTOR ME" : "Requested!"}
+					</button>
+				) : null }
+			</div>
+		)
+	}
+
+	renderProfile() {
 		const {
 			bio,
 			email,
@@ -125,6 +177,7 @@ export default class ProfileCard extends Component {
 			location,
 			rating,
 			tags,
+			type,
 			username
 		} = this.props;
 		const actionable = this.state.actionable;
@@ -140,17 +193,10 @@ export default class ProfileCard extends Component {
 				</div>
 				<div className="profile-content">
 					<h3>{ firstName + " " +  lastName }</h3>
-					{ bio } <br/>
+					<p>{ bio }</p>
 					{ this.renderTags(tags) }
 				</div>
-				<div className="profile-actions">
-					<button
-						className={"btn btn-" + (actionable ? "primary" : "secondary")}
-						disabled={!actionable}
-						onClick={this.requestMentor.bind(this, username)}>
-						{actionable ? "MENTOR ME" : "Requested!"}
-					</button>
-				</div>
+				{ this.renderProfileActions() }
 			</div>
 		);
 	}

@@ -88,3 +88,7 @@ html {
 	margin-right: 5%;
 	min-width: 150px;
 }
+
+div.clear {
+	padding: 10px;
+}
