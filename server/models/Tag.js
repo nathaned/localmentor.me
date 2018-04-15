@@ -9,6 +9,10 @@ const TagsSchema = new Schema({
 	},
 	tagMentors: {
 		type: [String]
+	},
+	count: {
+		type:  Number,
+		default: 1
 	}
 })
 
@@ -17,7 +21,7 @@ class TagClass {
 	static async addMentorToTag(newTag, mentor) {
 		const isTag = await this.findOne({tag: newTag});
 		if(!isTag){
-			const newRecord = await this.create({ tag: newTag, tagMentors: mentor, count: "1" });
+			const newRecord = await this.create({ tag: newTag, tagMentors: mentor});
 			console.log(`------> new "${newTag}" tag has been created`);
 			return newRecord;
 		}
