@@ -25,9 +25,6 @@ export default class FindAMentor extends Component {
 	}
 
 	async componentDidMount() {
-		if (!this.props.user)
-			window.location = '/login';
-
 		await this.loadTags();
 	}
 
@@ -38,9 +35,14 @@ export default class FindAMentor extends Component {
 		this.setState({ mentors });
 	}
 
-	static async getInitialProps({ req }) {
+	static async getInitialProps({ req, res }) {
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		const user = req.session.user;
+		if (!user && res) { // if the user isn't logged in, send them to login
+			res.writeHead(302, { Location: '/login' });
+			res.end();
+			res.finished = true;
+		}
 		const limitedProfile = await getLimitedProfile(baseUrl, user);
 		return { limitedProfile, user };
 	}
@@ -110,7 +112,7 @@ export default class FindAMentor extends Component {
 						<div className="jumbotron trans">
 							<h1>Oops!</h1>
 							<p>Your profile isn't set up to be a mentee, so you can't search/request any mentors until you update it.</p>
-							<a href="/register" className="btn btn-lg btn-primary">Edit Profile</a>
+							<a href="/my-profile" className="btn btn-lg btn-primary">Edit Profile</a>
 						</div>
 					</div>
 				</div>

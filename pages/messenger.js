@@ -17,10 +17,14 @@ export default class MessengerPage extends Component {
 		this.continuouslyCheckUnreads();
 	}
 
-
-	static async getInitialProps({ req }) {
+	static async getInitialProps({ req, res }) {
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		const user = req.session.user;
+		if (!user && res) { // if the user isn't logged in, send them to login
+			res.writeHead(302, { Location: '/login' });
+			res.end();
+			res.finished = true;
+		}
 		const limitedProfile = await getLimitedProfile(baseUrl, user);
 		return { limitedProfile, user };
 	}
