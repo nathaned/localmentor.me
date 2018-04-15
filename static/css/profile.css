@@ -54,6 +54,7 @@ html {
 	overflow-y: auto;
 	overflow-x: hidden;
 	background: rgba(90, 90, 90, .9);
+	border-radius: 10px;
 	text-align: left;
 }
 

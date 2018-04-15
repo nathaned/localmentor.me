@@ -1,0 +1,19 @@
+.profileCard {
+	background: red;
+	flex-wrap: wrap;
+}
+
+.profileCard .profile-picture {
+	min-width: 150px;
+	flex: 30;
+}
+
+.profileCard .profile-picture .react-gravatar{
+	border: 2px solid black;
+	margin: 3px;
+}
+
+.profileCard .profile-content {
+	min-width: 350px;
+	flex: 70;
+}

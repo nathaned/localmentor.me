@@ -8,7 +8,6 @@ export default class MentorList extends Component {
 		this.state = {};
 	}
 
-
 	renderMentors() {
 		const mentors = this.props.mentors;
 		console.log("mentors in renderMentors");
@@ -16,15 +15,15 @@ export default class MentorList extends Component {
 		return (
 			mentors.map( (item, i) =>
 				<ProfileCard
-					username = {item.username}
-					rating = {item.rating}
-					profileText = {item.profileText}
-					distanceAway = {item.distanceAway}
-					tags = {item.tags}
-					key = {i}
-					expanded = {0}
+					key={item.username + i}
+					email={item.email}
 					firstName = {item.firstName}
 					lastName = {item.lastName}
+					location = {item.location}
+					profileText = {item.profileText}
+					rating = {item.rating500 / 100}
+					tags = {item.tags}
+					username = {item.username}
 				/>
 			)
 		);

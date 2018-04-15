@@ -44,26 +44,25 @@ export default class MyConnectionsTest extends Component {
 						"react-select.min.css",
 						"jumbo.css"
 					]}
-					title="Dashboard" />
+					title={pageTitle} />
 
-				<div>
-					<DashboardNav
-						pageTitle={pageTitle}
-						user={this.props.user}
-						md5={this.props.limitedProfile.email}
-					/>
-					<div className="cover-container">
-						<div className="jumbotron trans">
-							<h1>Connections</h1>
+				<DashboardNav
+					pageTitle={pageTitle}
+					user={this.props.user}
+					md5={this.props.limitedProfile.email}
+				/>
+				<div className="cover-container">
+					<div className="jumbotron trans">
+						<h1>Connections</h1>
 
-								<ConnectionsList
-									user={this.props.user}
-									tab = {this.state.tab}
-								/>
+							<ConnectionsList
+								user={this.props.user}
+								tab = {this.state.tab}
+							/>
 
-						</div>
 					</div>
 				</div>
+				<div className="clear"></div>
 			</div>
 		);
 	}

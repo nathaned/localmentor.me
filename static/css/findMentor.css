@@ -15,8 +15,8 @@ html {
 #fullpage-container {
 	min-height: 100vh;
 	background-image: url("../images/findMentor.jpg");
-	background-size:     cover;                      /* <------ */
-	background-repeat:   no-repeat;
+	background-size: cover;
+	background-repeat: no-repeat;
 	background-position: center center;
 }
 
@@ -24,7 +24,6 @@ html {
 	margin-top: 30px;
 	margin-right: auto;
 	margin-left: auto;
-	background-color: #333;
 	color: #fff;
 	text-align: center;
 	text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);

@@ -31,7 +31,7 @@ export default class ConnectionList extends Component {
 			)
 		);
 	}
-	
+
 	renderMentees() {
 		const mentees = this.props.mentees;
 		console.log("mentees in renderMentees");
@@ -54,7 +54,7 @@ export default class ConnectionList extends Component {
 			)
 		);
 	}
-	
+
 	renderMentorRequests() {
 		const mentorRequests = this.props.mentorRequests;
 		console.log("mentorRequests in renderMentorRequests");
@@ -76,8 +76,8 @@ export default class ConnectionList extends Component {
 			)
 		);
 	}
-	
-	
+
+
 	renderMenteeRequests() {
 		const menteeRequests = this.props.menteeRequests;
 		console.log("menteeRequests in renderMenteeRequests");
@@ -105,24 +105,13 @@ export default class ConnectionList extends Component {
 		const mentees = this.props.mentees;
 		const menteesRequests = this.props.menteesRequests;
 		const mentorsRequests = this.props.mentorsRequests;
-		
+
 		return (
-		
+
 			<div>
-		
-				<Head
-					cssFiles={[
-						"dashboard.css",
-						"dashboardNav.css",
-						"profileCard.css",
-						"react-select.min.css",
-						"jumbo.css"
-					]}
-					title="Dashboard" />
-			
 				<div>
 					<div className="jumbotron connections">
-						<h2> Requests</h2>	
+						<h2> Requests</h2>
 						<ProfileCard
 								username = {"abc"}
 								rating500 = {0}
@@ -138,9 +127,9 @@ export default class ConnectionList extends Component {
 								lastName = {"nothing2"}
 						/>
 					</div>
-					
+
 					<div className="jumbotron connections">
-					
+
 						<h2> MENTORS </h2>
 							<ProfileCard
 								username = {"abc"}
@@ -157,9 +146,9 @@ export default class ConnectionList extends Component {
 								lastName = {"Mentor"}
 							/>
 					</div>
-					
+
 					<div className="jumbotron connections">
-						
+
 						<h2> MENTEES </h2>
 						<ProfileCard
 							username = {"abc"}
@@ -175,7 +164,7 @@ export default class ConnectionList extends Component {
 							firstName = {"ajjjjay "}
 							lastName = {"Mentee"}
 						/>
-						
+
 						<ProfileCard
 							username = {"abc"}
 							rating500 = {5}
@@ -191,11 +180,11 @@ export default class ConnectionList extends Component {
 							lastName = {"Mentee"}
 						/>
 					</div>
-				
+
 				</div>
-				
+
 			</div>
-				
+
 			)
 	}
 }
