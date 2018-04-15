@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import DashboardNav from '../components/user/dashboardNav'
 import ConnectionsList from '../components/user/connectionsList'
 import Head from '../components/head'
-import { getTags } from '../lib/api/user';
-import SearchBar from '../components/user/searchBar'
-import { getLimitedProfile, searchTags } from '../lib/api/user'
+//import { getTags } from '../lib/api/user';
+//import SearchBar from '../components/user/searchBar'
+import { getLimitedProfile, acceptR, ignoreR, blockR } from '../lib/api/user'
 
 export default class MyConnectionsTest extends Component {
 
@@ -30,6 +30,21 @@ export default class MyConnectionsTest extends Component {
 		const limitedProfile = await getLimitedProfile(baseUrl, user);
 		return { limitedProfile, user };
 	}
+
+	// async handleAccept (mentee) {
+	// console.log("accepting a request ");
+	// 	await acceptR(mentee)
+	// }
+
+	// async handleIgnore (mentee) {
+	// console.log("ignoring a request ");
+	// 	await ignoreR(mentee);
+	// }
+
+	// async handleBlock (mentee) {
+	// console.log("blocking a user ");
+	// 	await blockR(mentee);
+	// }
 
 	render() {
 		const pageTitle = "My Connections";
