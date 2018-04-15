@@ -17,14 +17,15 @@ class TagClass {
 	static async addMentorToTag(newTag, mentor) {
 		const isTag = await this.findOne({tag: newTag});
 		if(!isTag){
-			const newRecord = await this.create({ tag: newTag, tagMentors: mentor });
+			const newRecord = await this.create({ tag: newTag, tagMentors: mentor, count: "1" });
 			console.log(`------> new "${newTag}" tag has been created`);
 			return newRecord;
 		}
 		else{
 			const addmentor = await this.findOneAndUpdate(
 				{ tag: newTag },
-				{ $addToSet: { tagMentors: mentor } }
+				{ $addToSet: { tagMentors: mentor } },
+				{ $inc:{count: 1} }
 			);
 			console.log(`------->${mentor} is added to the "${newTag}" tag`);
 			return addmentor;
@@ -32,7 +33,7 @@ class TagClass {
 	};
 
 	static async exploreAllTags() {
-		const alltags = await this.find({});
+		const alltags = await this.find({}).sort({count: -1});
 		return alltags;
 	};
 
