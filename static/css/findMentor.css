@@ -26,6 +26,9 @@ html {
 	margin-left: auto;
 	color: #fff;
 	text-align: center;
+}
+
+.cover-container h1 {
 	text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
 }
 
@@ -60,6 +63,12 @@ html {
 	flex-wrap: wrap;
 	justify-content: center;
 	padding: 10px;
+}
+
+#search-bar #search-alert {
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 .Select {

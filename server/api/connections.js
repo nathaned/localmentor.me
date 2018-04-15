@@ -19,7 +19,6 @@ connectionsApi.get('/api/connections/request/:mentor', async (req, res) => {
 });
 
 
-// slug = mentee the request is coming from
 connectionsApi.get('/api/connections/acceptRequest/:mentee', async (req, res) => {
 	const user = getUserFromSession(req);
 	if (!user) {
@@ -75,7 +74,7 @@ connectionsApi.get('/api/connections/mentors', async (req, res) => {
 		return res.sendStatus(403);
 	}
 
-	const mentorList = Profile.checkMentors(user);
+	const mentorList = Profile.getMentors(user);
 	if(!mentorList) {
 		const error = "error in find mentor";
 		return res.status(404).json({ error });
@@ -85,6 +84,7 @@ connectionsApi.get('/api/connections/mentors', async (req, res) => {
 	return res.status(200).json({profiles});
 });
 
+
 // get users' current mentees
 connectionsApi.get('/api/connections/mentees', async (req, res) => {
 	const user = getUserFromSession(req);
@@ -92,7 +92,7 @@ connectionsApi.get('/api/connections/mentees', async (req, res) => {
 		return res.sendStatus(403);
 	}
 
-	const menteeList = Profile.checkMentees(user);
+	const menteeList = Profile.getMentees(user);
 	if (!mentorList) {
 		const error = "error in find mentee";
 		return res.status(404).json({ error });

@@ -212,68 +212,72 @@ class ProfileClass {
 	static async requestMentor(requester, requested) {
 		const mentee = await this.findByUsername(requester);
 		if (!mentee) {
-			console.log("requestMentor: requester (mentee) not found");
+			console.log("requestMentor: requester (mentee) not found: ", requester);
 			return;
 		}
 		const mentor = await this.findByUsername(requested);
 		if (!mentor) {
-			console.log("requestMentor: requested (mentor) not found");
+			console.log("requestMentor: requested (mentor) not found: ", requested);
 			return;
 		}
 
-		let requestedMentors = mentee.requestedMentors;
-		if (requestedMentors.indexOf(requested) == -1) {
-			requestedMentors.push(requested);
-		}
-		await this.findOneAndUpdate({ username: requester }, { requestedMentors });
-
-		let requestedMentees = mentor.requestedMentees;
-		if (requestedMentees.indexof(requester) == -1) {
-			requestedMentees.push(requestMentor);
-		}
-		await this.findOneAndUpdate({ username: requester }, { requestedMentees });
+		await this.findOneAndUpdate(
+			{ username: requester },
+			{ $addToSet: { requestedMentors : requested } }
+		);
+		await this.findOneAndUpdate(
+			{ username: requested },
+			{ $addToSet: { requestedMentees: requester } }
+		);
 	}
 
 	// called when Mentor accepts a request! uses user in session  (mentor)
 	// takes care of moving menotrs/mentees from the requested section to actual mentors/mentees
 	static async acceptRequest(mentor, mentee) {
-		const addedMentee = await this.findOne({username: mentor}, {$pull: {requestedMentees: mentee}}, {$addToSet: {mentees: mentee}});
+		const addedMentee = await this.findOne(
+			{username: mentor},
+			{$pull: {requestedMentees: mentee}},
+			{$addToSet: {mentees: mentee}}
+		);
 		console.log("added mentee in acceptRequest:", addedMentee);
 		return addedMentee;
 	}
 
 	static async block(mentor, mentee) {
-		const addedMentee = await this.findOne({username: mentor}, {$pull: {requestedMentees: mentee}}, {$addToSet: {blocked: mentee}});
+		const addedMentee = await this.findOne(
+			{username: mentor},
+			{$pull: {requestedMentees: mentee}},
+			{$addToSet: {blocked: mentee}}
+		);
 		console.log("added mentee in acceptRequest:", addedMentee);
 		return addedMentee;
 	}
 
 	static async ignoreRequest(mentor, mentee) {
 		const ignoredMentee = await this.findOne(
-			{username: mentor}, {$pull: {requestedMentees: mentee}}
+			{username: mentor},
+			{$pull: {requestedMentees: mentee}}
 		);
 		console.log("ignoredMentee in ignoreRequest: ", ignoredMentee);
 		return ignoredMentee;
 	}
 
-	static async checkMentors(username) {
+	static async getkMentors(username) {
 		const result = await this.findOne({ username }, {mentors: 1});
 		console.log("profile in checkMentors", mentorList);
 		if (!result) {
 			return false;
 		}
 
-		let usernames = {};
-		result.map( ({mentors}) => mentors.map( x => usernames[x] = true) );
-		console.log(result);
-		console.log("keys: ", Object.keys(usernames));
-		return Object.keys(usernames);
+		return result.mentors;
 	}
 
-	static async checkMentees(user) {
-		const menteeList = await this.findOne({username: user}, {mentors: 1});
-		if(!menteeList){return false;}
-		return menteeList;
+	static async getMentees(user) {
+		const result = await this.findOne({username: user}, {mentees: 1});
+		if (!result) {
+			return false;
+		}
+		return result.mentees;
 	}
 
 	static async getProfiles(usernames) {

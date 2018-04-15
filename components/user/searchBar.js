@@ -26,15 +26,28 @@ export default class SearchBar extends Component {
 	}
 
 	async handleSearch () {
+		if (!this.state.inputSearch || !this.state.inputSearch.length ||
+			!this.state.inputLocation || !this.state.inputLocation.value
+		) {
+			return this.setState({ error: true })
+		}
 		const tags = this.state.inputSearch.map( ({value}) => value);
 		const location = this.state.inputLocation.value;
 		await this.props.onClick(tags, location);
+		this.setState({ error: false });
 	}
 
 	render(props) {
 		console.log(this.state);
 		return (
 			<div id="search-bar">
+				{ this.state.error ? (
+					<div id="search-alert">
+						<div className="alert alert-warning" role="alert">
+							Select tags and location to search.
+						</div>
+					</div>
+				) : null }
 				<Select
 					id="tag-search"
 					arrowRenderer={null}

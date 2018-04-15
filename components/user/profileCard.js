@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Gravatar from 'react-gravatar';
+import { sendRequest } from '../../lib/api/user';
 
 export default class ProfileCard extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { expanded: true };
+		this.state = { actionable: props.actionable };
 	}
 
 	render() {
@@ -22,36 +23,31 @@ export default class ProfileCard extends Component {
 		}
 	}
 
-	requestMentor(username){
+	async requestMentor(username) {
+		console.log("going to request user " + username);
+		this.setState({ actionable: false });
+		await sendRequest(username);
 		// API call to accept mentor
 	}
 
-	acceptMentor(username){
+	acceptMentor(username) {
 		// API call to accept mentor
 	}
 
-	ignoreMentor(username){
+	ignoreMentor(username) {
 		// API call to ignore mentor
 	}
 
-	messageMentor(username){
+	messageMentor(username) {
 		// API call to message mentor
 	}
 
-	blockMentor(username){
+	blockMentor(username) {
 		// API call to ignore mentor
 	}
 
-	endMentor(username){
+	endMentor(username) {
 		// API call to end mentor
-	}
-
-	renderRequestButton() {
-		return (
-			<button id = "requestButton" className="btn btn-primary" onClick={() => RequestMentor()}>
-				MENTOR ME
-			</button>
-		)
 	}
 
 	renderAcceptButton() {
@@ -98,8 +94,8 @@ export default class ProfileCard extends Component {
 		if (!tags || tags.length == 0)
 			return null;
 		return (
-			<ul class="tags-container">
-				{ tags.map( tag => <li class="tag">{tag}</li>)
+			<ul className="tags-container">
+				{ tags.map( tag => <li key={tag} className="tag">{tag}</li>)
 				}
 			</ul>
 		);
@@ -111,10 +107,10 @@ export default class ProfileCard extends Component {
 			<span>
 				{[1,2,3,4,5].map( i => {
 					if (rating >= i)
-						return <i class="material-icons">star</i>;
+						return <i key={i} className="material-icons">star</i>;
 					if (rating >= i - 0.5)
-						return <i class="material-icons">star_half</i>;
-					return <i class="material-icons">star_border</i>;
+						return <i key={i} className="material-icons">star_half</i>;
+					return <i key={i} className="material-icons">star_border</i>;
 				})}
 			</span>
 		)
@@ -131,12 +127,13 @@ export default class ProfileCard extends Component {
 			tags,
 			username
 		} = this.props;
+		const actionable = this.state.actionable;
 
 		return (
 			<div className="profileCard">
 				<div className="profile-top">
 					{ this.renderRating(Math.random()*5.0) }
-					<div> <i class="material-icons">location_on</i> { location }</div>
+					<div> <i className="material-icons">location_on</i> { location }</div>
 				</div>
 				<div className="profile-picture">
 					<Gravatar size={100} protocol="https://" email={email} />
@@ -147,8 +144,11 @@ export default class ProfileCard extends Component {
 					{ this.renderTags(tags) }
 				</div>
 				<div className="profile-actions">
-					<button className="btn btn-primary" onClick={this.requestMentor.bind(this, username)}>
-						MENTOR ME
+					<button
+						className={"btn btn-" + (actionable ? "primary" : "secondary")}
+						disabled={!actionable}
+						onClick={this.requestMentor.bind(this, username)}>
+						{actionable ? "MENTOR ME" : "Requested!"}
 					</button>
 				</div>
 			</div>

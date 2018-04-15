@@ -5,17 +5,18 @@ import fetch from 'isomorphic-fetch';
 export default class MentorList extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
 	}
 
 	renderMentors() {
 		const mentors = this.props.mentors;
+		const user = this.props.user;
 		console.log("mentors in renderMentors");
 		console.log(mentors);
 		return (
-			mentors.map( (item, i) =>
+			mentors.map( (item, i) => (item.username == user ? null :
 				<ProfileCard
 					key={item.username + i}
+					actionable={item.requestedMentees.indexOf(user) == -1}
 					bio={item.bio}
 					email={item.email}
 					firstName={item.firstName}
@@ -26,7 +27,7 @@ export default class MentorList extends Component {
 					type={"search"}
 					username={item.username}
 				/>
-			)
+			))
 		);
 	}
 
