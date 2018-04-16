@@ -2,6 +2,10 @@
 	min-height: 100vh;
 	min-width: 800px;
 	background: #333;
+	background-image: url("../images/mail.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 
 #messenger-container {
