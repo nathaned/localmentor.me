@@ -32,7 +32,7 @@ export default class Header extends Component {
 									? " active"
 									: " "
 							)}>
-							Contact
+							About
 						</a>
 					</nav>
 					</div>

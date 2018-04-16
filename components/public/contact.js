@@ -4,13 +4,18 @@ export default class Contact extends Component {
 	render() {
 		return (
 			<div className="inner cover">
-				<h1 className="cover-heading">Contact us</h1>
-				<p className="lead">Cover is a one-page template for building Complicated and ugly home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-				<p className="lead">
-					<a href="#" className="btn btn-lg btn-primary">Learn more</a>
-				</p>
+
+			<div className="jumbotron trans">
+					<h1 className="cover-heading">About Us</h1>
+					<p className="lead">
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+					labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+					laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+					voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+					non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</p>
+			</div>
 			</div>
 		);
 	}
 }
-
