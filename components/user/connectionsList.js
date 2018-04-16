@@ -22,7 +22,7 @@ export default class ConnectionList extends Component {
 			);
 		}
 
-		return (this.renderProfiles(requestedMentees, "connection"));
+		return (this.renderProfiles(requestedMentees, "connection", true));
 	}
 
 	renderMentees() {
@@ -57,12 +57,30 @@ export default class ConnectionList extends Component {
 		);
 	}
 
-	renderProfiles(profiles, type) {
+	renderRatings() {
+		const ratings = this.props.toRate;
+		console.log("toRate in renderRatings: ", ratings);
+
+		if (!ratings || !ratings.length) {
+			return null;
+		}
+		return (
+			<div>
+				<h2>Ended Mentorships</h2>
+				{this.renderProfiles(ratings, "rate")}
+			</div>
+		)
+	}
+
+	renderProfiles(profiles, type, isMentor = false) {
 		return (
 			<div>
 				{profiles.map( (item, i) =>
 					<ProfileCard
 						key={item.username}
+						actionable={true}
+						bio={ isMentor ? item.mentorBio : item.menteeBio }
+						email={item.email}
 						firstName={item.firstName}
 						lastName={item.lastName}
 						location={item.location}
@@ -83,6 +101,8 @@ export default class ConnectionList extends Component {
 		return (
 			<div>
 
+				{ this.renderRatings() }
+
 				{ this.renderMenteeRequests() }
 
 				{ this.props.isMentee ? (
@@ -90,6 +110,7 @@ export default class ConnectionList extends Component {
 						<h2>Your Mentors</h2>
 						{ this.renderMentors() }
 						<ProfileCard
+							actionable={true}
 							username={"abc"}
 							rating500={5}
 							email="lol11.com"

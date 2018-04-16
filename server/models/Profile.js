@@ -52,6 +52,10 @@ const mongoSchema = new mongoose.Schema({
 		type: [String],
 		default: []
 	},
+	toRate: {
+		type: [String],
+		default: []
+	},
 	requestedMentors: {
 		type: [String],
 		default: []
@@ -274,6 +278,28 @@ class ProfileClass {
 		return ignoredMentee;
 	}
 
+	static async endMentorship(mentor, mentee) {
+		const mentorProfile = await this.findByUsername(mentor);
+		if (!mentorProfile) {
+			console.log("mentor not found in endMentorship: ", mentor);
+		}
+		const menteeProfile = await this.findByUsername(mentee);
+		if (!menteeProfile) {
+			console.log("mentee not found in endMentorship: ", mentee);
+		}
+
+		await this.findOneAndUpdate(
+			{ username: mentor },
+			{ $pull: { mentees: mentee } },
+			{ $addToSet: { toRate: mentee } }
+		);
+		await this.findOneAndUpdate(
+			{ username: mentee },
+			{ $pull: { mentees: mentor } },
+			{ $addToSet: { toRate: mentor } }
+		);
+	}
+
 	static async getMentors(username) {
 		const result = await this.findOne({ username }, {mentors: 1});
 		if (!result) {
@@ -305,7 +331,20 @@ class ProfileClass {
 		return profiles || [];
 	}
 
-	static async rateUser(username, rating) {
+	static async rateUser(username, rater, rating) {
+		const raterProfile = await this.findByUsername(rater);
+		if (!raterProfile) {
+			console.log("rater not found in rateUser: ", rater);
+			return;
+		}
+		await this.findOneAndUpdate(
+			{ username: rater },
+			{ $pull: { toRate: username } }
+		);
+
+		if (!rating) {
+			return;
+		}
 		const profile = await this.findByUsername(username);
 		if (!profile) {
 			console.log("user " + username + " not found in rateUser");

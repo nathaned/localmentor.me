@@ -58,3 +58,15 @@
 .profileCard .material-icons {
 	font-size: 18px;
 }
+
+.profileCard .profile-content .material-icons {
+	font-size: 28px;
+}
+
+.profileCard .delete-rating {
+	margin-top: 3px;
+}
+
+.profileCard.warning {
+	justify-content: center;
+}

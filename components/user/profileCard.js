@@ -5,51 +5,79 @@ import { sendRequest } from '../../lib/api/user';
 export default class ProfileCard extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { actionable: props.actionable };
+		this.state = {
+			actionable: props.actionable,
+			showConfirmation: false,
+			rating: 5
+		};
 	}
 
-	render() {
-		return this.renderProfile();
-		/*
-		switch (this.props.type) {
-			case "search":
-				return this.renderProfile();
-			case "request":
-				return this.renderRequestProfile();
-			case "connectedMentor":
-				return this.renderConnectedMenteeProfile();
-			case "connectedMentee":
-				return this.renderConnectedMenteeProfile();
-			default: // todo remove this everything should have a type
-				return this.renderProfile();
-		}
-		*/
-	}
-
-	async requestMentor(username) {
+	async requestMentor() {
+		const username = this.props.username;
 		this.setState({ actionable: false });
 		await sendRequest(username);
 	}
 
-	async acceptMentee(username) {
-		// API call to accept mentor
+	async acceptMentee() {
+		const username = this.props.username;
+		this.setState({ actionable: false });
+		this.props.refresh();
 	}
 
-	async ignoreMentee(username) {
-		// API call to ignore mentor
+	async ignoreMentee() {
+		const username = this.props.username;
+		this.setState({ actionable: false });
+		this.props.refresh();
 	}
 
-	async messageUser(username) {
-		console.log("message button clicked, username: ", username);
-		window.location = ('/messenger#' + username);
+	async blockUser() {
+		const username = this.props.username;
+		this.setState({ actionable: false });
+
+		this.props.refresh();
 	}
 
-	async blockUser(username) {
-		// API call to ignore mentor
+	async endUser() {
+		const username = this.props.username;
+		const confirmationCallback = async () => {
+			await endMentorship(username);
+			this.props.refresh();
+		};
+		const confirmationMessage = "Are you sure you want to end this mentorship with " + username + "?";
+		this.setState({
+			showConfirmation: true,
+			confirmationMessage,
+			confirmationCallback
+		});
 	}
 
-	async endUser(username) {
-		// API call to end mentor
+	async rateUser(noRating = false) {
+		const username = this.props.username;
+		const rating = noRating ? 0 : this.state.rating;
+
+		console.log("this would rate " + username + " " + rating)
+	}
+
+	renderConfirmation() {
+		const { confirmationMessage, confirmationCallback } = this.state;
+		return (
+			<div className="profileCard warning">
+				<h2>{confirmationMessage}</h2>
+				<div className="profile-actions">
+					<button
+						className="btn btn-primary"
+						onClick={confirmationCallback}>
+						Yes
+					</button>
+					<br />
+					<button
+						className="btn btn-secondary btn-sm"
+						onClick={() => this.setState({ showConfirmation: false})}>
+						Oops! Nevermind.
+					</button>
+					</div>
+			</div>
+		);
 	}
 
 	renderTags(tags) {
@@ -75,19 +103,36 @@ export default class ProfileCard extends Component {
 					return <i key={i} className="material-icons">star_border</i>;
 				})}
 			</span>
-		)
+		);
+	}
+
+	renderLiveRating() {
+		const rating = this.state.rating;
+		return (
+			<span>
+				{[1,2,3,4,5].map( i =>
+					<i
+						key={i}
+						className="material-icons"
+						onClick={() => this.setState({ rating: i })}>
+						{"star" + (rating >= i ? "" : "_border")}
+					</i>
+				)}
+			</span>
+		);
 	}
 
 	renderProfileActions() {
 		const { type, username } = this.props;
 		const actionable = this.state.actionable;
+		console.log("rendering profilecard with type: ", type);
 		return (
 			<div className="profile-actions">
 				{ type == "search" ? (
 					<button
 						className={"btn btn-" + (actionable ? "primary" : "secondary")}
 						disabled={!actionable}
-						onClick={this.requestMentor.bind(this, username)}>
+						onClick={this.requestMentor.bind(this)}>
 						{actionable ? "MENTOR ME" : "Requested!"}
 					</button>
 				) : null }
@@ -95,7 +140,7 @@ export default class ProfileCard extends Component {
 				{ (type == "request" && actionable )? (
 					<button
 						className="btn btn-secondary"
-						onClick={this.ignoreMentee.bind(this, username)}>
+						onClick={this.ignoreMentee.bind(this)}>
 						Ignore
 					</button>
 				) : null }
@@ -103,7 +148,7 @@ export default class ProfileCard extends Component {
 				{ (type == "request" && actionable )? (
 					<button
 						className="btn btn-success"
-						onClick={this.acceptMentee.bind(this, username)}>
+						onClick={this.acceptMentee.bind(this)}>
 						Accept
 					</button>
 				) : null }
@@ -118,17 +163,55 @@ export default class ProfileCard extends Component {
 
 				{ (type == "connection" && actionable )? (
 					<button
-						className="btn btn-success"
-						onClick={this.acceptMentee.bind(this, username)}>
-						Accept
+						className="btn btn-secondary btn-sm"
+						onClick={this.endUser.bind(this)}>
+						End Mentorship
+					</button>
+				) : null }
+				{ (type == "connection" && actionable )? (
+					<button
+						className="btn btn-secondary btn-sm"
+						onClick={this.blockUser.bind(this)}>
+						Block User
 					</button>
 				) : null }
 
 			</div>
-		)
+		);
 	}
 
-	renderProfile() {
+	renderRateCard() {
+		const { email, firstName, lastName } = this.props;
+		return (
+			<div className="profileCard">
+				<div className="profile-picture">
+					<Gravatar size={100} protocol="https://" email={email} />
+				</div>
+				<div className="profile-content">
+					<h3>Rate { firstName + " " +  lastName }</h3>
+					<p>
+						The mentorship between you and {firstName} has ended.<br/>
+						Provide a rating to help other users.
+					</p>
+					{ this.renderLiveRating() }
+					<br />
+					<button
+						className="btn btn-success"
+						onClick={this.rateUser.bind(this)}>
+						Submit Rating
+					</button>
+					<br />
+					<button
+						className="btn btn-secondary btn-sm delete-rating"
+						onClick={this.rateUser.bind(this, true)}>
+						Delete without Rating
+					</button>
+				</div>
+			</div>
+		);
+	}
+
+	render() {
 		const {
 			bio,
 			email,
@@ -140,7 +223,15 @@ export default class ProfileCard extends Component {
 			type,
 			username
 		} = this.props;
-		const actionable = this.state.actionable;
+		const { actionable, showConfirmation } = this.state;
+
+		if (showConfirmation) {
+			return this.renderConfirmation();
+		}
+
+		if (type == "rate") {
+			return this.renderRateCard();
+		}
 
 		return (
 			<div className="profileCard">
@@ -157,110 +248,6 @@ export default class ProfileCard extends Component {
 					{ this.renderTags(tags) }
 				</div>
 				{ this.renderProfileActions() }
-			</div>
-		);
-	}
-
-	renderConnectionsProfile() {
-		const {
-			email,
-			firstName,
-			lastName,
-			location,
-			bio,
-			tags,
-			rating500,
-			numRatings,
-			distanceAway
-		} = this.props;
-
-		return (
-			<div className="jumbotron cards"  >
-				<div className="profile-picture">
-					<Gravatar protocol="https://" email={email} />
-				</div>
-				<div className="profile-content">
-					<div className="name">
-						{ firstName + lastName } <br/>
-					</div>
-
-					<Gravatar protocol="https://" email={email} />
-
-					<div className="bio">
-						{ bio } <br/>
-					</div>
-
-					<div className="tags">
-						{ tags } <br/>
-					</div>
-
-					<div className="rating">
-						{ rating500 } <br/>
-					</div>
-
-					<div className="distance">
-						{ location + " place" } <br/>
-					</div>
-
-					<div className="buttons">
-						{ this.renderAcceptButton() }
-						{ this.renderIgnoreButton() }
-						{ this.renderBlockButton() }
-					</div>
-
-				</div>
-			</div>
-		);
-	}
-
-	renderConnectedProfile() {
-		const {
-			email,
-			firstName,
-			lastName,
-			location,
-			bio,
-			tags,
-			rating500,
-			numRatings,
-			distanceAway
-		} = this.props;
-
-		return (
-			<div className="jumbotron cards"  >
-				<div className="profile-picture">
-					<Gravatar protocol="https://" email={email} />
-				</div>
-				<div className="profile-content">
-					<div className="name">
-						{ firstName + lastName } <br/>
-					</div>
-
-					<Gravatar protocol="https://" email={email} />
-
-					<div className="bio">
-						{ bio } <br/>
-					</div>
-
-					<div className="tags">
-						{ tags } <br/>
-					</div>
-
-					<div className="rating">
-						{ rating500 } <br/>
-					</div>
-
-					<div className="location">
-						{ location + " place" } <br/>
-					</div>
-
-					<div className="buttons">
-						{ this.renderMessageButton() }
-						{ this.renderBlockButton() }
-						{ this.renderEndButton() }
-					</div>
-
-				</div>
 			</div>
 		);
 	}
