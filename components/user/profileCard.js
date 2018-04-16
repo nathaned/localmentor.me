@@ -38,7 +38,7 @@ export default class ProfileCard extends Component {
 			await ignoreRequest(username);
 			this.props.refresh();
 		};
-		const confirmationMessage = "Are you sure you want to ignore " + username + "? Note: this is permanent; they cannot request you again.";
+		const confirmationMessage = "Are you sure you want to ignore " + username + "?";
 		this.setState({
 			showConfirmation: true,
 			confirmationMessage,

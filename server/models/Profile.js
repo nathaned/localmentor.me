@@ -284,7 +284,6 @@ class ProfileClass {
 	}
 
 	static async ignoreRequest(mentor, mentee) {
-		// this is permanent, mentee can't request mentor ever again
 		const ignoredMentee = await this.findOneAndUpdate(
 			{username: mentor},
 			{ $pull: { requestedMentees: mentee} }
