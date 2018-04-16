@@ -93,3 +93,7 @@ html {
 #submit-button {
 	margin-left: 100px;
 }
+
+.alert.alert-success {
+	text-shadow: none;
+}

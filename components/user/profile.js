@@ -52,6 +52,7 @@ export default class Profile extends Component {
 			await this.refresh();
 		}
 		NProgress.done();
+		this.setState({ saveAlert: true });
 	}
 
 	async refresh() {
@@ -69,37 +70,44 @@ export default class Profile extends Component {
 		switch(e.target.id) {
 			case "firstName":
 				this.setState( ({profile}) => ({
-					profile: { ...profile, firstName: value}
+					profile: { ...profile, firstName: value},
+					saveAlert: false
 				}));
 				break;
 			case "lastName":
 				this.setState( ({profile}) => ({
-					profile: { ...profile, lastName: value}
+					profile: { ...profile, lastName: value},
+					saveAlert: false
 				}));
 				break;
 			case "email":
 				this.setState( ({profile}) => ({
-					profile: { ...profile, email: value}
+					profile: { ...profile, email: value},
+					saveAlert: false
 				}));
 				break;
 			case "mentorBio":
 				this.setState( ({profile}) => ({
-					profile: { ...profile, mentorBio: value}
+					profile: { ...profile, mentorBio: value},
+					saveAlert: false
 				}));
 				break;
 			case "menteeBio":
 				this.setState( ({profile}) => ({
-					profile: { ...profile, menteeBio: value}
+					profile: { ...profile, menteeBio: value},
+					saveAlert: false
 				}));
 				break;
 			case "mentor-checkbox":
 				this.setState( ({profile}) => ({
-					profile: { ...profile, isMentor: !profile.isMentor }
+					profile: { ...profile, isMentor: !profile.isMentor },
+					saveAlert: false
 				}));
 				break;
 			case "mentee-checkbox":
 				this.setState( ({profile}) => ({
-					profile: { ...profile, isMentee: !profile.isMentee }
+					profile: { ...profile, isMentee: !profile.isMentee },
+					saveAlert: false
 				}));
 				break;
 		}
@@ -121,8 +129,7 @@ export default class Profile extends Component {
 	}
 
 	render() {
-		console.log(this.state.profile);
-		console.log(this.state.tags);
+		console.log(this.state);
 		if (!this.state.profile) {
 			return (
 				<div id="profile-container">
@@ -147,149 +154,156 @@ export default class Profile extends Component {
 				<h1>Edit Profile</h1>
 				<hr/>
 				<div className="row">
-						<div className="col-md-3">
-							<div className="text-center">
-								<Gravatar size={150} protocol="https://" email={this.state.profile.email} />
+					<div className="col-md-3">
+						<div className="text-center">
+							{ this.state.saveAlert ? (
+								<div className="form-group">
+									<div className="alert alert-success" role="alert">
+										Profile Saved!
+									</div>
+								</div>
+							) : null}
+							<Gravatar size={150} protocol="https://" email={this.state.profile.email} />
+						</div>
+					</div>
+
+					<div className="col-md-9 personal-info">
+						<form className="form-horizontal" role="form">
+							<div className="form-group">
+								<label className="col-lg-3 control-label">First name:</label>
+								<div className="col-lg-8">
+									<input
+										className="form-control"
+										id="firstName"
+										onChange={this.handleChange.bind(this)}
+										type="text"
+										value={this.state.profile.firstName}/>
+								</div>
 							</div>
-						</div>
-
-						<div className="col-md-9 personal-info">
-							<form className="form-horizontal" role="form">
-								<div className="form-group">
-									<label className="col-lg-3 control-label">First name:</label>
-									<div className="col-lg-8">
-										<input
-											className="form-control"
-											id="firstName"
-											onChange={this.handleChange.bind(this)}
-											type="text"
-											value={this.state.profile.firstName}/>
-									</div>
+							<div className="form-group">
+								<label className="col-lg-3 control-label">Last name:</label>
+								<div className="col-lg-8">
+									<input
+										className="form-control"
+										id="lastName"
+										onChange={this.handleChange.bind(this)}
+										type="text"
+										value={this.state.profile.lastName}/>
 								</div>
-								<div className="form-group">
-									<label className="col-lg-3 control-label">Last name:</label>
-									<div className="col-lg-8">
-										<input
-											className="form-control"
-											id="lastName"
-											onChange={this.handleChange.bind(this)}
-											type="text"
-											value={this.state.profile.lastName}/>
-									</div>
+							</div>
+							<div className="form-group">
+								<label className="col-lg-3 control-label">Email (used for Gravatar image):</label>
+								<div className="col-lg-8">
+									<input
+										className="form-control"
+										id="email"
+										onChange={this.handleChange.bind(this)}
+										type="text"
+										value={this.state.profile.email}/>
 								</div>
-								<div className="form-group">
-									<label className="col-lg-3 control-label">Email (used for Gravatar image):</label>
-									<div className="col-lg-8">
-										<input
-											className="form-control"
-											id="email"
-											onChange={this.handleChange.bind(this)}
-											type="text"
-											value={this.state.profile.email}/>
-									</div>
-								</div>
-								{ this.state.profile.isMentor ? (
-									<div className="form-group">
-										<div className="col-md-8">
-											<span>Tags:</span>
-											<Select.Creatable
-												arrowRenderer={null}
-												backspaceRemoves={false}
-												clearable={false}
-												multi={true}
-												onChange={this.handleTagChange.bind(this)}
-												options={this.state.tags}
-												placeholder="Select some tags"
-												value={this.state.profile.tags}/>
-										</div>
-									</div>
-								) : null }
+							</div>
+							{ this.state.profile.isMentor ? (
 								<div className="form-group">
 									<div className="col-md-8">
-										<span>Location:</span>
-										<Select
+										<span>Tags:</span>
+										<Select.Creatable
+											arrowRenderer={null}
 											backspaceRemoves={false}
-											onChange={this.handleLocationChange.bind(this)}
-											options={this.state.locations}
-											placeholder="Where are you from?"
-											shouldKeyDownEventCreateNewOption={this.sKDECNO}
-											value={this.state.profile.location}/>
+											clearable={false}
+											multi={true}
+											onChange={this.handleTagChange.bind(this)}
+											options={this.state.tags}
+											placeholder="Select some tags"
+											value={this.state.profile.tags}/>
 									</div>
 								</div>
-								{ this.state.profile.isMentor ? (
-									<div className="form-group">
-										<label className="col-md-3 control-label">Mentor Bio:</label>
-										<div className="col-md-8">
-											<textarea
-												className="form-control"
-												id="mentorBio"
-												onChange={this.handleChange.bind(this)}
-												placeholder="Write a little about yourself. What you know, what you do, what you're looking for..."
-												type="text"
-												rows="6"
-												value={this.state.profile.mentorBio}>
-											</textarea>
-										</div>
-									</div>
-								): null }
-								{ this.state.profile.isMentee ? (
-									<div className="form-group">
-										<label className="col-md-3 control-label">Mentee Bio:</label>
-										<div className="col-md-8">
-											<textarea
-												className="form-control"
-												id="menteeBio"
-												onChange={this.handleChange.bind(this)}
-												placeholder="Write a little about yourself. What you know, what you do, what you're looking for..."
-												type="text"
-												rows="6"
-												value={this.state.profile.menteeBio}>
-											</textarea>
-										</div>
-									</div>
-
-								) : null }
-								<div className="form-group">
-									<label className="col-md-3 control-label">Status:</label>
-									<div className="col-md-8" id="status-container">
-										<label>
-											<input
-												checked={this.state.profile.isMentor ? "checked" : false}
-												className="form-control"
-												id="mentor-checkbox"
-												onChange={this.handleChange.bind(this)}
-												type="checkbox" />
-											<span>Mentor</span>
-										</label>
-										<label>
-											<input
-												checked={this.state.profile.isMentee ? "checked" : false}
-												className="form-control"
-												id="mentee-checkbox"
-												onChange={this.handleChange.bind(this)}
-												type="checkbox" />
-											Mentee
-										</label>
-									</div>
+							) : null }
+							<div className="form-group">
+								<div className="col-md-8">
+									<span>Location:</span>
+									<Select
+										backspaceRemoves={false}
+										onChange={this.handleLocationChange.bind(this)}
+										options={this.state.locations}
+										placeholder="Where are you from?"
+										shouldKeyDownEventCreateNewOption={this.sKDECNO}
+										value={this.state.profile.location}/>
 								</div>
+							</div>
+							{ this.state.profile.isMentor ? (
 								<div className="form-group">
-									<label className="col-md-3 control-label"></label>
+									<label className="col-md-3 control-label">Mentor Bio:</label>
 									<div className="col-md-8">
-										<input
-											type="reset"
-											className="btn btn-default"
-											onClick={this.refresh.bind(this)}
-											value="Reset"/>
-										<input
-											id="submit-button"
-											type="button"
-											className="btn btn-primary"
-											onClick={this.handleSubmit.bind(this)}
-											value="Save Changes"/>
+										<textarea
+											className="form-control"
+											id="mentorBio"
+											onChange={this.handleChange.bind(this)}
+											placeholder="Write a little about yourself. What you know, what you do, what you're looking for..."
+											type="text"
+											rows="6"
+											value={this.state.profile.mentorBio}>
+										</textarea>
 									</div>
 								</div>
-							</form>
-						</div>
+							): null }
+							{ this.state.profile.isMentee ? (
+								<div className="form-group">
+									<label className="col-md-3 control-label">Mentee Bio:</label>
+									<div className="col-md-8">
+										<textarea
+											className="form-control"
+											id="menteeBio"
+											onChange={this.handleChange.bind(this)}
+											placeholder="Write a little about yourself. What you know, what you do, what you're looking for..."
+											type="text"
+											rows="6"
+											value={this.state.profile.menteeBio}>
+										</textarea>
+									</div>
+								</div>
+
+							) : null }
+							<div className="form-group">
+								<label className="col-md-3 control-label">Status:</label>
+								<div className="col-md-8" id="status-container">
+									<label>
+										<input
+											checked={this.state.profile.isMentor ? "checked" : false}
+											className="form-control"
+											id="mentor-checkbox"
+											onChange={this.handleChange.bind(this)}
+											type="checkbox" />
+										<span>Mentor</span>
+									</label>
+									<label>
+										<input
+											checked={this.state.profile.isMentee ? "checked" : false}
+											className="form-control"
+											id="mentee-checkbox"
+											onChange={this.handleChange.bind(this)}
+											type="checkbox" />
+										Mentee
+									</label>
+								</div>
+							</div>
+							<div className="form-group">
+								<label className="col-md-3 control-label"></label>
+								<div className="col-md-8">
+									<input
+										type="reset"
+										className="btn btn-default"
+										onClick={this.refresh.bind(this)}
+										value="Reset"/>
+									<input
+										id="submit-button"
+										type="button"
+										className="btn btn-primary"
+										onClick={this.handleSubmit.bind(this)}
+										value="Save Changes"/>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		);
