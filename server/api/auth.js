@@ -31,7 +31,7 @@ authApi.post('/api/login', async (req, res) => {
 });
 
 authApi.post('/api/register', async (req, res) => {
-	const { username, password, password2 } = req.body || {}
+	const { username, password, password2 } = req.body || {};
 
 	if (!username || !password || !password2) {
 		const error = "Fields not complete";

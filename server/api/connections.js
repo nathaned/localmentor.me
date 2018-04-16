@@ -81,6 +81,23 @@ connectionsApi.get('/api/connections/end/:user', async (req, res) => {
 	return res.sendStatus(200);
 });
 
+connectionsApi.post('/api/connections/rateMentorship/', async (req, res) => {
+	const { username, rating } = req.body || {};
+
+	const user = getUserFromSession(req);
+	if (!user) {
+		return res.sendStatus(403);
+	}
+
+	const rated = await Profile.rateUser(username, user, rating);
+	if (!rated) {
+		const error = "failed rating";
+		return res.status(404).json({ error });
+	}
+
+	return res.sendStatus(200);
+});
+
 
 // get users' current mentors
 // todo not used

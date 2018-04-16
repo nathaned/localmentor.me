@@ -128,6 +128,7 @@ class ProfileClass {
 		connectionProfile.mentees = await this.getProfiles(profile.mentees);
 		connectionProfile.mentors = await this.getProfiles(profile.mentors);
 		connectionProfile.requestedMentees = await this.getProfiles(profile.requestedMentees);
+		connectionProfile.toRate = await this.getProfiles(profile.toRate);
 		return connectionProfile;
 	}
 
@@ -366,9 +367,9 @@ class ProfileClass {
 			{ username: rater },
 			{ $pull: { toRate: username } }
 		);
-
+		console.log("rateUser", username, rater, rating);
 		if (!rating) {
-			return;
+			return true;
 		}
 		const profile = await this.findByUsername(username);
 		if (!profile) {

@@ -65,7 +65,7 @@ export default class ConnectionList extends Component {
 			return null;
 		}
 		return (
-			<div>
+			<div className="jumbotron connections">
 				<h2>Ended Mentorships</h2>
 				{this.renderProfiles(ratings, "rate")}
 			</div>

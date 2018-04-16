@@ -71,6 +71,7 @@ export default class MyConnectionsTest extends Component {
 								refresh={this.refresh.bind(this)}
 								requestedMentors={profile.requestedMentors}
 								requestedMentees={profile.requestedMentees}
+								toRate={profile.toRate}
 								user={this.props.user}
 							/>
 						) : null }

@@ -15,7 +15,7 @@ export default class ProfileCard extends Component {
 		this.state = {
 			actionable: props.actionable,
 			showConfirmation: false,
-			rating: 5
+			rating: 4
 		};
 	}
 
@@ -74,10 +74,13 @@ export default class ProfileCard extends Component {
 		});
 	}
 
-	async rateUser(noRating = false) {
+	async rateUser(noRating) {
+		console.log("noRating: ", noRating);
 		const username = this.props.username;
 		const rating = noRating ? 0 : this.state.rating;
+		console.log("going to rate user a " + rating);
 		await rateMentorship(username, rating);
+		this.props.refresh();
 	}
 
 	renderConfirmation() {
@@ -219,7 +222,7 @@ export default class ProfileCard extends Component {
 					<br />
 					<button
 						className="btn btn-success"
-						onClick={this.rateUser.bind(this)}>
+						onClick={this.rateUser.bind(this, false)}>
 						Submit Rating
 					</button>
 					<br />
