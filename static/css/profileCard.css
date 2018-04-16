@@ -1,5 +1,5 @@
 .profileCard {
-	background: #405c8c;
+	background: rgba(91,213,214,0.3);;
 	display: flex;
 	flex-wrap: wrap;
 	margin: 10px;
@@ -41,12 +41,12 @@
 }
 
 .tags-container {
-	padding: 5px 0;
+	padding: 40px 0;
 }
 
-.tags-container .tag {
+.tag {
 	color: black;
-	background: lightblue;
+	background: rgba(36,222,118,0.3);;
 	list-style: none;
 	display: inline;
 	padding: 5px 10px;
