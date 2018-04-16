@@ -1,5 +1,5 @@
 .profileCard {
-	background: #0ba1c7;
+	background: #405c8c;
 	display: flex;
 	flex-wrap: wrap;
 	margin: 10px;
@@ -29,6 +29,7 @@
 	min-width: 350px;
 	padding: 10px;
 	flex: 70;
+	white-space: pre-line;
 }
 
 .profileCard .profile-actions {
