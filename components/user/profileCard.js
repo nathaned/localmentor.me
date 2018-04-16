@@ -38,7 +38,7 @@ export default class ProfileCard extends Component {
 			await ignoreRequest(username);
 			this.props.refresh();
 		};
-		const confirmationMessage = "Are you sure you want to ignore " + username + "?";
+		const confirmationMessage = "Are you sure you want to ignore " + username + "? Note: this is permanent; they cannot request you again.";
 		this.setState({
 			showConfirmation: true,
 			confirmationMessage,
@@ -52,7 +52,7 @@ export default class ProfileCard extends Component {
 			await blockUser(username);
 			this.props.refresh();
 		};
-		const confirmationMessage = "Are you sure you want to block " + username + "?";
+		const confirmationMessage = "Are you sure you want to block " + username + "? Note: this is permanent.";
 		this.setState({
 			showConfirmation: true,
 			confirmationMessage,

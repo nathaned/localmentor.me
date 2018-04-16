@@ -265,30 +265,37 @@ class ProfileClass {
 			}
 
 		);
-		console.log("addedMentee, addedMentor: ", addedMentee, addedMentor);
-		return true; // todo
+		return (addedMentor && addedMentee); // todo
 	}
 
-	static async block(mentor, mentee) {
-		const addedMentee = await this.findOneAndUpdate(
-			{ username: mentor },
-			{ $pull: { requestedMentees: mentee } },
-			{ $addToSet: { blocked: mentee } }
+	static async block(snowflake, baddie) {
+		const safespace = await this.findOneAndUpdate(
+			{ username: snowflake },
+			{
+				$pull: { requestedMentees: baddie },
+				$pull: { requestedMentors: baddie },
+				$pull: { mentees: baddie },
+				$pull: { mentors: baddie },
+				$addToSet: { blocked: baddie }
+			}
 		);
-		console.log("added mentee in acceptRequest:", addedMentee);
-		return addedMentee;
+		return safespace;
 	}
 
 	static async ignoreRequest(mentor, mentee) {
+		// this is permanent, mentee can't request mentor ever again
 		const ignoredMentee = await this.findOneAndUpdate(
 			{username: mentor},
-			{$pull: {requestedMentees: mentee}}
+			{ $pull: { requestedMentees: mentee} }
 		);
 		console.log("ignoredMentee in ignoreRequest: ", ignoredMentee);
 		return ignoredMentee;
 	}
 
-	static async endMentorship(mentor, mentee) {
+	static async endMentorship(user1, user2) {
+		// we actually don't know who's who here
+		let mentor = user1;
+		let mentee = user2;
 		const mentorProfile = await this.findByUsername(mentor);
 		if (!mentorProfile) {
 			console.log("mentor not found in endMentorship: ", mentor);
@@ -298,17 +305,24 @@ class ProfileClass {
 			console.log("mentee not found in endMentorship: ", mentee);
 		}
 
-		await this.findOneAndUpdate(
+		if (mentorProfile.mentees.indexOf(mentee) == -1)
+			[mentor, mentee] = [user2, user1]; // swap
+
+		const part1 = await this.findOneAndUpdate(
 			{ username: mentor },
-			{ $pull: { mentees: mentee } },
-			{ $addToSet: { toRate: mentee } }
+			{
+				$pull: { mentees: mentee },
+				$addToSet: { toRate: mentee }
+			}
 		);
-		await this.findOneAndUpdate(
+		const part2 = await this.findOneAndUpdate(
 			{ username: mentee },
-			{ $pull: { mentees: mentor } },
-			{ $addToSet: { toRate: mentor } }
+			{
+				$pull: { mentors: mentor },
+				$addToSet: { toRate: mentor }
+			}
 		);
-		return true; // todo
+		return (part1 && part2); // todo
 	}
 
 	static async getMentors(username) {
