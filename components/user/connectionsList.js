@@ -16,7 +16,7 @@ export default class ConnectionList extends Component {
 		if (!mentors || !mentors.length) {
 			return (
 				<div className="jumbotron trans">
-					<p>You don't have any mentors yet! Head over to the <strong>Find a Mentor</strong> page to request a mentor.</p>
+					<p>You dont have any mentors yet! Head over to the <strong>Find a Mentor</strong> page to request a mentor.</p>
 					<a href="/find-a-mentor" className="btn btn-lg btn-primary">Find a Mentor</a>
 				</div>
 			);
@@ -32,7 +32,7 @@ export default class ConnectionList extends Component {
 		if (!mentees || !mentees.length) {
 			return (
 				<div className="jumbotron trans">
-					<p>You don't have any mentees yet! Mentors who have updated their bio, tags, and profile pictures have the best chance of gaining connections.</p>
+					<p>You dont have any mentees yet! Mentors who have updated their bio, tags, and profile pictures have the best chance of gaining connections.</p>
 					<a href="/my-profile" className="btn btn-lg btn-primary">Edit Profile</a>
 				</div>
 			);
