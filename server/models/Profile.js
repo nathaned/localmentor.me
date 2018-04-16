@@ -114,12 +114,24 @@ class ProfileClass {
 		return profile;
 	}
 
+	static async getConnectionProfile(username) {
+		const profile = await this.findByUsername(username);
+		if (!profile) {
+			return false;
+		}
+		let connectionProfile = JSON.parse(JSON.stringify(profile));
+		console.log("got profile in gCP: ", profile);
+		connectionProfile.mentees = await this.getProfiles(profile.mentees);
+		connectionProfile.mentors = await this.getProfiles(profile.mentors);
+		connectionProfile.requestedMentees = await this.getProfiles(profile.requestedMentees);
+		return connectionProfile;
+	}
+
+	// todo this needs to be updated to have more stuff done client-side
 	static async getContactList(username) {
-		const connections = await this.findOne(
-			{ username }, { mentors: 1, mentees: 1 }
-		);
+		const profile = await this.getConnectionProfile(username);
 		let contactList = [];
-		for (mentor of connections.mentors) {
+		for (mentor of profile.mentors) {
 			contactList.push( {
 				email: mentor.email,
 				firstName: mentor.firstName,
@@ -128,7 +140,7 @@ class ProfileClass {
 				username: mentor.username,
 			});
 		}
-		for (mentee of connections.mentees) {
+		for (mentee of profile.mentees) {
 			contactList.push( {
 				email: mentee.email,
 				firstName: mentee.firstName,
@@ -262,13 +274,11 @@ class ProfileClass {
 		return ignoredMentee;
 	}
 
-	static async getkMentors(username) {
+	static async getMentors(username) {
 		const result = await this.findOne({ username }, {mentors: 1});
-		console.log("profile in checkMentors", mentorList);
 		if (!result) {
 			return false;
 		}
-
 		return result.mentors;
 	}
 

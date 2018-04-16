@@ -2,22 +2,27 @@ import React, { Component } from 'react';
 import DashboardNav from '../components/user/dashboardNav'
 import ConnectionsList from '../components/user/connectionsList'
 import Head from '../components/head'
-import { getLimitedProfile } from '../lib/api/user'
+import { getConnectionProfile, getLimitedProfile } from '../lib/api/user'
 
 export default class MyConnectionsTest extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {};
 	}
 
-	async loadTags() {
-		const tags = await getTags();
-		this.setState({ tags });
+	async componentDidMount() {
+		await this.refresh();
 	}
 
-	async componentDidMount() {
-		await this.loadTags();
+	async refresh() {
+		console.log("refresh method run");
+		await this.loadConnectionProfile();
+	}
+
+	async loadConnectionProfile() {
+		const profile = await getConnectionProfile();
+		console.log("profile: ", profile);
+		this.setState({ profile });
 	}
 
 	static async getInitialProps({ req, res }) {
@@ -32,23 +37,9 @@ export default class MyConnectionsTest extends Component {
 		return { limitedProfile, user };
 	}
 
-	// async handleAccept (mentee) {
-	// console.log("accepting a request ");
-	// 	await acceptR(mentee)
-	// }
-
-	// async handleIgnore (mentee) {
-	// console.log("ignoring a request ");
-	// 	await ignoreR(mentee);
-	// }
-
-	// async handleBlock (mentee) {
-	// console.log("blocking a user ");
-	// 	await blockR(mentee);
-	// }
-
 	render() {
 		const pageTitle = "My Connections";
+		const profile = this.state.profile;
 
 		return (
 			<div id="fullpage-container">
@@ -71,10 +62,18 @@ export default class MyConnectionsTest extends Component {
 				<div className="cover-container">
 					<div className="jumbotron trans">
 						<h1>Connections</h1>
-						<ConnectionsList
-							user={this.props.user}
-							tab = {this.state.tab}
-						/>
+						{ this.state.profile ? (
+							<ConnectionsList
+								isMentor={this.props.limitedProfile.isMentor}
+								isMentee={this.props.limitedProfile.isMentee}
+								mentors={profile.mentors}
+								mentees={profile.mentees}
+								refresh={this.refresh.bind(this)}
+								requestedMentors={profile.requestedMentors}
+								requestedMentees={profile.requestedMentees}
+								user={this.props.user}
+							/>
+						) : null }
 					</div>
 				</div>
 				<div className="clear"></div>

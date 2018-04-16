@@ -40,7 +40,8 @@ export default class ProfileCard extends Component {
 	}
 
 	async messageUser(username) {
-		// API call to message mentor
+		console.log("message button clicked, username: ", username);
+		window.location = ('/messenger#' + username);
 	}
 
 	async blockUser(username) {
@@ -49,46 +50,6 @@ export default class ProfileCard extends Component {
 
 	async endUser(username) {
 		// API call to end mentor
-	}
-
-	renderAcceptButton() {
-		return (
-			<button id = "acceptButton" className="btn btn-primary" onClick={() => this.acceptMentor()}>
-				Accept
-			</button>
-		)
-	}
-
-	renderIgnoreButton() {
-		return (
-			<button id = "ignoreButton" className="btn btn-primary" onClick={() => this.ignoreMentor()}>
-				Ignore
-			</button>
-		)
-	}
-
-	renderMessageButton() {
-		return (
-			<button id = "ignoreButton" className="btn btn-primary" onClick={() => this.ignoreMentor()}>
-				Message
-			</button>
-		)
-	}
-
-	renderBlockButton() {
-		return (
-			<button id = "ignoreButton" className="btn btn-primary" onClick={() => this.ignoreMentor()}>
-				Block
-			</button>
-		)
-	}
-
-	renderEndButton() {
-		return (
-			<button id = "endButton" className="btn btn-primary" onClick={() => this.endMentor()}>
-				End
-			</button>
-		)
 	}
 
 	renderTags(tags) {
@@ -147,23 +108,22 @@ export default class ProfileCard extends Component {
 					</button>
 				) : null }
 
+				{ type == "connection" ? (
+					<a
+						className="btn btn-primary"
+						href={"/messenger#" + username}>
+						Message
+					</a>
+				) : null }
+
 				{ (type == "connection" && actionable )? (
 					<button
-						className={"btn btn-" + (actionable ? "primary" : "secondary")}
-						disabled={!actionable}
-						onClick={this.requestMentor.bind(this, username)}>
-						{actionable ? "MENTOR ME" : "Requested!"}
+						className="btn btn-success"
+						onClick={this.acceptMentee.bind(this, username)}>
+						Accept
 					</button>
 				) : null }
 
-				{ type == "request" ? (
-					<button
-						className={"btn btn-" + (actionable ? "primary" : "secondary")}
-						disabled={!actionable}
-						onClick={this.requestMentor.bind(this, username)}>
-						{actionable ? "MENTOR ME" : "Requested!"}
-					</button>
-				) : null }
 			</div>
 		)
 	}

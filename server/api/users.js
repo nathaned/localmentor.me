@@ -3,9 +3,6 @@ const usersApi = express.Router();
 const { getUserFromSession } = require('./auth');
 const Profile = require('../models/Profile');
 
-const getUserProfile = async (username) => {
-	return false;
-}
 
 // this call is used to get the currently-logged-in user's profile
 usersApi.get('/api/profile', async (req, res) => {
@@ -47,4 +44,17 @@ usersApi.get('/api/profiles/:slug', async (req, res) => {
 	return res.status(200).json({ limitedProfile });
 })
 
-module.exports = { usersApi, getUserProfile };
+usersApi.get('/api/connection-profile', async (req, res) => {
+	const user = getUserFromSession(req);
+	if (!user) {
+		return res.sendStatus(403);
+	}
+
+	const profile = await Profile.getConnectionProfile(user);
+	if (!profile) {
+		return res.sendStatus(404);
+	}
+	return res.status(200).json({ profile });
+})
+
+module.exports = { usersApi };
