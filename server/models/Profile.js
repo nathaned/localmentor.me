@@ -250,27 +250,37 @@ class ProfileClass {
 	// called when Mentor accepts a request! uses user in session  (mentor)
 	// takes care of moving menotrs/mentees from the requested section to actual mentors/mentees
 	static async acceptRequest(mentor, mentee) {
-		const addedMentee = await this.findOne(
-			{username: mentor},
-			{$pull: {requestedMentees: mentee}},
-			{$addToSet: {mentees: mentee}}
+		const addedMentee = await this.findOneAndUpdate(
+			{ username: mentor },
+			{
+				$pull: { requestedMentees: mentee },
+				$addToSet: { mentees: mentee }
+			}
 		);
-		console.log("added mentee in acceptRequest:", addedMentee);
-		return addedMentee;
+		const addedMentor = await this.findOneAndUpdate(
+			{ username: mentee },
+			{
+				$pull: { requestedMentors: mentor },
+				$addToSet: { mentors: mentor }
+			}
+
+		);
+		console.log("addedMentee, addedMentor: ", addedMentee, addedMentor);
+		return true; // todo
 	}
 
 	static async block(mentor, mentee) {
-		const addedMentee = await this.findOne(
-			{username: mentor},
-			{$pull: {requestedMentees: mentee}},
-			{$addToSet: {blocked: mentee}}
+		const addedMentee = await this.findOneAndUpdate(
+			{ username: mentor },
+			{ $pull: { requestedMentees: mentee } },
+			{ $addToSet: { blocked: mentee } }
 		);
 		console.log("added mentee in acceptRequest:", addedMentee);
 		return addedMentee;
 	}
 
 	static async ignoreRequest(mentor, mentee) {
-		const ignoredMentee = await this.findOne(
+		const ignoredMentee = await this.findOneAndUpdate(
 			{username: mentor},
 			{$pull: {requestedMentees: mentee}}
 		);
@@ -298,6 +308,7 @@ class ProfileClass {
 			{ $pull: { mentees: mentor } },
 			{ $addToSet: { toRate: mentor } }
 		);
+		return true; // todo
 	}
 
 	static async getMentors(username) {
@@ -361,7 +372,7 @@ class ProfileClass {
 				rating500: newRating
 			}
 		);
-
+		return true; // todo
 	}
 }
 

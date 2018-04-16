@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import Gravatar from 'react-gravatar';
-import { sendRequest } from '../../lib/api/user';
+import {
+	acceptRequest,
+	blockUser,
+	endMentorship,
+	ignoreRequest,
+	rateMentorship,
+	sendRequest
+} from '../../lib/api/user';
 
 export default class ProfileCard extends Component {
 	constructor(props) {
@@ -21,20 +28,36 @@ export default class ProfileCard extends Component {
 	async acceptMentee() {
 		const username = this.props.username;
 		this.setState({ actionable: false });
+		await acceptRequest(username);
 		this.props.refresh();
 	}
 
 	async ignoreMentee() {
 		const username = this.props.username;
-		this.setState({ actionable: false });
-		this.props.refresh();
+		const confirmationCallback = async () => {
+			await ignoreRequest(username);
+			this.props.refresh();
+		};
+		const confirmationMessage = "Are you sure you want to ignore " + username + "?";
+		this.setState({
+			showConfirmation: true,
+			confirmationMessage,
+			confirmationCallback
+		});
 	}
 
 	async blockUser() {
 		const username = this.props.username;
-		this.setState({ actionable: false });
-
-		this.props.refresh();
+		const confirmationCallback = async () => {
+			await blockUser(username);
+			this.props.refresh();
+		};
+		const confirmationMessage = "Are you sure you want to block " + username + "?";
+		this.setState({
+			showConfirmation: true,
+			confirmationMessage,
+			confirmationCallback
+		});
 	}
 
 	async endUser() {
@@ -54,8 +77,7 @@ export default class ProfileCard extends Component {
 	async rateUser(noRating = false) {
 		const username = this.props.username;
 		const rating = noRating ? 0 : this.state.rating;
-
-		console.log("this would rate " + username + " " + rating)
+		await rateMentorship(username, rating);
 	}
 
 	renderConfirmation() {

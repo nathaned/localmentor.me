@@ -7,6 +7,7 @@
 .jumbotron.connections {
 	background: rgba(0, 255, 255, .7);
 	border-radius: 1rem;
+	padding: 1rem;
 }
 
 .jumbotron.cards {

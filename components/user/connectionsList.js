@@ -38,7 +38,7 @@ export default class ConnectionList extends Component {
 			);
 		}
 
-		return (this.renderProfiles(requestedMentees, "connection"));
+		return (this.renderProfiles(mentees, "connection"));
 	}
 
 	renderMenteeRequests() {
@@ -50,7 +50,7 @@ export default class ConnectionList extends Component {
 		}
 
 		return (
-			<div>
+			<div className="jumbotron connections">
 				<h2>Requests</h2>
 				{this.renderProfiles(requestedMentees, "request")}
 			</div>
@@ -106,52 +106,16 @@ export default class ConnectionList extends Component {
 				{ this.renderMenteeRequests() }
 
 				{ this.props.isMentee ? (
-					<div>
+					<div className="jumbotron connections">
 						<h2>Your Mentors</h2>
 						{ this.renderMentors() }
-						<ProfileCard
-							actionable={true}
-							username={"abc"}
-							rating500={5}
-							email="lol11.com"
-							bio={"NOTHING bio"}
-							tags={ ["hahah TAgs", "LOL"] }
-							location={"Orlando"}
-							key={2}
-							type="connection"
-							refresh={this.props.refresh}
-							firstName={"ajjjjay "}
-							lastName={"Mentor"}
-						/>
 					</div>
 				) : null }
 
 				{ this.props.isMentee ? (
-					<div>
+					<div className="jumbotron connections">
 						<h2>Your Mentees</h2>
 						{ this.renderMentees() }
-						<ProfileCard
-							username={"abc"}
-							rating500={5}
-							email="lol2.com"
-							bio={"NOTHING bio"}
-							tags={ ["hahah TAgs", "LOL"] }
-							location={"Orlando"}
-							key={3}
-							firstName={"ajjjjay "}
-							lastName={"Mentee"}
-						/>
-						<ProfileCard
-							username={"abc"}
-							email="lol3.com"
-							rating500={5}
-							bio={"NOTHING bio"}
-							tags={ ["hahah TAgs", "LOL"] }
-							location={"Orlando"}
-							key={4}
-							firstName={"ajjjjay "}
-							lastName={"Mentee"}
-						/>
 					</div>
 				) : null }
 
