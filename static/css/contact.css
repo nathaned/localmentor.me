@@ -166,3 +166,8 @@
 		width: 62rem;
 	}
 }
+
+#about-content {
+	font-size: 12px;
+	max-height: 200px;
+}

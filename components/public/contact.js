@@ -11,7 +11,7 @@ export default class Contact extends Component {
 					<p className="lead"> A Fun, Easy, and Safe way to find a mentor.		</p>
 
 
-					<p className="lead">
+					<p className="lead" id="about-content">
 
 					We all have aspects in our life that we would like to get help with.
 
