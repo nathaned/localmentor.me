@@ -15,6 +15,24 @@ export default class Contact extends Component {
 					We invite you to please use responsibly, and consider Mentoring aswell.
 				</p>
 				<br/>
+				<br/>
+				<br/>
+				<div className="jumbotron questions">
+					<h2>Sample Questions</h2>
+					<ol>
+						<li>What are some good vegan places around here?</li>
+						<li>Do you have any tips and tricks to learn surfing?</li>
+						<li>I just moved to this city, and love fishing too! What are some good spots in town?</li>
+						<li>I own a drone and have been trying to learn how to capture good shots. Mind if you can help out?</li>
+						<li>I see you have experience in java. I’m building a simple calculator program and stuck at the moment, do you mind asking you a few questions?</li>
+						<li>I’m shooting a movie based locally in this town, what are some places that are famous only to locals?</li>
+						<li>I go skydiving as well; can I join on your next mission?</li>
+						<li>I’m new in town and as an artist was wondering where are the best places to host a gallery opening?</li>
+						<li>I’m new to photography and I see you have a passion for it. What are a few lenses you would recommend starting with?</li>
+						<li> I see you love travelling, what road trips would you recommend and how to prepare for them.</li>
+
+					</ol>
+				</div>
 				<h3>Questions, Comments, Concerns?</h3>
 				<h3>Contact us at: </h3>
 				<h3>contact@localmentor.me </h3>
