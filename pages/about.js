@@ -1,19 +1,19 @@
 import Head from '../components/head'
 import HomepageNav from '../components/public/homeNav'
-import Contact from '../components/public/contact'
+import About from '../components/public/about'
 import Footer from '../components/footer'
 
-const pageTitle = "Contact";
+const pageTitle = "About";
 
 export default () => (
 	<div>
-		<Head title={pageTitle} cssFiles={ ["contact.css"] }/>
+		<Head title={pageTitle} cssFiles={ ["about.css"] }/>
 		<div className="app-container">
 			<div className="site-wrapper">
 				<div className="site-wrapper-inner">
 					<div className="cover-container">
 						<HomepageNav page={pageTitle}/>
-						<Contact pageTitle={pageTitle}/>
+						<About pageTitle={pageTitle}/>
 						<Footer />
 					</div>
 				</div>

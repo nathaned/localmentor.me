@@ -26,9 +26,9 @@ export default class Header extends Component {
 							)}>
 							Sign In
 						</a>
-						<a	href="/contact"
+						<a	href="/about"
 							className={"btn btn-dark" + (
-								this.props.page == "Contact"
+								this.props.page == "About"
 									? " active"
 									: " "
 							)}>

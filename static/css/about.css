@@ -1,31 +1,10 @@
-/* Custom default button */
-.btn-secondary,
-.btn-secondary:hover,
-.btn-secondary:focus {
-	color: #333;
-	text-shadow: none; /* Prevent inheritance from `body` */
-	background-color: #fff;
-	border: .05rem solid #fff;
-}
-
 .jumbotron.trans {
 	background: rgba(0, 0, 0, .7);
 	border-radius: 1rem;
 	margin-bottom: 0;
+	max-height: 80vh;
+	overflow-y: auto;
 }
-
-.jumbotron.connections {
-	background: rgba(0, 255, 255, .7);
-	border-radius: 1rem;
-	padding: 1rem;
-}
-
-.jumbotron.cards {
-	background: rgba(252, 47, 37, .7);
-	border-radius: 1rem;
-}
-
-
 
 /*
  * Base structure
@@ -40,7 +19,6 @@
 	background-position: center center;
 	color: #fff;
 	text-align: center;
-	text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -60,12 +38,6 @@
 	margin-right: auto;
 	margin-left: auto;
 }
-
-/* Padding for spacing */
-.inner {
-	padding: 2rem;
-}
-
 
 /*
  * Header
@@ -167,7 +139,6 @@
 	}
 }
 
-#about-content {
-	font-size: 12px;
-	max-height: 200px;
+.jumbotron p {
+	text-align: left;
 }
