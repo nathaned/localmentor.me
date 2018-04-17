@@ -1,16 +1,16 @@
 .jumbotron.trans {
-	background: rgba(0, 0, 0, .4);
+	background: rgba(0, 0, 0, .7);
 	border-radius: 1rem;
 	margin-bottom: 0;
 }
 
 .jumbotron.connections {
-	background: rgba(172,193,193,.4);
+	background: rgba(0, 255, 255, .7);
 	border-radius: 1rem;
 	padding: 1rem;
 }
 
 .jumbotron.cards {
-	background: rgba(252, 47, 37, .3);
+	background: rgba(252, 47, 37, .7);
 	border-radius: 1rem;
 }
