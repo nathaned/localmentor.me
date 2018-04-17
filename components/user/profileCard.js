@@ -38,7 +38,7 @@ export default class ProfileCard extends Component {
 			await ignoreRequest(username);
 			this.props.refresh();
 		};
-		const confirmationMessage = "Are you sure you want to ignore " + username + "?";
+		const confirmationMessage = "Are you sure you want to ignore " + username + "? Note: this user will be able to request you again unless you use the 'block' function.";
 		this.setState({
 			showConfirmation: true,
 			confirmationMessage,
@@ -164,17 +164,17 @@ export default class ProfileCard extends Component {
 
 				{ (type == "request" && actionable )? (
 					<button
-						className="btn btn-secondary"
-						onClick={this.ignoreMentee.bind(this)}>
-						Ignore
+						className="btn btn-success"
+						onClick={this.acceptMentee.bind(this)}>
+						Accept
 					</button>
 				) : null }
 
 				{ (type == "request" && actionable )? (
 					<button
-						className="btn btn-success"
-						onClick={this.acceptMentee.bind(this)}>
-						Accept
+						className="btn btn-secondary"
+						onClick={this.ignoreMentee.bind(this)}>
+						Ignore
 					</button>
 				) : null }
 
@@ -193,7 +193,7 @@ export default class ProfileCard extends Component {
 						End Mentorship
 					</button>
 				) : null }
-				{ (type == "connection" && actionable )? (
+				{ (type == "connection" || type == "request" )? (
 					<button
 						className="btn btn-secondary btn-sm"
 						onClick={this.blockUser.bind(this)}>
