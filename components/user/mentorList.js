@@ -14,6 +14,9 @@ export default class MentorList extends Component {
 		if (profile.blocked && profile.blocked.indexOf(user) != -1) {
 			return false;
 		}
+		if (profile.mentees && profile.mentees.indexOf(user) != -1) {
+			return false;
+		}
 		return true;
 	}
 
