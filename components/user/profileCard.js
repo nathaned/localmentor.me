@@ -110,7 +110,7 @@ export default class ProfileCard extends Component {
 			return null;
 		return (
 			<ul className="tags-container">
-				{ tags.map( tag => <li key={tag} className="tag">{tag}</li>)
+				{ tags.map( tag => <li key={tag} className="badge badge-info">{tag}</li>)
 				}
 			</ul>
 		);

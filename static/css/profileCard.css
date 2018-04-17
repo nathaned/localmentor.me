@@ -37,22 +37,15 @@
 }
 
 .profileCard .profile-actions button {
-	margin: 3px;
+	margin: 2px 3px 5px;
 }
 
 .tags-container {
 	padding: 5px 0;
 }
-
-.tags-container .tag {
-	color: black;
-	background: lightblue;
-	list-style: none;
-	display: inline;
-	padding: 1px 5px;
-	margin: 5px;
-	border-radius: 25px;
-	text-shadow: none;
+.tags-container .badge {
+	margin: 3px;
+	font-size: 85%;
 }
 
 .profileCard .material-icons {
