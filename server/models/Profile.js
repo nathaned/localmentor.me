@@ -271,7 +271,6 @@ class ProfileClass {
 
 	static async block(snowflake, baddie) {
 		const profile = await this.findByUsername(snowflake);
-		console.log("presnowflake: ", profile);
 		const safespace = await this.findOneAndUpdate(
 			{ username: snowflake },
 			{
@@ -284,7 +283,18 @@ class ProfileClass {
 				$addToSet: { blocked: baddie }
 			}
 		);
-		console.log("safespace: ", safespace);
+		const safespace2 = await this.findOneAndUpdate(
+			{ username: baddie },
+			{
+				$pull: {
+					requestedMentees: snowflake,
+					requestedMentors: snowflake,
+					mentees: snowflake,
+					mentors: snowflake
+				},
+				$addToSet: { blocked: snowflake }
+			}
+		);
 		return safespace;
 	}
 
