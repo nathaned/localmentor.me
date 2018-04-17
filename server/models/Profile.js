@@ -357,7 +357,7 @@ class ProfileClass {
 		const profiles = await this.find({
 			location: currentLocation,
 			username: { $in: usernames }
-		});
+		}).sort({ rating500: 'descending' });
 		return profiles || [];
 	}
 
