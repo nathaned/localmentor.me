@@ -49,10 +49,18 @@ class MessageClass {
 	}
 
 	static async getConversation (user1, user2) {
+		// user1 is the person who asked to see the messages, so any messages
+		// where they are the recipient can be marked as read
+		const read = await this.update(
+			{ recipient: user1 },
+			{ unread: false },
+			{ multi: true }
+		);
+		// the messages in the coversation include
 		const result = await this.find().or([
 			{ sender: user1, recipient: user2 },
 			{ sender: user2, recipient: user1 }
-		]);
+		]).sort({ date: 'ascending' });
 		return result;
 	}
 

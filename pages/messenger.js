@@ -9,12 +9,11 @@ import { getLimitedProfile } from '../lib/api/user'
 export default class MessengerPage extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { messages: [], unreads: [] };
+		this.state = { messages: [] };
 	}
 
 	async componentDidMount() {
 		await this.loadContactList();
-		this.continuouslyCheckUnreads();
 	}
 
 	static async getInitialProps({ req, res }) {
@@ -27,21 +26,6 @@ export default class MessengerPage extends Component {
 		}
 		const limitedProfile = await getLimitedProfile(baseUrl, user);
 		return { limitedProfile, user };
-	}
-
-	continuouslyCheckUnreads() {
-		setInterval( async () => {
-			console.log("checking for new unread messages");
-			if (document.hidden) {
-				console.log("jk, document is hidden");
-				return;
-			}
-			const unreads = await getUnreads();
-			if ( JSON.stringify(this.state.unreads) != JSON.stringify(unreads) ) {
-				this.setState({ unreads });
-			}
-			console.log("unreads: ", unreads);
-		}, 2000)
 	}
 
 	async loadContactList() {
@@ -69,7 +53,6 @@ export default class MessengerPage extends Component {
 						<Messenger
 							contactList={this.state.contactList}
 							messages={this.state.messages}
-							unreads={this.state.unreads}
 							user={this.props.user}/>
 					)
 					: <p>Loading...</p>

@@ -134,3 +134,8 @@
 div.clear {
 	padding: 10px;
 }
+
+div.fake-bottom {
+	float: left;
+	clear: both;
+}

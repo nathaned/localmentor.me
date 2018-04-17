@@ -1,12 +1,41 @@
 import React, { Component } from 'react';
 import Contact from './contact';
 import Chat from './chat';
-import { sendMessage, getMessagesWithUser } from '../../lib/api/messages';
+import {
+	sendMessage,
+	getMessagesWithUser,
+	getUnreads
+} from '../../lib/api/messages';
 
 export default class Messenger extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { };
+		this.state = {};
+	}
+
+	continuouslyCheckUnreads() {
+		// this is a really bad way of doing this but it works
+		if (this.state.interval) {
+			clearInterval(this.state.interval);
+		}
+		const interval = setInterval( async () => {
+			console.log("checking for new unread messages");
+			if (document.hidden) { // pretend to be efficient
+				console.log("jk, document is hidden");
+				return;
+			}
+			const unreads = await getUnreads();
+			if ( JSON.stringify(this.state.unreads) != JSON.stringify(unreads) ) {
+				const contact = this.state.contact;
+				if (contact && unreads.indexOf(contact.username) != -1) {
+					await this.update();
+				}
+				this.setState({ unreads });
+			}
+			console.log("unreads: ", unreads);
+		}, 2000);
+		// we can track this interval so they don't pile up
+		this.setState({ interval });
 	}
 
 	async fetchMessages(contact) {
@@ -21,7 +50,7 @@ export default class Messenger extends Component {
 	}
 
 	renderContacts() {
-		const unreads = this.props.unreads || [];
+		const unreads = this.state.unreads || [];
 		const selectedUsername = (
 			this.state.contact ? this.state.contact.username : null
 		);
@@ -59,11 +88,12 @@ export default class Messenger extends Component {
 
 	async componentDidMount() {
 		const currHash = window.location.hash;
-		await this.setContact(currHash.slice(1));
+		await this.setInitialContact(currHash.slice(1));
+		this.continuouslyCheckUnreads();
 		// todo should it listen to hash change or just read it once?
 	}
 
-	async setContact(contact) {
+	async setInitialContact(contact) {
 		const contactList = this.props.contactList;
 		if (contactList && contactList.indexOf(contact) != -1) {
 			this.setState({ messages: [] });
@@ -76,6 +106,14 @@ export default class Messenger extends Component {
 			this.setState({ contact: null })
 			window.location.hash = '';
 		}
+	}
+
+	async update() {
+		console.log("calling update");
+		const contact = this.state.contact;
+		const messages = await this.fetchMessages(contact);
+		console.log("in update, got these messages: ", contact);
+		this.setState({ messages });
 	}
 
 
@@ -92,7 +130,8 @@ export default class Messenger extends Component {
 							? <Chat
 								contact={this.state.contact}
 								messages={this.state.messages}
-								sendMessage={this.handleMessage.bind(this)}/>
+								sendMessage={this.handleMessage.bind(this)}
+								update={this.update.bind(this)}/>
 							: <div id="chat-noselection">Select someone to chat.</div>
 						}
 					</div>

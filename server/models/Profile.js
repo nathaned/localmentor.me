@@ -136,7 +136,7 @@ class ProfileClass {
 	static async getContactList(username) {
 		const profile = await this.getConnectionProfile(username);
 		let contactList = [];
-		for (mentor of profile.mentors) {
+		for (const mentor of profile.mentors) {
 			contactList.push( {
 				email: mentor.email,
 				firstName: mentor.firstName,
@@ -145,7 +145,7 @@ class ProfileClass {
 				username: mentor.username,
 			});
 		}
-		for (mentee of profile.mentees) {
+		for (const mentee of profile.mentees) {
 			contactList.push( {
 				email: mentee.email,
 				firstName: mentee.firstName,
@@ -183,6 +183,14 @@ class ProfileClass {
 			unreads.push(sender);
 		}
 		await this.findOneAndUpdate( {username: recipient }, { unreads });
+	}
+
+	static async removeFromUnreads(reader, other) {
+		const profile = await this.findOneAndUpdate(
+			{ username: reader },
+			{ $pull: { unreads: other } }
+		);
+		return profile;
 	}
 
 	static async getUserTags(username) {

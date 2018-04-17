@@ -14,13 +14,13 @@ export default class Chat extends Component {
 		const renderedMessages = (
 			this.props.messages.map( (message, i) => {
 				const showName = (previousSender != message.sender);
-				console.log(message);
 				previousSender = message.sender;
 				const type = (message.sender == selectedUsername) ? "received" : "sent"
 				return (
 					<Message
-						sender={message.sender}
 						key={message.text + i}
+						date={message.date}
+						sender={message.sender}
 						showName={showName}
 						type={type}
 						text={message.text}/>
@@ -31,6 +31,7 @@ export default class Chat extends Component {
 		return (
 			<ul>
 				{ renderedMessages }
+				<div className="fake-bottom" ref={(el) => { this.messagesEnd = el; }}></div>
 			</ul>
 		);
 	}
@@ -40,11 +41,11 @@ export default class Chat extends Component {
 		this.setState({ inputText });
 	}
 
-	sendMessage() {
+	async sendMessage() {
 		const message = this.state.inputText;
 		this.props.sendMessage(message);
 		this.setState({ inputText: '' })
-
+		await this.props.update();
 	}
 
 	onKeyDown(e) {
@@ -54,8 +55,19 @@ export default class Chat extends Component {
 		}
 	}
 
+	scrollToBottom () {
+		this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+	}
+
+	componentDidMount() {
+		this.scrollToBottom();
+	}
+
+	componentDidUpdate() {
+		this.scrollToBottom();
+	}
+
 	render() {
-		console.log(this.props);
 		return (
 			<div id="chat">
 				<div id="message-list">
