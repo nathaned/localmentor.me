@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Message from './message';
+import timeago from 'timeago.js';
 
 export default class Chat extends Component {
 	constructor(props) {
@@ -15,11 +16,13 @@ export default class Chat extends Component {
 			this.props.messages.map( (message, i) => {
 				const showName = (previousSender != message.sender);
 				previousSender = message.sender;
-				const type = (message.sender == selectedUsername) ? "received" : "sent"
+				const type = (message.sender == selectedUsername) ? "received" : "sent";
+				const date = timeago().format(new Date(message.date));
+				console.log(date);
 				return (
 					<Message
 						key={message.text + i}
-						date={message.date}
+						date={date}
 						sender={message.sender}
 						showName={showName}
 						type={type}

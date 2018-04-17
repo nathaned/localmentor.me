@@ -115,7 +115,13 @@
 	list-style: none;
 }
 
-#message-list .message p {
+#message-list .message .message-content {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+#message-list .message .message-text {
 	border: 1px solid black;
 	border-radius: 5px;
 	width: fit-content;

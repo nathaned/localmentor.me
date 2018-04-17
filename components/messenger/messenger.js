@@ -33,7 +33,7 @@ export default class Messenger extends Component {
 				this.setState({ unreads });
 			}
 			console.log("unreads: ", unreads);
-		}, 2000);
+		}, 200);
 		// we can track this interval so they don't pile up
 		this.setState({ interval });
 	}
