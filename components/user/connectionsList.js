@@ -112,7 +112,7 @@ export default class ConnectionList extends Component {
 					</div>
 				) : null }
 
-				{ this.props.isMentee ? (
+				{ this.props.isMentor ? (
 					<div className="jumbotron connections">
 						<h2>Your Mentees</h2>
 						{ this.renderMentees() }
