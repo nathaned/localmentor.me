@@ -9,7 +9,7 @@ import { getLimitedProfile, searchTags } from '../lib/api/user'
 export default class FindAMentor extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { inputSearch: '', tags: [] };
+		this.state = { inputSearch: '', tags: [], numRequested: 0 };
 	}
 	async loadTags() {
 		const tags = await getTags();
@@ -30,13 +30,16 @@ export default class FindAMentor extends Component {
 
 	async handleSearch (tags, location) {
 		console.log("going to search, got tags:", tags);
-		const mentors = await searchTags(tags, location);
-		console.log("got these guys back: ", mentors);
-		if (mentors.error) {
-			this.setState({ rateLimited: true });
-			return;
-		}
-		this.setState({ mentors });
+		const obj = await searchTags(tags, location);
+		const mentors = obj.mentors;
+		const numRequested = obj.numRequested;
+		console.log("got this back: ", obj);
+		this.setState({ mentors, numRequested });
+	}
+
+	incrementRequested() {
+		const count = (this.state.numRequested || 0) + 1;
+		this.setState({ numRequested: count });
 	}
 
 	static async getInitialProps({ req, res }) {
@@ -57,7 +60,7 @@ export default class FindAMentor extends Component {
 			return this.renderRestrictedPage();
 		}
 
-		if (this.state.rateLimited) {
+		if (this.state.numRequested >= 5) {
 			return this.renderRateLimitedPage();
 		}
 
@@ -89,6 +92,7 @@ export default class FindAMentor extends Component {
 							{this.state.mentors
 								? (
 									<MentorList
+										incrementRequested={this.incrementRequested.bind(this)}
 										mentors={this.state.mentors}
 										user={this.props.user} />
 								) : null

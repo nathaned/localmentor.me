@@ -22,6 +22,7 @@ export default class ProfileCard extends Component {
 	async requestMentor() {
 		const username = this.props.username;
 		this.setState({ actionable: false });
+		this.props.incrementRequested();
 		await sendRequest(username);
 	}
 

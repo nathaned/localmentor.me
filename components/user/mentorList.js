@@ -23,6 +23,7 @@ export default class MentorList extends Component {
 	renderMentors() {
 		const mentors = this.props.mentors;
 		const user = this.props.user;
+		const incrementRequested = this.props.incrementRequested
 		console.log("mentors in renderMentors");
 		console.log(mentors);
 		return (
@@ -30,6 +31,7 @@ export default class MentorList extends Component {
 				this.okayToShow(user, item) ? (
 					<ProfileCard
 						key={item.username + i}
+						incrementRequested={incrementRequested}
 						actionable={item.requestedMentees.indexOf(user) == -1}
 						bio={item.mentorBio}
 						email={item.email}

@@ -9,10 +9,9 @@ tagsApi.post('/api/tags/search', async (req, res) => {
 	if (!user) {
 		return res.sendStatus(403);
 	}
-	const rateLimited = await Profile.isRateLimited(user);
-	if (rateLimited) {
-		return res.status(200).json({ mentors: {error: "rate limited"} });
-	}
+
+	const profile = await Profile.findByUsername(user);
+	const numRequested = profile.requestedMentors.length;
 
 	const tags = req.body.tags;
 	const location = req.body.location;
@@ -20,7 +19,7 @@ tagsApi.post('/api/tags/search', async (req, res) => {
 	console.log("found these usernames matching those tags: ", usernames);
 	const locatedProfiles = await Profile.limitLocation(usernames, location);
 	console.log("limited by location: ", locatedProfiles);
-	return res.status(200).json({ mentors: locatedProfiles});
+	return res.status(200).json({ mentors: locatedProfiles, numRequested});
 });
 
 // returns all tags in the database
