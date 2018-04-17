@@ -22,7 +22,7 @@ export default class ConnectionList extends Component {
 			);
 		}
 
-		return (this.renderProfiles(requestedMentees, "connection", true));
+		return (this.renderProfiles(mentors, "connection", true));
 	}
 
 	renderMentees() {
