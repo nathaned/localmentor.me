@@ -2,8 +2,18 @@ const express = require('express');
 const tagsApi = express.Router();
 const Tag = require('../models/Tag');
 const Profile = require('../models/Profile');
+const { getUserFromSession } = require('./auth')
 
 tagsApi.post('/api/tags/search', async (req, res) => {
+	const user = getUserFromSession(req);
+	if (!user) {
+		return res.sendStatus(403);
+	}
+	const rateLimited = await Profile.isRateLimited(user);
+	if (rateLimited) {
+		return res.status(200).json({ mentors: {error: "rate limited"} });
+	}
+
 	const tags = req.body.tags;
 	const location = req.body.location;
 	const usernames = await Tag.searchTags(tags);

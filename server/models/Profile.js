@@ -411,6 +411,15 @@ class ProfileClass {
 		);
 		return true; // todo
 	}
+
+	static async isRateLimited(username) {
+		const profile = await this.findByUsername(username);
+		if (!profile.requestedMentors) {
+			return true; // lol what, todo
+		}
+		// rate don't allow users who have requested 5 or more ppl to request more
+		return (profile.requestedMentors.length >= 5)
+	}
 }
 
 mongoSchema.loadClass(ProfileClass);

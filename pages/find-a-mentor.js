@@ -32,6 +32,10 @@ export default class FindAMentor extends Component {
 		console.log("going to search, got tags:", tags);
 		const mentors = await searchTags(tags, location);
 		console.log("got these guys back: ", mentors);
+		if (mentors.error) {
+			this.setState({ rateLimited: true });
+			return;
+		}
 		this.setState({ mentors });
 	}
 
@@ -52,6 +56,11 @@ export default class FindAMentor extends Component {
 		if (!this.props.limitedProfile.isMentee) {
 			return this.renderRestrictedPage();
 		}
+
+		if (this.state.rateLimited) {
+			return this.renderRateLimitedPage();
+		}
+
 		return (
 			<div id="fullpage-container">
 				<Head
@@ -114,6 +123,34 @@ export default class FindAMentor extends Component {
 							<h1>Oops!</h1>
 							<p>Your profile isn't set up to be a mentee, so you can't search/request any mentors until you update it.</p>
 							<a href="/my-profile" className="btn btn-lg btn-primary">Edit Profile</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
+	renderRateLimitedPage() {
+		const pageTitle = "Find a Mentor";
+		return (
+			<div id="fullpage-container">
+				<Head
+					cssFiles={[
+						"findMentor.css",
+						"dashboardNav.css",
+						"jumbo.css"
+					]}
+					title={pageTitle} />
+				<div>
+					<DashboardNav
+						pageTitle={pageTitle}
+						user={this.props.user}
+						md5={this.props.limitedProfile.email}
+					/>
+					<div className="cover-container">
+						<div className="jumbotron trans">
+							<h1>Slow down, big boy!</h1>
+							<p>You've been requesting too many mentors lately! Wait until one responds before requesting more.</p>
 						</div>
 					</div>
 				</div>
