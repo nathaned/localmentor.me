@@ -12,7 +12,7 @@ export default class Profile extends Component {
 			edit: true,
 			locations: [
 				{ label: "Orlando, FL", value: "Orlando, FL"},
-				{ label: "New York, FL", value: "New York, NY"},
+				{ label: "New York, NY", value: "New York, NY"},
 				{ label: "Tampa, FL", value: "Tampa, FL"},
 				{ label: "Miami, FL", value: "Miami, FL"},
 				{ label: "Atlanta, GA", value: "Atlanta, GA"}
