@@ -39,13 +39,11 @@ export default class Messenger extends Component {
 	}
 
 	async fetchMessages(contact) {
-		console.log("fetching messages in chat");
 		if (!contact) {
 			console.log("no contact selected", contact);
 			return;
 		}
 		const messages = await getMessagesWithUser(contact.username);
-		console.log("fetched messages: ", messages);
 		return messages;
 	}
 
@@ -75,7 +73,6 @@ export default class Messenger extends Component {
 	}
 
 	handleMessage(text) {
-		console.log("going to send message with text: ", text);
 		sendMessage(this.state.contact.username, text);
 	}
 
@@ -95,11 +92,13 @@ export default class Messenger extends Component {
 
 	async setInitialContact(contact) {
 		const contactList = this.props.contactList;
-		if (contactList && contactList.indexOf(contact) != -1) {
-			this.setState({ messages: [] });
-			this.setState({ contact });
-			window.location.hash = contact;
-			await this.fetchMessages();
+		const contactInList = this.props.contactList.reduce(( (prev, c) =>
+			(c.username == contact) ? c : prev
+		), false);
+
+		if (contactInList) {
+			const messages = await this.fetchMessages(contactInList);
+			this.setState({ contact: contactInList, messages });
 		}
 		else {
 			console.log("contact not found");
@@ -109,16 +108,13 @@ export default class Messenger extends Component {
 	}
 
 	async update() {
-		console.log("calling update");
 		const contact = this.state.contact;
 		const messages = await this.fetchMessages(contact);
-		console.log("in update, got these messages: ", contact);
 		this.setState({ messages });
 	}
 
 
 	render() {
-		console.log("messenger.js state", this.state);
 		return (
 			<div className="inner cover">
 				<div id="messenger-container">

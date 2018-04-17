@@ -8,17 +8,31 @@ export default class Chat extends Component {
 		this.state = { inputText: "" };
 	}
 
+	renderHelpScreen() {
+		return (
+			<div ref={(el) => { this.messagesEnd = el; }}>
+				<h1>No messages yet!</h1>
+				<p>Use the box below to send a message. Don't know what to say? Check out our sample questions!</p>
+				<a href="/about" className="btn btn-primary">Sample Questions</a>
+			</div>
+		);
+	}
+
 	renderMessages() {
-		if (!this.props.messages) return null;
+		console.log("messages? ", this.props.messages);
+		if (!this.props.messages || !this.props.messages.length) {
+			return this.renderHelpScreen();
+		}
+
 		let previousSender = false;
 		const selectedUsername = this.props.contact.username;
+
 		const renderedMessages = (
 			this.props.messages.map( (message, i) => {
 				const showName = (previousSender != message.sender);
 				previousSender = message.sender;
 				const type = (message.sender == selectedUsername) ? "received" : "sent";
 				const date = timeago().format(new Date(message.date));
-				console.log(date);
 				return (
 					<Message
 						key={message.text + i}
